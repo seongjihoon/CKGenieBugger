@@ -5,50 +5,56 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 
-[CustomEditor(typeof(BaseState<Enum>))]
-public class MyStateEditor : Editor
+namespace CKProject
 {
-    private BaseState<Enum> baseState;
 
-    private void OnEnable()
+    public abstract class BaseState<T> : MonoBehaviour
     {
-        baseState = (BaseState<Enum>)target;
-    }
+        [SerializeField]
+        protected T stateType;
+        public T StateType { get { return stateType; } }
 
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
+        public UnityEvent enterStateEvent;
+        public UnityEvent executeUpdateStateEvent;
+        public UnityEvent executeFixedUpdateStateEvent;
+        public UnityEvent exitStateEvent;
 
-        if (baseState == null)
+        public bool bEndState = false;
+
+        public void DebugScript(string str)
         {
-            OnComponentRemoved();
+            Debug.Log($"{str}");
         }
+
+        public virtual void Enter()
+        {
+            this.enabled = true;
+            enterStateEvent?.Invoke();
+        }
+
+        public virtual void Exit()
+        {
+            exitStateEvent?.Invoke();
+            this.enabled = false;
+        }
+
+        public virtual void ExcuteUpdate()
+        {
+            executeUpdateStateEvent?.Invoke();
+        }
+
+        public virtual void ExcuteFixedUpdate()
+        {
+            executeFixedUpdateStateEvent?.Invoke();
+        }
+        public void KeyDownEvent()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                bEndState = true;
+            }
+        }
+
     }
 
-    private void OnComponentRemoved()
-    {
-        Debug.Log($"MyComponent has been Removed!");
-    }
-}
-
-public abstract class BaseState<T> : MonoBehaviour
-{
-    [SerializeField]
-    protected T stateType;
-    public T StateType { get { return stateType; } }
-
-    public UnityEvent enterStateEvent;
-    public UnityEvent executeUpdateStateEvent;
-    public UnityEvent executeFixedUpdateStateEvent;
-    public UnityEvent exitStateEvent;
-
-    public void ExcuteUpdate()
-    {
-
-    }
-
-    internal void ExcuteFixedUpdate()
-    {
-        throw new NotImplementedException();
-    }
 }

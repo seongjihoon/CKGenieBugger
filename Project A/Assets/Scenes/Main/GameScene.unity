@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 939452583}
   - component: {fileID: 939452588}
   - component: {fileID: 939452589}
-  - component: {fileID: 939452587}
+  - component: {fileID: 939452590}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -339,18 +339,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &939452587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939452582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a61ef53a8fa4de04abf6251d0be5e64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &939452588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,11 +351,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c5f98f9fcdfba849a8fbb5f0c393a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousStateType: 0
-  currentStateType: 0
+  previousStateType: 1
+  currentStateType: 1
   stateTable:
-    keys: 
-    values: []
+    keys: 0100000002000000
+    values:
+    - {fileID: 939452589}
+    - {fileID: 939452590}
 --- !u!114 &939452589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,19 +370,142 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543734fa52bbf694eadc4e0f33d06f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateType: 0
+  stateType: 1
   enterStateEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 939452589}
+        m_TargetAssemblyTypeName: CKProject.PlayerIdleState, Assembly-CSharp
+        m_MethodName: DebugScript
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Idle State Start
+          m_BoolArgument: 0
+        m_CallState: 2
   executeUpdateStateEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 939452589}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: KeyDownEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 939452588}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: ChangeState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   executeFixedUpdateStateEvent:
     m_PersistentCalls:
       m_Calls: []
   exitStateEvent:
     m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 939452589}
+        m_TargetAssemblyTypeName: CKProject.PlayerIdleState, Assembly-CSharp
+        m_MethodName: DebugScript
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Idle State Exit
+          m_BoolArgument: 0
+        m_CallState: 2
+  bEndState: 0
+--- !u!114 &939452590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939452582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: badd8a89f2fb43d4784c152d67c07e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateType: 2
+  enterStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 939452590}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: DebugScript
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Move State Start
+          m_BoolArgument: 0
+        m_CallState: 2
+  executeUpdateStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 939452590}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: KeyDownEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 939452588}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: ChangeState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  executeFixedUpdateStateEvent:
+    m_PersistentCalls:
       m_Calls: []
+  exitStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 939452590}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: DebugScript
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Move State Exit
+          m_BoolArgument: 0
+        m_CallState: 2
+  bEndState: 0
 --- !u!1 &1020483859
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +612,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1558009253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1202068942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1202068943}
+  - component: {fileID: 1202068944}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1202068943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202068942}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1202068944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202068942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b69e40d0d53628a4b8f9c800d35b7992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guestArray: []
 --- !u!1 &1301366733
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,3 +1098,4 @@ SceneRoots:
   - {fileID: 1656331184}
   - {fileID: 939452586}
   - {fileID: 1558009253}
+  - {fileID: 1202068943}
