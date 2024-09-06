@@ -4,7 +4,7 @@ using System;
 using UnityEditor;
 
 
-namespace CKProject
+namespace CKProject.FSM
 {
     //[Serializable]
     //public class StateDictionary : SerializableDictionary<StateType, BaseState<StateType>> { }
@@ -56,14 +56,11 @@ namespace CKProject
 
         public virtual void ChangeState(T1 updateStateType)
         {
-            if(stateTable[CurrentStateType].bEndState)
-            {
-                previousStateType = currentStateType;
-                stateTable[currentStateType].Exit();
-                currentStateType = updateStateType;
-                stateTable[currentStateType].Enter();
-                changeStateAction?.Invoke(currentStateType);
-            }
+            previousStateType = currentStateType;
+            stateTable[currentStateType].Exit();
+            currentStateType = updateStateType;
+            stateTable[currentStateType].Enter();
+            changeStateAction?.Invoke(currentStateType);
         }
 
         protected virtual void Start()

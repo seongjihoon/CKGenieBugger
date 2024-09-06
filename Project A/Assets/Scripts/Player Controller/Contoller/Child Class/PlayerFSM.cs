@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 using UnityEditor;
+using UnityEngine.InputSystem;
 
-namespace CKProject
+
+namespace CKProject.FSM
 {
     [SerializeField]
-    public enum StateType
+    public enum EStateType
     {
         Idle = 1,
         Move = 2,
-        Attack = 3,
+        Interact = 3,
         
     }
 
@@ -32,12 +32,12 @@ namespace CKProject
             GUILayout.FlexibleSpace();
 
 
-            if (GUILayout.Button("»óÅÂ Ãß°¡", GUILayout.Width(120), GUILayout.Height(30)))
+            if (GUILayout.Button("ìƒíƒœ ì¶”ê°€", GUILayout.Width(120), GUILayout.Height(30)))
             {
                 fsmEditor.AddState();
             }
 
-            //if (GUILayout.Button("Á¦°Å", GUILayout.Width(120), GUILayout.Height(30)))
+            //if (GUILayout.Button("ì œê±°", GUILayout.Width(120), GUILayout.Height(30)))
             //{
             //    fsmEditor.SubState();
             //}
@@ -48,20 +48,29 @@ namespace CKProject
         }
     }
 
-    public class PlayerFSM : FSMController<StateType>
+    public class PlayerFSM : FSMController<EStateType>
     {
+        //private DefaultInputActions defaultPlayerActions;
+        // ì„¸ ê°€ì§€ í‚¤ íƒ€ì….
+        public InputAction moveAction;
+        public InputAction interactAction;
 
-        // Start is called before the first frame update
+        // Start is called before the first frame update    
         void Start()
         {
             base.Start();
+            //defaultPlayerActions = new DefaultInputActions();
+
+            moveAction = InputSystem.actions["Move"];
+            interactAction = InputSystem.actions["Interact"];
+
         }
 
         public void AddState()
         {
-            // ¸ğµç »óÅÂ Àû¿ë ÇÏÀÚ.
+            // ëª¨ë“  ìƒíƒœ ì ìš© í•˜ì.
             int i = 0;
-            BaseState<StateType>[] childState = transform.GetComponents<BaseState<StateType>>(); 
+            BaseState<EStateType>[] childState = transform.GetComponents<BaseState<EStateType>>(); 
             
             ClearStates();
 
@@ -80,13 +89,13 @@ namespace CKProject
 
         }
 
-        [VisibleEnum(typeof(StateType))]
+        [VisibleEnum(typeof(EStateType))]
         public void ChangeState(int nextState)
         {
-            ChangeState((StateType)nextState);
+            ChangeState((EStateType)nextState);
         }
 
-        public override void ChangeState(StateType updateStateType)
+        public override void ChangeState(EStateType updateStateType)
         {
             base.ChangeState(updateStateType);
         }

@@ -5,21 +5,25 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 
-namespace CKProject
+namespace CKProject.FSM
 {
 
-    public abstract class BaseState<T> : MonoBehaviour
+    public abstract class BaseState<T> : MonoBehaviour where T : Enum
     {
+        public FSMController<T> FsmController;
+
         [SerializeField]
         protected T stateType;
         public T StateType { get { return stateType; } }
 
-        public UnityEvent enterStateEvent;
-        public UnityEvent executeUpdateStateEvent;
-        public UnityEvent executeFixedUpdateStateEvent;
-        public UnityEvent exitStateEvent;
+        public UnityEvent EnterStateEvent;
+        public UnityEvent ExecuteUpdateStateEvent;
+        public UnityEvent ExecuteFixedUpdateStateEvent;
+        public UnityEvent ExitStateEvent;
 
+        [HideInInspector]
         public bool bEndState = false;
+        
 
         public void DebugScript(string str)
         {
@@ -29,32 +33,29 @@ namespace CKProject
         public virtual void Enter()
         {
             this.enabled = true;
-            enterStateEvent?.Invoke();
+            EnterStateEvent?.Invoke();
         }
 
         public virtual void Exit()
         {
-            exitStateEvent?.Invoke();
+            ExitStateEvent?.Invoke();
             this.enabled = false;
         }
 
         public virtual void ExcuteUpdate()
         {
-            executeUpdateStateEvent?.Invoke();
+            ExecuteUpdateStateEvent?.Invoke();
         }
 
         public virtual void ExcuteFixedUpdate()
         {
-            executeFixedUpdateStateEvent?.Invoke();
-        }
-        public void KeyDownEvent()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                bEndState = true;
-            }
+            ExecuteFixedUpdateStateEvent?.Invoke();
         }
 
+        //protected void ChangeState(T stateType)
+        //{
+        //    FsmController.ChangeState(stateType);
+        //}
     }
 
 }
