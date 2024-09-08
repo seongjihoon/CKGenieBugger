@@ -2,6 +2,8 @@
 using System;
 using UnityEditor;
 using UnityEngine.InputSystem;
+using CKProject.Managers;
+using CKProject.CustomSystem;
 
 
 namespace CKProject.FSM
@@ -55,6 +57,8 @@ namespace CKProject.FSM
         public InputAction moveAction;
         public InputAction interactAction;
 
+        public CustomCollision CustomCollision;
+
         // Start is called before the first frame update    
         void Start()
         {
@@ -64,6 +68,12 @@ namespace CKProject.FSM
             moveAction = InputSystem.actions["Move"];
             interactAction = InputSystem.actions["Interact"];
 
+        }
+
+        private void Update()
+        {
+            base.Update();
+            CustomCollision = CollisionManager.Instance.CheckCollision(transform);
         }
 
         public void AddState()

@@ -123,6 +123,85 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &212260169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 212260170}
+  m_Layer: 0
+  m_Name: Logic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &212260170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212260169}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.1140738, y: -0.752824, z: 2.4025788}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1202068943}
+  - {fileID: 233022942}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &233022941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 233022942}
+  - component: {fileID: 233022943}
+  m_Layer: 0
+  m_Name: Custom Collision Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &233022942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233022941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 212260170}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &233022943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233022941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619ac5304afaaf447891dfcca56cd629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomCollision:
+  - {fileID: 746231494}
 --- !u!1 &683176879
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,9 +320,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f5f2f828c830b4eb9e227ea53e0053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodSO: {fileID: 0}
+  FoodSO: {fileID: 11400000, guid: 7ac23f79f4a005c468785ccadd4b954e, type: 2}
+  foodReady: 0
   objectPools: []
   foodType: 0
+  kitchenType: 0
+  cookTimer: 0
 --- !u!1 &746231488
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +338,7 @@ GameObject:
   - component: {fileID: 746231491}
   - component: {fileID: 746231490}
   - component: {fileID: 746231489}
+  - component: {fileID: 746231494}
   - component: {fileID: 746231493}
   m_Layer: 0
   m_Name: Bugger Kitchen
@@ -362,9 +445,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f5f2f828c830b4eb9e227ea53e0053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodSO: {fileID: 0}
+  FoodSO: {fileID: 11400000, guid: 515f5c119b602d3429485f4b3742e958, type: 2}
+  foodReady: 0
   objectPools: []
   foodType: 0
+  kitchenType: 0
+  cookTimer: 0
+--- !u!114 &746231494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746231488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209a6732fdcc98644bd0245368a22743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offset: {x: 0, y: 0, z: -1}
+  Radius: 0.8
 --- !u!1 &901443464
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +586,7 @@ GameObject:
   - component: {fileID: 939452588}
   - component: {fileID: 939452589}
   - component: {fileID: 939452590}
+  - component: {fileID: 939452591}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -780,6 +881,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   bEndState: 0
+--- !u!114 &939452591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939452582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1af00c69ed1b947a06932dfab81f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ppp: {fileID: 0}
 --- !u!1 &998316776
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,9 +1012,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f5f2f828c830b4eb9e227ea53e0053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodSO: {fileID: 0}
+  FoodSO: {fileID: 11400000, guid: ee95bcb81c3248c49b16b935e3b4c3ce, type: 2}
+  foodReady: 0
   objectPools: []
   foodType: 0
+  kitchenType: 0
+  cookTimer: 0
 --- !u!1 &1020483859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1169,7 @@ GameObject:
   - component: {fileID: 1202068943}
   - component: {fileID: 1202068944}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: Guest Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1066,12 +1183,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202068942}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.1140738, y: 1.7528241, z: -2.4025788}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 212260170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1202068944
 MonoBehaviour:
@@ -1528,4 +1645,4 @@ SceneRoots:
   - {fileID: 1656331184}
   - {fileID: 939452586}
   - {fileID: 1558009253}
-  - {fileID: 1202068943}
+  - {fileID: 212260170}

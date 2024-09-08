@@ -1,21 +1,35 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CKProject.CustomSystem;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CKProject.Managers
 {
-    public class CollisionManager : MonoBehaviour
+    public class CollisionManager : SingleTon.SingleTon<CollisionManager>
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public CustomCollision[] CustomCollision;
 
+        private void Awake()
+        {
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
-
-        // Update is called once per frame
-        void Update()
+        public CustomCollision CheckCollision(Transform t)
         {
+            foreach(var c in CustomCollision) 
+            {
+                if (c.OnCollision(t))
+                    return c;
+            }
 
+            return null;
         }
     }
 

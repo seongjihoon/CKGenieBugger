@@ -2,6 +2,9 @@
 using UnityEngine.Events;
 using System;
 using UnityEditor;
+using Unity.IO.LowLevel.Unsafe;
+using JetBrains.Annotations;
+using CKProject.Managers;
 
 
 namespace CKProject.FSM

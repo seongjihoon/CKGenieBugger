@@ -8,9 +8,12 @@ namespace CKProject.SingleTon
 {
     public abstract class SingleTon<T> : MonoBehaviour
     {
-        private T instance;
+        private static T instance;
 
-        public T Instance { get { return instance; } set { instance = value; } }
+        public static T Instance
+        {
+            get { return instance; }
+            set { instance = value; }
+        }
     }
-
 }

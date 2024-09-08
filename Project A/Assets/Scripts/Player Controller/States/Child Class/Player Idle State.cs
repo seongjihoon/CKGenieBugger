@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;   
+using System;
+using CKProject.Interactable;
 
 namespace CKProject.FSM
 {
@@ -65,16 +66,12 @@ namespace CKProject.FSM
                 }
             }
         }
-
         #endregion
 
         #region Private Methods
 
         private void InputMoveKey(EStateType stateType)
         {
-            //if (Mathf.Abs(playerFSM.moveAction.ReadValue<Vector2>().x) > 0.2f
-            //    || Mathf.Abs(playerFSM.moveAction.ReadValue<Vector2>().y) > 0.2f)
-            //if(playerFSM.moveAction.WasPressedThisFrame())
             if(playerFSM.moveAction.IsPressed())
             {
                 FsmController.ChangeState(stateType);
@@ -85,8 +82,11 @@ namespace CKProject.FSM
         {
             if(playerFSM.interactAction.WasPressedThisFrame())
             {
-                Debug.Log($"Press Interaction(Idle)");
-                //FsmController.ChangeState(stateType);
+                Debug.Log($"상호 작용 키 입력");
+                if(playerFSM.CustomCollision != null)
+                {
+                    playerFSM.CustomCollision.GetComponent<Kitchen>().Interaction();
+                }
             }
         }
         #endregion
