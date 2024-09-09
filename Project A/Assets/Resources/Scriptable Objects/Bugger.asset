@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4e527b866963b40bbd6498fe270e47, type: 3}
   m_Name: Bugger
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 5574880182221989816, guid: a15b261beb418314aa2afe05d89f979d, type: 3}
   Price: 0
+  ReadyTime: 1
   SpawnTime: 2
+  ThrowSpeed: 5

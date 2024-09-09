@@ -59,7 +59,12 @@ namespace CKProject.FSM
                         InputMoveKey((EStateType)inputKey);
                         break;
                     case EStateType.Interact:
-                        InputInteractKey((EStateType)inputKey);
+                        {
+                            if (playerFSM.FoodObject == null)
+                                InputInteractKey((EStateType)inputKey);
+                            else
+                                InputThrowInteractKey((EStateType)inputKey);
+                        }
                         break;
                     default:
                         break;
@@ -83,12 +88,29 @@ namespace CKProject.FSM
             if(playerFSM.interactAction.WasPressedThisFrame())
             {
                 Debug.Log($"상호 작용 키 입력");
-                if(playerFSM.CustomCollision != null)
+                if(playerFSM.CustomCollision != null )
                 {
-                    playerFSM.CustomCollision.GetComponent<Kitchen>().Interaction();
+                    playerFSM.FoodObject = playerFSM.CustomCollision.GetComponent<Kitchen>().Interaction();
+                    if(playerFSM.FoodObject != null )
+                        GetFoodObject();
                 }
             }
         }
+
+        private void GetFoodObject()
+        {
+            playerFSM.FoodObject.transform.parent = this.transform;
+            playerFSM.FoodObject.transform.position = transform.position + Vector3.up * 1.0f;
+        }
+        private void InputThrowInteractKey(EStateType stateType)
+        { 
+            if(playerFSM.interactAction.WasPressedThisFrame())
+            {
+                Debug.Log($"던지기 시작");
+                playerFSM.ChangeState(EStateType.Interact);
+            }
+        }
+
         #endregion
 
 

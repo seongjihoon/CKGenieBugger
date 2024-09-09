@@ -12,8 +12,13 @@ namespace CKProject.Interactable
         public GameObject Prefab;
 
         public int Price;
+        [Space(10), InspectorName("준비 시간")]
+        public float ReadyTime;
+        [Space(10), InspectorName("제작 시간")]
         public float SpawnTime;
 
+        [Space(10), InspectorName("날아가는 속도")]
+        public float ThrowSpeed;
 
     }
 }

@@ -46,7 +46,7 @@ namespace CKProject.FSM
         #region public Methods
         public void Move()
         {
-            transform.Translate(ConvertVecYToZ(playerFSM.moveAction.ReadValue<Vector2>()) * 0.05f);
+            transform.Translate(ConvertVecYToZ(playerFSM.moveAction.ReadValue<Vector2>()) * Time.deltaTime * 2f);
         }
 
 

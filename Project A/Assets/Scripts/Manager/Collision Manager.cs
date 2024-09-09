@@ -21,6 +21,12 @@ namespace CKProject.Managers
                 Destroy(this.gameObject);
             }
         }
+
+        private void Start()
+        {
+            CustomCollision = FindObjectsOfType<CustomCollision>();
+        }
+
         public CustomCollision CheckCollision(Transform t)
         {
             foreach(var c in CustomCollision) 

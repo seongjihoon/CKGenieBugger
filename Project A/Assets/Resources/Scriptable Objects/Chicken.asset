@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4e527b866963b40bbd6498fe270e47, type: 3}
   m_Name: Chicken
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 1252132357804551462, guid: 5e3a05cb80602d54c9b6fb7fe5be53b2, type: 3}
   Price: 0
+  ReadyTime: 1
   SpawnTime: 2
+  ThrowSpeed: 5

@@ -26,7 +26,7 @@ namespace CKProject.FSM
 
         public void DebugScript(string str)
         {
-            //Debug.Log($"{str}");
+            Debug.Log($"{str}");
         }
 
         public virtual void Enter()

@@ -6,6 +6,6 @@ namespace CKProject.Interactable
 {
     public interface IInteract
     {
-        public void Interaction();
+        public GameObject Interaction();
     }
 }

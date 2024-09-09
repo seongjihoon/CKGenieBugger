@@ -14,6 +14,8 @@ namespace CKProject.FSM
         Idle = 1,
         Move = 2,
         Interact = 3,
+        Throw = 4,
+        Standby = 5,
         
     }
 
@@ -58,6 +60,8 @@ namespace CKProject.FSM
         public InputAction interactAction;
 
         public CustomCollision CustomCollision;
+        public bool Check = false;
+        public GameObject FoodObject;
 
         // Start is called before the first frame update    
         void Start()
