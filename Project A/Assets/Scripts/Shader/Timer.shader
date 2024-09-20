@@ -45,7 +45,7 @@ Shader "Custom/Timer"
             {
                 float2 centeredUV = uv * 2.0 - 1.0; // center UV to (-1, 1)
                 float radius = length(centeredUV);
-                float angle = atan2( centeredUV.x,centeredUV.y); // returns radians between (-PI, PI)
+                float angle = atan2( centeredUV.x, -centeredUV.y); // returns radians between (-PI, PI)
                 return float2(radius, angle);
             }
 

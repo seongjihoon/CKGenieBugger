@@ -154,7 +154,7 @@ namespace CKProject.Interactable
         private void ShowCoolDown(float timeScale)
         {
             float cook = cookTimer / timeScale; 
-            CooldownPanel.GetComponent<MeshRenderer>().material.SetFloat("_Cooldown", cook);
+            CooldownPanel.GetComponent<SpriteRenderer>().material.SetFloat("_Cooldown", cook);
         }
 
         private void Update()

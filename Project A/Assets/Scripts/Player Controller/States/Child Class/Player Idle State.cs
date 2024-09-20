@@ -102,6 +102,7 @@ namespace CKProject.FSM
             playerFSM.FoodObject.transform.parent = this.transform;
             playerFSM.FoodObject.transform.position = transform.position + Vector3.up * 1.0f;
         }
+
         private void InputThrowInteractKey(EStateType stateType)
         { 
             if(playerFSM.interactAction.WasPressedThisFrame())

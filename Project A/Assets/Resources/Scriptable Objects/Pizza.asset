@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a4e527b866963b40bbd6498fe270e47, type: 3}
   m_Name: Pizza
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 2742696874465039484, guid: 9188ca4918a1d0d4ba5e03fc2e689c82, type: 3}
+  Prefab: {fileID: 7110612849146564809, guid: 31af60e0b65f54347986b2a30a0740a0, type: 3}
   Price: 0
   ReadyTime: 1
   SpawnTime: 2
-  ThrowSpeed: 5
+  ThrowSpeed: 10
