@@ -5,12 +5,19 @@ using System;
 
 namespace PathFinding
 {
+    public enum NODETYPE
+    {
+        UnWalkable,
+        Walkable,
+        MoveTarget,
 
+    }
     public class Node : IHeapItem<Node>
     {
         int heapIndex;
 
         public bool walkable;
+        public bool target; 
         public Vector3 worldPosition;
         public int gridX;
         public int gridY;
@@ -21,9 +28,10 @@ namespace PathFinding
         public Node parent;
 
 
-        public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY, int _penalty)
+        public Node(bool _walkable,bool _target, Vector3 _worldPos, int _gridX, int _gridY, int _penalty)
         {
             walkable = _walkable;
+            target = _target;
             worldPosition = _worldPos;
             gridX = _gridX;
             gridY = _gridY;

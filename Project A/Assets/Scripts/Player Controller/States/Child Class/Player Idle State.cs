@@ -90,18 +90,19 @@ namespace CKProject.FSM
                 Debug.Log($"상호 작용 키 입력");
                 if(playerFSM.CustomCollision != null )
                 {
-                    playerFSM.FoodObject = playerFSM.CustomCollision.GetComponent<Kitchen>().Interaction();
-                    if(playerFSM.FoodObject != null )
-                        GetFoodObject();
+                    playerFSM.CustomCollision.PlayInteractionEvent();
+                    //playerFSM.FoodObject = playerFSM.CustomCollision.GetComponent<Kitchen>().Interaction();
+                    //if (playerFSM.FoodObject != null)
+                    //    GetFoodObject();
                 }
             }
         }
 
-        private void GetFoodObject()
-        {
-            playerFSM.FoodObject.transform.parent = this.transform;
-            playerFSM.FoodObject.transform.position = transform.position + Vector3.up * 1.0f;
-        }
+        //private void GetFoodObject()
+        //{
+        //    playerFSM.FoodObject.transform.parent = this.transform;
+        //    playerFSM.FoodObject.transform.position = transform.position + Vector3.up * 1.0f;
+        //}
 
         private void InputThrowInteractKey(EStateType stateType)
         { 

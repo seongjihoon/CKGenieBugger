@@ -102,8 +102,8 @@ namespace PathFinding
 
                             if (!openSet.Contains(neighbour))
                                 openSet.Add(neighbour);
-                            else
-                                openSet.UpdateItem(neighbour);
+                            //else
+                            //    openSet.UpdateItem(neighbour);
                         }
                     }
                 }
@@ -139,12 +139,12 @@ namespace PathFinding
             List<Vector3> wayPoints = new List<Vector3>();
             Vector2 directionOld = Vector2.zero;
 
-            for(int i = 1; i <  path.Count; i++)
+            for(int i = 0; i <  path.Count; i++)
             {
-                Vector2 directionNew = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
-                if(directionNew != directionOld)
+                //Vector2 directionNew = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
+                //if (directionNew != directionOld)
                     wayPoints.Add(path[i].worldPosition);
-                directionOld = directionNew;
+                //directionOld = directionNew;
             }
             return wayPoints.ToArray();
         }

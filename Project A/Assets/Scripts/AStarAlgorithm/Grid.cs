@@ -10,6 +10,7 @@ namespace PathFinding
         //public bool onlyDisplayPathGizmos;
         public bool displayGridGizmos;
         public LayerMask unwalkableMask;
+        public LayerMask targetLayer;
         public Vector2 gridWorldSize;
         public float nodeRadius;
         public TerrainType[] walkableRegions;
@@ -68,31 +69,32 @@ namespace PathFinding
         {
             grid = new Node[gridSizeX, gridSizeY];
             Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
-
+            Vector3 worldPoint;
+            bool walkable;
+            bool target;
+            int movementPenalty;
+            Ray ray;
+            RaycastHit hit;
             for (int x = 0; x < gridSizeX; x++)
             {
                 for (int y = 0; y < gridSizeY; y++)
                 {
-                    Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
-                    bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
+                    worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
+                    walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
+                    target = (Physics.CheckSphere(worldPoint, nodeRadius, targetLayer));
+                    movementPenalty = 0;
 
-                    int movementPenalty = 0;
+                    ray = new Ray(worldPoint + Vector3.up * 50, Vector3.down);
 
-                    // raycast
-
-                    Ray ray = new Ray(worldPoint + Vector3.up * 50, Vector3.down);
-                    RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, 100, walkableMask))
-                    {
                         walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
-                    }
+
                     if (!walkable)
                         movementPenalty += obstacleProximityPenalty;
 
-                    grid[x, y] = new Node(walkable, worldPoint, x, y, movementPenalty);
+                    grid[x, y] = new Node(walkable,target, worldPoint, x, y, movementPenalty);
                 }
             }
-
             // 노드를 중심으로 가중치를 부가하는 노드.
             BlurPenaltyMap(3);
         }
@@ -197,12 +199,11 @@ namespace PathFinding
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    if ((x == 0 && y == 0) /*|| (x == -1 && y == -1) || (x == 1 && y == -1) || (x == -1 && y == 1) || (x == 1 && y == 1)*/)
+                    if ((x == 0 && y == 0))
                         continue;
 
                     int checkX = node.gridX + x;
                     int checkY = node.gridY + y;
-
 
                     if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
                     {
@@ -217,9 +218,6 @@ namespace PathFinding
 
             return neighbours;
         }
-
-        // 8방향 탐색을 하는 것으로 하자 
-        //Vector3[] vec = {new Vector3(-1, 0, -1)}
 
         public Node NodeFromWorldPoint(Vector3 worldPosition)
         {
@@ -247,8 +245,6 @@ namespace PathFinding
 
             return grid[x, y];
         }
-
-        //public List<Node> path;
         void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -273,11 +269,12 @@ namespace PathFinding
                 {
                     Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, n.movementPenalty));
 
-                    Gizmos.color = (n.gridX + n.gridY) % 2 == 0 ?
-                        new Color(0, 0, 0, 0.3f) :
-                        new Color(1, 1, 1, 0.3f);
+                    //Gizmos.color = (n.gridX + n.gridY) % 2 == 0 ?
+                    //    new Color(0, 0, 0, 0.3f) :
+                    //    new Color(1, 1, 1, 0.3f);
 
                     Gizmos.color = (n.walkable) ? Gizmos.color : new Color(1, 0, 0, 0.3f);
+                    //Gizmos.color = !(n.target) ? Gizmos.color : new Color(0, 1, 0, 0.3f);
                     //if (path != null)
                     //    if (path.Contains(n))
                     //        Gizmos.color = Color.black;

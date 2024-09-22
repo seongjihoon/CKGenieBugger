@@ -32,7 +32,9 @@ namespace CKProject.Managers
             foreach(var c in CustomCollision) 
             {
                 if (c.OnCollision(t))
+                {
                     return c;
+                }
             }
 
             return null;

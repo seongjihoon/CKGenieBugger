@@ -75,10 +75,8 @@ namespace CKProject.Interactable
                 case EKitchenType.Complet:
                     // 제작
                     kitchenType = EKitchenType.Clean;
-                    //objectPools[curCount].SetActive(false);
                     CooldownPanel.SetActive(true);
                     return objectPools[curCount];
-                    //return FoodSO.Prefab;
 
                 case EKitchenType.Clean:
                     break;

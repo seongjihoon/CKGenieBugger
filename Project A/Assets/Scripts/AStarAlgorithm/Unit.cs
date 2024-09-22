@@ -16,12 +16,13 @@ namespace PathFinding
         public bool chasing = false;
         public bool finding = false;
 
-        float speed = 5;
+        float speed = 2;
         int targetIndex;
 
         private void Start()
         {
             //PathRequestManager.RequestPath(new PathRequest( this.transform.position, target.position, OnPathFound));
+            grid = GameObject.Find("PathFinding").GetComponent<Grid>();
         }
 
         private void Update()
@@ -30,6 +31,13 @@ namespace PathFinding
             //    PathRequestManager.RequestPath(new PathRequest(this.transform.position, target.position, OnPathFound));
         }
 
+
+        public void RequestPathGuest(GameObject chair, Grid gridInfo)
+        {
+            grid = gridInfo;
+            target = chair.transform;
+            PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+        }
 
         public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
         {
@@ -67,7 +75,7 @@ namespace PathFinding
         IEnumerator FollowPath()
         {
             int count = 0;
-            Vector3 currentWaypoint = path[0];
+            Vector3 currentWaypoint = path[0] + Vector3.forward * 0.5f;
             while (true)
             {
                 count++;
@@ -76,11 +84,9 @@ namespace PathFinding
                     targetIndex++;
                     if (targetIndex >= path.Length)
                     {
-                        finding = true;
-                        chasing = false;
                         yield break;
                     }
-                    currentWaypoint = path[targetIndex];
+                    currentWaypoint = path[targetIndex] + Vector3.forward * 0.5f;
                 }
                 if (count > 100000)
                 {

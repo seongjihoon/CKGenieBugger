@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using System;
 using UnityEditor;
 using UnityEngine.InputSystem;
 using CKProject.Managers;
 using CKProject.CustomSystem;
+using CKProject.Interactable;
 
 
 namespace CKProject.FSM
@@ -54,7 +54,6 @@ namespace CKProject.FSM
 
     public class PlayerFSM : FSMController<EStateType>
     {
-        //private DefaultInputActions defaultPlayerActions;
         // 세 가지 키 타입.
         public InputAction moveAction;
         public InputAction interactAction;
@@ -67,7 +66,6 @@ namespace CKProject.FSM
         void Start()
         {
             base.Start();
-            //defaultPlayerActions = new DefaultInputActions();
 
             moveAction = InputSystem.actions["Move"];
             interactAction = InputSystem.actions["Interact"];
@@ -96,6 +94,16 @@ namespace CKProject.FSM
                 }
             }
 
+        }
+
+        public void GetFoodObject()
+        {
+            FoodObject = CustomCollision.GetComponent<Kitchen>().Interaction();
+            if (FoodObject != null)
+            {
+                FoodObject.transform.parent = this.transform;
+                FoodObject.transform.position = transform.position + Vector3.up * 1.0f;
+            }
         }
 
         public void SubState()

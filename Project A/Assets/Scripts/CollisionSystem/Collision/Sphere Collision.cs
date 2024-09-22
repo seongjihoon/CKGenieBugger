@@ -23,7 +23,7 @@ namespace CKProject.CustomSystem
 
         public void OnDrawGizmos()
         {
-            Gizmos.color = Color.yellow;
+            Gizmos.color = PersonalColor;
             Gizmos.DrawWireSphere(Offset + transform.position, Radius);
         }
     }

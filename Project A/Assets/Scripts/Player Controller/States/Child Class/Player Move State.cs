@@ -95,6 +95,10 @@ namespace CKProject.FSM
                 }
             }
         }
+
+        /// <summary>
+        /// 음 
+        /// </summary>
         private void GetFoodObject()
         {
             playerFSM.FoodObject.transform.parent = this.transform;
@@ -114,6 +118,11 @@ namespace CKProject.FSM
                 playerFSM.ChangeState(EStateType.Interact);
                 //FsmController.ChangeState(stateType);
             }
+        }
+
+        private void PhysicsCheck()
+        {
+
         }
 
         #endregion
