@@ -10,13 +10,13 @@ namespace CKProject.CustomSystem
         [Header("Events"), SerializeField]
         private UnityEvent InteractEvent;
         public UnityEvent EnterEvent;
-        //public UnityEvent ExitEvent;
-        //public UnityEvent StayEvent;
+        //[SerializeField]
+        //private List<Transform> HitedTransforms;
 
         public Color PersonalColor;
         public Vector3 Offset;
 
-        //private List<Transform> enterTransforms;
+        private List<Transform> enterTransforms;
 
         public abstract bool OnCollision(Transform t);
 
@@ -26,15 +26,23 @@ namespace CKProject.CustomSystem
             
         }
 
-        //public virtual void PlayEnterEvents(Transform t)
+        //public virtual void PlayEnterEvent()
         //{
-        //    enterTransforms.Add(t);
-        //    EnterEvent?.Invoke();
+
         //}
 
-        //public virtual void PlayExitEvents(Transform t)
-        //{
-        //    enterTransforms.Remove(t);
-        //}
+        public virtual void PlayEnterEvents(Transform t)
+        {
+            if (!enterTransforms.Contains(t))
+            {
+                enterTransforms.Add(t);
+                EnterEvent?.Invoke();
+            }
+        }
+
+        public virtual void PlayExitEvents(Transform t)
+        {
+            enterTransforms.Remove(t);
+        }
     }
 }

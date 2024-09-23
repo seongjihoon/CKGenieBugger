@@ -13,7 +13,10 @@ namespace CKProject.CustomSystem
         public override bool OnCollision(Transform t)
         {
             if (CheckXYSize(t) && CheckZSize(t))
+            {
+                PlayEnterEvents(t);
                 return true;
+            }
             return false;
         }
 

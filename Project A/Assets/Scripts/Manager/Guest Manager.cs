@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using PathFinding;
 using CKProject.SingleTon;
+using CKProject.Interactable;
+using System.Linq;
+using System;
 
+using Random = System.Random;
 using Grid = PathFinding.Grid;
 
 
@@ -27,11 +31,16 @@ namespace CKProject.Managers
         [SerializeField, Space(10)] private Grid gridFieldInfo;
 
         [SerializeField] private GameObject[] targetChairList;
+
+        [SerializeField] private Table[] targetTableList;
+
         private int currentChairCount = 0;
 
         private Unit[] guestPools;
 
         private int chairCount = 0;
+
+        private Queue<Table> tableQueue = new Queue<Table>();
 
         private void Awake()
         {
@@ -52,6 +61,7 @@ namespace CKProject.Managers
             SpawnTimer = SpawnTimer <= 0 ? 3f : SpawnTimer;
             MaxSpawnCount = MaxSpawnCount <= 0 ? 2 : MaxSpawnCount;
             CreateGeust();
+
         }
 
         // Update is called once per frame
@@ -68,20 +78,47 @@ namespace CKProject.Managers
             }
         }
 
+        private void SetQueueEmptyTable()
+        {
+            var random = new Random();
+            foreach(var table in targetTableList)
+            {
+                tableQueue.Enqueue(table);
+            }
+             tableQueue = (Queue<Table>)tableQueue.OrderBy(_ => random.Next());
+        }
+
         /// <summary>
         /// 손님을 생성하고 위치를 지정
         /// </summary>
         private void SpawnGuest()
         {
             // 생성은 최대 2번
-            //int SpawnCount = Random.Range(1, MaxSpawnCount);
+            int SpawnCount = UnityEngine.Random.Range(0, MaxSpawnCount);
             int i = 0;
-            for(; i < 1; i++)
+            for(; i < SpawnCount + 1; i++)
             {
                 guestPools[currentPoolsCount].gameObject.SetActive(true);
                 guestPools[currentPoolsCount].transform.position = new Vector3(spawnPoint.transform.position.x, 0f, spawnPoint.transform.position.z);
+                
+                // 이거 빈 테이블을 꺼내야할 듯?
                 guestPools[currentPoolsCount].RequestPathGuest(targetChairList[currentChairCount], gridFieldInfo);
                 UpandCount();
+                TableSet();
+            }
+        }
+
+        private void SufffleEmptyTable()
+        {
+            var random = new Random();
+            
+        }
+
+        private void TableSet()
+        {
+            foreach(var table in targetTableList)
+            {
+                table.Initialized();
             }
         }
 
