@@ -2,19 +2,25 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using System;
-using CKProject.CustomSystem;
+using CKProject.TriggerSystem;
 using CKProject.Managers;
+using System.Security.Cryptography;
 
 namespace CKProject.Interactable
 {
     public class Food : MonoBehaviour
     {
         [SerializeField]
-        private CustomCollision customCollision;
+        private CustomTrigger customCollision;
         private FoodScriptableObject foodSO;
         public bool Throwing = false;
 
-        public Task Unitask { get; private set; }
+        public FoodScriptableObject GetFoodSo
+        {
+            get { return foodSO; }
+        }
+
+        //public Task Unitask { get; private set; }
 
         public void Init(FoodScriptableObject foodSO)
         {
@@ -40,11 +46,11 @@ namespace CKProject.Interactable
             if(Throwing)
             {
                 transform.Translate(transform.forward * Time.deltaTime * foodSO.ThrowSpeed);
-                customCollision = CollisionManager.Instance.CheckCollision(transform);
+                customCollision = TriggerManager.Instance.CheckCollision(transform);
                 if(customCollision != null)
                 {
-                    // 음식 제거
-                    gameObject.SetActive(false);
+                    Throwing = false;
+                    customCollision.GetComponent<Table>().EnterFood(this);
                 }
             }
         }

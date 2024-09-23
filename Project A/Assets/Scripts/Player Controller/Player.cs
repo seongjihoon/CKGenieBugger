@@ -1,14 +1,14 @@
 ﻿using CKProject.FSM;
 using CKProject.Managers;
 using UnityEngine;
-using CKProject.CustomSystem;
+using CKProject.TriggerSystem;
 using CKProject.Interactable;
 
 namespace CKProject
 {
     public class Player : MonoBehaviour
     {
-        public CustomCollision ppp;
+        public CustomTrigger ppp;
         // Start is called before the first frame update
         void Start()
         {
@@ -18,7 +18,7 @@ namespace CKProject
         // Update is called once per frame
         void Update()
         {
-            ppp = CollisionManager.Instance.CheckCollision(transform);
+            ppp = TriggerManager.Instance.CheckCollision(transform);
         }
     }
 

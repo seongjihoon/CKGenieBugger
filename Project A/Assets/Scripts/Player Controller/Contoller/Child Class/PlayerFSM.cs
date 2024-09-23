@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.InputSystem;
 using CKProject.Managers;
-using CKProject.CustomSystem;
+using CKProject.TriggerSystem;
 using CKProject.Interactable;
 
 
@@ -58,24 +58,30 @@ namespace CKProject.FSM
         public InputAction moveAction;
         public InputAction interactAction;
 
-        public CustomCollision CustomCollision;
+        public CustomTrigger CustomCollision;
         public bool Check = false;
         public GameObject FoodObject;
+        [HideInInspector]
+        public Rigidbody rigidbody;
 
         // Start is called before the first frame update    
+        private void Awake()
+        {
+            rigidbody = GetComponent<Rigidbody>();
+        }
+
         void Start()
         {
             base.Start();
 
             moveAction = InputSystem.actions["Move"];
             interactAction = InputSystem.actions["Interact"];
-
         }
 
         private void Update()
         {
             base.Update();
-            CustomCollision = CollisionManager.Instance.CheckCollision(transform);
+            CustomCollision = TriggerManager.Instance.CheckCollision(transform);
         }
 
         public void AddState()

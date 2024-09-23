@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Threading;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
+using CKProject.Interactable;
+using CKProject.TriggerSystem;
+using CKProject.Managers;
 
 
 namespace PathFinding
@@ -16,8 +18,10 @@ namespace PathFinding
         public bool chasing = false;
         public bool finding = false;
 
-        float speed = 2;
-        int targetIndex;
+        private float speed = 2;
+        private int targetIndex;
+        private CustomTrigger hitedTrigger;
+
 
         private void Start()
         {
@@ -29,6 +33,11 @@ namespace PathFinding
         {
             //if (!chasing && !finding)
             //    PathRequestManager.RequestPath(new PathRequest(this.transform.position, target.position, OnPathFound));
+            hitedTrigger = TriggerManager.Instance.CheckCollision(transform);
+            if(hitedTrigger != null)
+            {
+                
+            }
         }
 
 

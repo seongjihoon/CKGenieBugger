@@ -1,18 +1,19 @@
-﻿using System.Collections;
+﻿using Cysharp.Threading.Tasks.Triggers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CKProject.CustomSystem
+namespace CKProject.TriggerSystem
 {
 
-    public class BoxCollision : CustomCollision
+    public class BoxTrigger : CustomTrigger
     {
         public Vector3 Size = Vector3.zero;
         [SerializeField] private Rect localScale;
 
         public override bool OnCollision(Transform t)
         {
-            if (CheckXYSize(t) && CheckZSize(t))
+            if (CheckXYSize(t.position) && CheckZSize(t.position))
             {
                 PlayEnterEvents(t);
                 return true;
@@ -20,18 +21,28 @@ namespace CKProject.CustomSystem
             return false;
         }
 
-        private bool CheckZSize(Transform t)
+        public override bool OnCollision(Vector3 v)
         {
-            if (transform.position.z + Size.z * .5f >= t.position.z 
-                && transform.position.z - Size.z * 0.5f <= t.position.z)
+            if (CheckXYSize(v) && CheckZSize(v))
+            {
+                //PlayEnterEvents(v);
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckZSize(Vector3 v)
+        {
+            if (transform.position.z + Size.z * .5f >= v.z 
+                && transform.position.z - Size.z * 0.5f <= v.z)
                 return true;
             return false;
         }
 
-        private bool CheckXYSize(Transform t)
+        private bool CheckXYSize(Vector3 v)
         {
-            if(t.position.x <= localScale.x && t.position.x >= localScale.width &&
-                t.position.y <= localScale.y && t.position.y >= localScale.height)
+            if(v.x <= localScale.x && v.x >= localScale.width &&
+                v.y <= localScale.y && v.y >= localScale.height)
             {
                 return true;
             }

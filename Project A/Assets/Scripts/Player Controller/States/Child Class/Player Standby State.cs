@@ -15,6 +15,7 @@ namespace CKProject.FSM
         public override void Enter()
         {
             playerFSM = FsmController as PlayerFSM;
+            //playerFSM.rigidbody.velocity = Vector3.zero;
             currentTimer = 0;
             base.Enter();
         }

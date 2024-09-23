@@ -23,7 +23,8 @@ namespace CKProject.FSM
         public override void Enter()
         {
             playerFSM = FsmController as PlayerFSM;
-            
+            //playerFSM.rigidbody.velocity = Vector3.zero;
+
             base.Enter();
         }
 
@@ -87,7 +88,6 @@ namespace CKProject.FSM
         {
             if(playerFSM.interactAction.WasPressedThisFrame())
             {
-                Debug.Log($"상호 작용 키 입력");
                 if(playerFSM.CustomCollision != null )
                 {
                     playerFSM.CustomCollision.PlayInteractionEvent();
@@ -108,7 +108,6 @@ namespace CKProject.FSM
         { 
             if(playerFSM.interactAction.WasPressedThisFrame())
             {
-                Debug.Log($"던지기 시작");
                 playerFSM.ChangeState(EStateType.Interact);
             }
         }

@@ -96,7 +96,7 @@ namespace PathFinding
                 }
             }
             // 노드를 중심으로 가중치를 부가하는 노드.
-            BlurPenaltyMap(3);
+            BlurPenaltyMap(2);
         }
 
 
@@ -211,6 +211,7 @@ namespace PathFinding
                             continue;
                         if (!grid[checkX, node.gridY].walkable || !grid[node.gridX, checkY].walkable)
                             continue;
+
                         neighbours.Add(grid[checkX, checkY]);
                     }
                 }
@@ -267,11 +268,11 @@ namespace PathFinding
             {
                 foreach (Node n in grid)
                 {
-                    Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, n.movementPenalty));
+                    //Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, n.movementPenalty));
 
-                    //Gizmos.color = (n.gridX + n.gridY) % 2 == 0 ?
-                    //    new Color(0, 0, 0, 0.3f) :
-                    //    new Color(1, 1, 1, 0.3f);
+                    Gizmos.color = (n.gridX + n.gridY) % 2 == 0 ?
+                        new Color(0, 0, 0, 0.3f) :
+                        new Color(1, 1, 1, 0.3f);
 
                     Gizmos.color = (n.walkable) ? Gizmos.color : new Color(1, 0, 0, 0.3f);
                     //Gizmos.color = !(n.target) ? Gizmos.color : new Color(0, 1, 0, 0.3f);

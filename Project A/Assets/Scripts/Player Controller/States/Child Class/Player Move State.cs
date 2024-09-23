@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CKProject.Interactable;
+using CKProject.TriggerSystem;
+using CKProject.Managers;
+using Cysharp.Threading.Tasks.Triggers;
+using UnityEngine.UIElements;
 
 namespace CKProject.FSM
 {
@@ -13,18 +17,21 @@ namespace CKProject.FSM
 
         #region Public Values
         private PlayerFSM playerFSM;
+        private Vector3 velocity = Vector3.zero;
 
         #endregion
 
         public override void Enter()
         {
             playerFSM = FsmController as PlayerFSM;
+            velocity = Vector3.zero;
             base.Enter();
         }
         public override void Exit()
         {
             base.Exit();
         }
+
         public override void KeyAction(int inputKey)
         {
             //base.KeyInput(inputKey);
@@ -49,10 +56,25 @@ namespace CKProject.FSM
             }
         }
 
+        private float speed = 3f;
         #region public Methods
         public void Move()
         {
-            transform.Translate(ConvertVecYToZ(playerFSM.moveAction.ReadValue<Vector2>()) * Time.deltaTime * 2f);
+            // 이동 방향에 CustomCollision이 존재하는지 체크
+            //if (CollisionManager.Instance.CheckCollision(transform.position + (Vector3)playerFSM.moveAction.ReadValue<Vector2>() * 0.1f)?.isTrigger == true)
+            //{
+            //    Debug.Log("AA");
+            //}
+            //else
+            velocity = new Vector3 (playerFSM.moveAction.ReadValue<Vector2>().x , 0, playerFSM.moveAction.ReadValue<Vector2>().y) * speed;
+            playerFSM.rigidbody.velocity = velocity;
+            //transform.Translate(ConvertVecYToZ(playerFSM.moveAction.ReadValue<Vector2>()) * Time.deltaTime * 2f);
+
+        }
+
+        public void ResetVelocity()
+        {
+            playerFSM.rigidbody.velocity = Vector3.zero;
         }
 
 
@@ -86,7 +108,6 @@ namespace CKProject.FSM
         {
             if (playerFSM.interactAction.WasPressedThisFrame())
             {
-                Debug.Log($"상호 작용 키 입력");
                 if (playerFSM.CustomCollision != null)
                 {
                     playerFSM.FoodObject = playerFSM.CustomCollision.GetComponent<Kitchen>().Interaction();
@@ -114,7 +135,7 @@ namespace CKProject.FSM
         {
             if(playerFSM.interactAction.WasPressedThisFrame())
             {
-                Debug.Log($"Press Interaction(move)");
+                velocity = Vector3.zero;
                 playerFSM.ChangeState(EStateType.Interact);
                 //FsmController.ChangeState(stateType);
             }

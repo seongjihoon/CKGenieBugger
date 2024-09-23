@@ -10,7 +10,8 @@ namespace CKProject.Interactable
     {
         Bugger,
         Pizza,
-        Chicken
+        Chicken,
+        ALL
     }
 
     public enum EKitchenType
@@ -114,7 +115,7 @@ namespace CKProject.Interactable
                 cookTimer = 0;
                 SpawnObject();
 #if UNITY_EDITOR
-                Debug.Log($"완성");
+                //Debug.Log($"완성");
 #endif
             }
         }
@@ -135,7 +136,7 @@ namespace CKProject.Interactable
                 CleanObjects();
                 cookTimer = 0;
 #if UNITY_EDITOR
-                Debug.Log($"제작 준비 완료");
+                //Debug.Log($"제작 준비 완료");
 #endif
             }
         }

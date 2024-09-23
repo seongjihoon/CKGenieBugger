@@ -41,14 +41,37 @@ namespace CKProject.Interactable
             return Chairs[GetChair].transform;
         }
 
-        public void EnterGuest()
+        public void EnterGuest(PathFinding.Unit unit)
         {
 
         }
 
-        public void EnterFood()
+        public void EnterFood(Food food)
         {
-            
+            try
+            {
+                foreach (var chair in Chairs)
+                {
+                    if (chair.Guest != null) continue;
+
+                    if (chair.FoodType == food.GetFoodSo.foodType || chair.FoodType == EFoodType.ALL)
+                    {
+                        Debug.Log("음식 확인");
+                        return;
+                    }
+                }
+                Debug.Log("음식 불일치");
+                return;
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                food.gameObject.SetActive(false);
+            }
+
         }
 
         private void Shuffle()

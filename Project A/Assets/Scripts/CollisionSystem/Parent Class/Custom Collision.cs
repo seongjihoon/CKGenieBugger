@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace CKProject.CustomSystem
+namespace CKProject.TriggerSystem
 {
-    public abstract class CustomCollision : MonoBehaviour
+    public abstract class CustomTrigger : MonoBehaviour
     {
         [Header("Events"), SerializeField]
         private UnityEvent InteractEvent;
@@ -13,17 +13,24 @@ namespace CKProject.CustomSystem
         //[SerializeField]
         //private List<Transform> HitedTransforms;
 
+        public bool isTrigger = false;
         public Color PersonalColor;
         public Vector3 Offset;
 
-        private List<Transform> enterTransforms;
+        private List<Transform> enterTransforms = new List<Transform>();
 
         public abstract bool OnCollision(Transform t);
+        public abstract bool OnCollision(Vector3 v);
 
         public virtual void PlayInteractionEvent()
         {
             InteractEvent?.Invoke();
             
+        }
+
+        public virtual bool IsEnter(Transform t)
+        {
+            return enterTransforms.Contains(t) ? true: false;
         }
 
         //public virtual void PlayEnterEvent()

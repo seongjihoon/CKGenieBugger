@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CKProject.CustomSystem;
+using CKProject.TriggerSystem;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CKProject.Managers
 {
-    public class CollisionManager : SingleTon.SingleTon<CollisionManager>
+    public class TriggerManager : SingleTon.SingleTon<TriggerManager>
     {
-        public CustomCollision[] CustomCollision;
+        public CustomTrigger[] CustomCollision;
 
         private void Awake()
         {
@@ -24,10 +24,10 @@ namespace CKProject.Managers
 
         private void Start()
         {
-            CustomCollision = FindObjectsOfType<CustomCollision>();
+            CustomCollision = FindObjectsOfType<CustomTrigger>();
         }
 
-        public CustomCollision CheckCollision(Transform t)
+        public CustomTrigger CheckCollision(Transform t)
         {
             foreach(var c in CustomCollision) 
             {
@@ -36,7 +36,19 @@ namespace CKProject.Managers
                     return c;
                 }
             }
+            return null;
+        }
 
+        public CustomTrigger CheckCollision(Vector3 vec)
+        {
+            foreach (var c in CustomCollision)
+            {
+                if (c.OnCollision(vec))
+                {
+                    Debug.Log($"{c.name}");
+                    return c;
+                }
+            }
             return null;
         }
     }

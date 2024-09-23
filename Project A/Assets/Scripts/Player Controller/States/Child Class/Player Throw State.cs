@@ -26,8 +26,14 @@ namespace CKProject.FSM
         public override void Enter()
         {
             playerFSM = FsmController as PlayerFSM;
+            //playerFSM.rigidbody.velocity = Vector3.zero;
             currentTimer = 0;
             base.Enter();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
         }
 
         [VisibleEnum(typeof(EStateType))]
@@ -37,7 +43,6 @@ namespace CKProject.FSM
             currentTimer += Time.deltaTime;
             if(currentTimer > ThrowDelayTime)
             {
-                Debug.Log("던짐");
                 playerFSM.FoodObject.transform.parent = null;
                 //playerFSM.FoodObject.SetActive(false);
                 playerFSM.FoodObject.GetComponent<Food>().Throw().Forget();
