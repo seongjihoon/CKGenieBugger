@@ -8,10 +8,12 @@ namespace CKProject.Interactable
 {
     public enum EFoodType
     {
+        None,
         Bugger,
         Pizza,
         Chicken,
-        ALL
+        ALL,
+        Eatting,
     }
 
     public enum EKitchenType
@@ -146,7 +148,7 @@ namespace CKProject.Interactable
             CooldownPanel.SetActive(false);
             kitchenType = EKitchenType.Ready;
             curCount++;
-            if (curCount > ObjectPoolCount)
+            if (curCount >= ObjectPoolCount)
                 curCount = 0;
         }
 

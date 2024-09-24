@@ -26,9 +26,9 @@ namespace CKProject.FSM
         [ReadOnly] private SerializableDictionary<T1, BaseState<T1>> stateTable = new SerializableDictionary<T1, BaseState<T1>>();
 
 
-        public UnityAction<T1> changeStateAction;
-        public UnityAction excuteUpdateAction;
-        public UnityAction excuteFixedUpdateAction;
+        //public UnityAction<T1> changeStateAction;
+        //public UnityAction excuteUpdateAction;
+        //public UnityAction excuteFixedUpdateAction;
 
         public BaseState<T1> GetState(T1 stateType)
         {
@@ -63,25 +63,25 @@ namespace CKProject.FSM
             stateTable[currentStateType].Exit();
             currentStateType = updateStateType;
             stateTable[currentStateType].Enter();
-            changeStateAction?.Invoke(currentStateType);
+            //changeStateAction?.Invoke(currentStateType);
         }
 
         protected virtual void Start()
         {
             stateTable[currentStateType]?.Enter();
-            changeStateAction?.Invoke(currentStateType);
+            //changeStateAction?.Invoke(currentStateType);
         }
 
         protected virtual void Update()
         {
             stateTable[currentStateType]?.ExcuteUpdate();
-            excuteUpdateAction?.Invoke();
+            //excuteUpdateAction?.Invoke();
         }
 
         protected virtual void FixedUpdate()
         {
             stateTable[currentStateType]?.ExcuteFixedUpdate();
-            excuteFixedUpdateAction?.Invoke();
+            //excuteFixedUpdateAction?.Invoke();
         }
 
 

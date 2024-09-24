@@ -46,7 +46,7 @@ namespace CKProject.Interactable
             if(Throwing)
             {
                 transform.Translate(transform.forward * Time.deltaTime * foodSO.ThrowSpeed);
-                customCollision = TriggerManager.Instance.CheckCollision(transform);
+                customCollision = TriggerManager.Instance.CheckTriggerZone(transform);
                 if(customCollision != null)
                 {
                     Throwing = false;

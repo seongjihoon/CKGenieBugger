@@ -18,7 +18,7 @@ namespace CKProject
         // Update is called once per frame
         void Update()
         {
-            ppp = TriggerManager.Instance.CheckCollision(transform);
+            ppp = TriggerManager.Instance.CheckTriggerZone(transform);
         }
     }
 

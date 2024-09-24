@@ -11,8 +11,6 @@ namespace CKProject.FSM
     public class PlayerThrowState : PlayerBaseState
     {
         #region public Parameters
-        [HideInInspector, ReadOnly]
-        public PlayerFSM playerFSM;
 
         private const float ThrowDelayTime = 0.5f;
 

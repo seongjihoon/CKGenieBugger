@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 926570212524470840}
   - component: {fileID: -5375886019007580188}
+  - component: {fileID: 7596915306844560083}
+  - component: {fileID: 1040020147590867185}
+  - component: {fileID: 7268654423252044005}
   m_Layer: 0
   m_Name: Guest
   m_TagString: Untagged
@@ -45,11 +48,175 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09360de2a7c6e84478ae426e1fc8c861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previousStateType: 1
+  currentStateType: 1
+  stateTable:
+    keys: 010000000200000003000000
+    values:
+    - {fileID: 7596915306844560083}
+    - {fileID: 1040020147590867185}
+    - {fileID: 7268654423252044005}
   target: {fileID: 0}
   grid: {fileID: 0}
   path: []
-  chasing: 0
-  finding: 0
+  GetOut: 0
+  hitedTrigger: {fileID: 0}
+--- !u!114 &7596915306844560083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708598111227864436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d5e420f9235e494eb290b5e82fecc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FsmController: {fileID: 0}
+  stateType: 1
+  EnterStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ExecuteUpdateStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7596915306844560083}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: IsGetPath
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ExecuteFixedUpdateStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ExitStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  bEndState: 0
+  GuestFSM: {fileID: 0}
+--- !u!114 &1040020147590867185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708598111227864436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd62212c3c78ec1448c6a582be70cc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FsmController: {fileID: 0}
+  stateType: 2
+  EnterStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1040020147590867185}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: MoveStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ExecuteUpdateStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1040020147590867185}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: CheckTriggerArea
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1040020147590867185}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: CheckDoor
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ExecuteFixedUpdateStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ExitStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  bEndState: 0
+  GuestFSM: {fileID: 0}
+--- !u!114 &7268654423252044005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708598111227864436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10dcc0ee516da184ca37d9a4dda3cc4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FsmController: {fileID: 0}
+  stateType: 3
+  EnterStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7596915306844560083}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: DebugScript
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 'Guest Ready State Enter '
+          m_BoolArgument: 0
+        m_CallState: 2
+  ExecuteUpdateStateEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7268654423252044005}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: GetOutRestaurant
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ExecuteFixedUpdateStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ExitStateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  bEndState: 0
+  GuestFSM: {fileID: 0}
 --- !u!1 &7746773350620488976
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 7746773350620488976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.75, z: -1}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

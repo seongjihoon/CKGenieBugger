@@ -16,15 +16,13 @@ namespace CKProject.FSM
         // 이동이 완료되면 다음 행동을 할 메서드
 
         #region Public Values
-        private PlayerFSM playerFSM;
-        private Vector3 velocity = Vector3.zero;
+        //private Vector3 velocity = Vector3.zero;
 
         #endregion
 
         public override void Enter()
         {
-            playerFSM = FsmController as PlayerFSM;
-            velocity = Vector3.zero;
+            //velocity = Vector3.zero;
             base.Enter();
         }
         public override void Exit()
@@ -66,15 +64,18 @@ namespace CKProject.FSM
             //    Debug.Log("AA");
             //}
             //else
-            velocity = new Vector3 (playerFSM.moveAction.ReadValue<Vector2>().x , 0, playerFSM.moveAction.ReadValue<Vector2>().y) * speed;
-            playerFSM.rigidbody.velocity = velocity;
+            if (enabled)
+            {
+                playerFSM.velocity = new Vector3(playerFSM.moveAction.ReadValue<Vector2>().x, 0, playerFSM.moveAction.ReadValue<Vector2>().y) * speed;
+            }
             //transform.Translate(ConvertVecYToZ(playerFSM.moveAction.ReadValue<Vector2>()) * Time.deltaTime * 2f);
 
         }
 
         public void ResetVelocity()
         {
-            playerFSM.rigidbody.velocity = Vector3.zero;
+            playerFSM.velocity = Vector3.zero;
+
         }
 
 
@@ -135,7 +136,7 @@ namespace CKProject.FSM
         {
             if(playerFSM.interactAction.WasPressedThisFrame())
             {
-                velocity = Vector3.zero;
+                //velocity = Vector3.zero;
                 playerFSM.ChangeState(EStateType.Interact);
                 //FsmController.ChangeState(stateType);
             }

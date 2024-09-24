@@ -13,7 +13,6 @@ namespace CKProject.FSM
         #region Private Values
 
         private float currentTime = 0;
-        private PlayerFSM playerFSM;
 
         #endregion
 
@@ -22,7 +21,6 @@ namespace CKProject.FSM
         // 초기화
         public override void Enter()
         {
-            playerFSM = FsmController as PlayerFSM;
             //playerFSM.rigidbody.velocity = Vector3.zero;
 
             base.Enter();

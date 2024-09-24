@@ -4,41 +4,130 @@ using UnityEngine;
 using CKProject.Interactable;
 using CKProject.TriggerSystem;
 using CKProject.Managers;
-
+using CKProject.FSM;
+using UnityEditor;
 
 namespace PathFinding
 {
+
+    [SerializeField]
+    public enum EGuestStateType
+    {
+        Idle = 1,
+        Move = 2,
+        Ready = 3,
+        Out = 4,
+    }
+    [CustomEditor(typeof(Unit))]
+    public class UnitFSMEditor : Editor
+    {
+        private Unit fsmEditor;
+        private void OnEnable()
+        {
+            fsmEditor = (Unit)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+
+            if (GUILayout.Button("상태 추가", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                fsmEditor.AddState();
+            }
+
+            //if (GUILayout.Button("제거", GUILayout.Width(120), GUILayout.Height(30)))
+            //{
+            //    fsmEditor.SubState();
+            //}
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+
+        }
+    }
+
     // 이걸 State로 가르기
-    public class Unit : MonoBehaviour
+    public class Unit : FSMController<EGuestStateType>
     {
         //Thread Research;
         public Transform target;
         public Grid grid;
         public Vector3[] path;
-        public bool chasing = false;
-        public bool finding = false;
+        public bool GetOut;
+
+        //public bool chasing = false;
+        //public bool finding = false;
 
         private float speed = 2;
         private int targetIndex;
-        private CustomTrigger hitedTrigger;
+        [SerializeField] private CustomTrigger hitedTrigger;
 
 
         private void Start()
         {
+            base.Start();
             //PathRequestManager.RequestPath(new PathRequest( this.transform.position, target.position, OnPathFound));
             grid = GameObject.Find("PathFinding").GetComponent<Grid>();
         }
 
         private void Update()
         {
-            //if (!chasing && !finding)
-            //    PathRequestManager.RequestPath(new PathRequest(this.transform.position, target.position, OnPathFound));
-            hitedTrigger = TriggerManager.Instance.CheckCollision(transform);
-            if(hitedTrigger != null)
+            base.Update();
+        }
+
+        #region State Region 
+
+        public void AddState()
+        {
+            // 모든 상태 적용 하자.
+            int i = 0;
+            BaseState<EGuestStateType>[] childState = transform.GetComponents<BaseState<EGuestStateType>>();
+
+            ClearStates();
+
+            for (; i < childState.Length; i++)
             {
-                
+                if (childState[i] != null)
+                {
+                    AddState(childState[i].StateType, childState[i]);
+                }
             }
         }
+
+
+        public void SubState()
+        {
+
+        }
+
+        [VisibleEnum(typeof(EGuestStateType))]
+        public void ChangeState(int nextState)
+        {
+            ChangeState((EGuestStateType)nextState);
+        }
+
+        public override void ChangeState(EGuestStateType updateStateType)
+        {
+            base.ChangeState(updateStateType);
+        }
+
+        public void SetTarget(GameObject chair, Grid gridInfo)
+        {
+            grid = gridInfo;
+            target = chair.transform;
+            GetOut = false;
+        }
+
+        public void MoveStart()
+        {
+            PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+        }
+        #endregion
 
 
         public void RequestPathGuest(GameObject chair, Grid gridInfo)
@@ -52,7 +141,7 @@ namespace PathFinding
         {
             if (pathSuccessful)
             {
-                chasing = true;
+                //chasing = true;
                 targetIndex = 0;
                 path = newPath;
                 StopCoroutine("FollowPath");
@@ -81,32 +170,37 @@ namespace PathFinding
             return false;
         }
 
-        IEnumerator FollowPath()
+        public bool GetPathIndex()
+        {
+            return targetIndex >= path.Length;
+        }
+
+        private IEnumerator FollowPath()
         {
             int count = 0;
-            Vector3 currentWaypoint = path[0] + Vector3.forward * 0.5f;
+            Vector3 currentWaypoint = path[0];
             while (true)
             {
                 count++;
                 if (transform.position == currentWaypoint)
                 {
                     targetIndex++;
-                    if (targetIndex >= path.Length)
+                    if (GetPathIndex())
                     {
                         yield break;
                     }
-                    currentWaypoint = path[targetIndex] + Vector3.forward * 0.5f;
+                    currentWaypoint = path[targetIndex];
                 }
                 if (count > 100000)
                 {
                     transform.GetComponent<Unit>().enabled = false;
                     yield break;
                 }
-                if (CheckTargetPosition())
-                {
-                    chasing = false;
-                    break;
-                }
+                //if (CheckTargetPosition())
+                //{
+                //    chasing = false;
+                //    break;
+                //}
 
                 currentWaypoint.y = transform.position.y;
 
@@ -115,7 +209,7 @@ namespace PathFinding
             }
         }
 
-        public void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             if (path != null)
             {

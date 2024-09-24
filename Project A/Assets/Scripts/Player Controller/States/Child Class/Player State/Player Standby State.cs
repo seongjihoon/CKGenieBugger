@@ -6,15 +6,11 @@ namespace CKProject.FSM
 {
     public class PlayerStandbyState : PlayerBaseState
     {
-        [HideInInspector, ReadOnly]
-        public PlayerFSM playerFSM;
-
         private const float readyTimer = 0.5f;
 
         private float currentTimer = 0;
         public override void Enter()
         {
-            playerFSM = FsmController as PlayerFSM;
             //playerFSM.rigidbody.velocity = Vector3.zero;
             currentTimer = 0;
             base.Enter();

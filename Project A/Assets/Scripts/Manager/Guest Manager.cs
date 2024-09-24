@@ -24,7 +24,7 @@ namespace CKProject.Managers
         [Tooltip("현재 어떤 손님을 생성했는지 체크")] private int currentPoolsCount = 0;
 
 
-        [SerializeField, Space(20f)] private Transform spawnPoint;
+        [Space(20f)] public Transform spawnPoint;
 
         [SerializeField] private GameObject guestPrefab;
 
@@ -33,10 +33,16 @@ namespace CKProject.Managers
         [SerializeField] private GameObject[] targetChairList;
 
         [SerializeField] private Table[] targetTableList;
+        [SerializeField] private List<Table> useTableList;
+        private Stack<Table> tableStack = new Stack<Table>();
 
         private int currentChairCount = 0;
 
-        private Unit[] guestPools;
+        //private List<Unit> guestPools;
+        private List<Unit> useGuestList = new List<Unit>();
+        // 테스트 코드 
+        private Stack<Unit> guestStack = new Stack<Unit>();
+        //private List<Unit>
 
         private int chairCount = 0;
 
@@ -60,7 +66,9 @@ namespace CKProject.Managers
             // 최대 생성 개수 (2개) / 임시 생성 타임 (3초)
             SpawnTimer = SpawnTimer <= 0 ? 3f : SpawnTimer;
             MaxSpawnCount = MaxSpawnCount <= 0 ? 2 : MaxSpawnCount;
-            CreateGeust();
+            CreateGuest2();
+            // 빈 테이블을 체크
+            SetStackEmptyTable();
 
         }
 
@@ -72,12 +80,13 @@ namespace CKProject.Managers
                 currentTimer += Time.deltaTime;
                 if(currentTimer > SpawnTimer)
                 {
-                    SpawnGuest();
+                    SpawnGuest3();
                     currentTimer = 0;
                 }
             }
         }
 
+        #region Private Methods
         private void SetQueueEmptyTable()
         {
             var random = new Random();
@@ -88,30 +97,40 @@ namespace CKProject.Managers
              tableQueue = (Queue<Table>)tableQueue.OrderBy(_ => random.Next());
         }
 
-        /// <summary>
-        /// 손님을 생성하고 위치를 지정
-        /// </summary>
-        private void SpawnGuest()
+        private void SetStackEmptyTable()
         {
-            // 생성은 최대 2번
-            int SpawnCount = UnityEngine.Random.Range(0, MaxSpawnCount);
-            int i = 0;
-            for(; i < SpawnCount + 1; i++)
+            foreach(var table in targetTableList)
             {
-                guestPools[currentPoolsCount].gameObject.SetActive(true);
-                guestPools[currentPoolsCount].transform.position = new Vector3(spawnPoint.transform.position.x, 0f, spawnPoint.transform.position.z);
-                
-                // 이거 빈 테이블을 꺼내야할 듯?
-                guestPools[currentPoolsCount].RequestPathGuest(targetChairList[currentChairCount], gridFieldInfo);
-                UpandCount();
-                TableSet();
+                tableStack.Push(table);
+                table.Initialized();
             }
         }
 
-        private void SufffleEmptyTable()
+        /// <summary>
+        /// 손님을 생성하고 위치를 지정
+        /// 손님이 나가면 UseGuestList에 Remove하고 GuestStack에 Push하기
+        /// 테이블 또한 마찬가지
+        /// </summary>
+        private void SpawnGuest3()
         {
-            var random = new Random();
-            
+            int SpawnCount = UnityEngine.Random.Range(0, MaxSpawnCount);
+            int i = 0;
+            Unit unitTemp = null;
+            Table tableTemp = null;
+            if (tableStack.Count > 0)
+            {
+                tableTemp = tableStack.Pop();
+                tableTemp.IsEmptyTable = false;
+                useTableList.Add(tableTemp);
+                for (; i < SpawnCount + 1; i++)
+                {
+                    unitTemp = guestStack.Pop();
+                    useGuestList.Add(unitTemp);
+                    unitTemp.gameObject.SetActive(true);
+                    unitTemp.transform.position = new Vector3(spawnPoint.transform.position.x, 0f, spawnPoint.transform.position.z);
+                    unitTemp.SetTarget(tableTemp.GetChairTransform().gameObject, gridFieldInfo);
+                }
+            }
         }
 
         private void TableSet()
@@ -124,35 +143,68 @@ namespace CKProject.Managers
 
         private void UpandCount()
         {
-            currentPoolsCount++;
             currentChairCount++;
             if (currentChairCount >= targetChairList.Length)
                 currentChairCount = 0;
-            if (currentPoolsCount >= guestPools.Length)
-                currentPoolsCount = 0;
         }
 
-        private void CreateGeust()
+        private void CreateGuest2()
         {
             chairCount = targetChairList.Length;
-            guestPools = new Unit[chairCount];
-            for(int i = 0; i < chairCount; i++)
+            for(int i = 0; i  < chairCount; i++)
             {
-                try
+                guestStack.Push(Instantiate(guestPrefab).GetComponent<Unit>());
+                guestStack.Peek().gameObject.SetActive(false);
+                guestStack.Peek().transform.parent = transform;
+
+            }
+        }
+        #endregion
+
+        #region Public Methods
+        public void TableClear(Table table)
+        {
+            useTableList.Remove(table);
+            tableStack.Push(table);
+        }
+
+        public void OutGuest(Unit unit)
+        {
+            useGuestList.Remove(unit);
+            guestStack.Push(unit);
+            unit.gameObject.SetActive(false);
+        }
+
+        public bool TablingCheck(Table table)
+        {
+            return useTableList.Contains(table);
+        }
+        #endregion
+
+        #region Legarcy
+        private void SpawnGuest2()
+        {
+            int SpawnCount = UnityEngine.Random.Range(0, MaxSpawnCount);
+            int i = 0;
+            Unit temp = null;
+            if (guestStack.Count > 0)
+            {
+                for (; i < SpawnCount + 1; i++)
                 {
-                    guestPools[i] = Instantiate(guestPrefab).GetComponent<Unit>();
-                }
-                catch
-                {
-                    Debug.LogError($"this Entity haven't Unit Component.\nPlz Add Unit Component");
-                }
-                finally
-                {
-                    guestPools[i].gameObject.SetActive(false);
-                    guestPools[i].transform.parent = transform;
+                    temp = guestStack.Pop();
+                    useGuestList.Add(temp);
+                    temp.gameObject.SetActive(true);
+                    temp.transform.position = new Vector3(spawnPoint.transform.position.x, 0f, spawnPoint.transform.position.z);
+
+                    temp.RequestPathGuest(targetChairList[currentChairCount], gridFieldInfo);
+                    UpandCount();
+                    TableSet();
+
                 }
             }
         }
+
+        #endregion
     }
 
 }

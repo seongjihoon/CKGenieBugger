@@ -8,9 +8,11 @@ namespace CKProject.FSM
     {
         //public PlayerFSM fsmController;
 
+        public PlayerFSM playerFSM;
         private void Awake()
         {
             FsmController = GetComponent<PlayerFSM>();
+            playerFSM = FsmController as PlayerFSM;
         }
 
         [VisibleEnum(typeof(EStateType))]

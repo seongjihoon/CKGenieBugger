@@ -27,7 +27,7 @@ namespace CKProject.Managers
             CustomCollision = FindObjectsOfType<CustomTrigger>();
         }
 
-        public CustomTrigger CheckCollision(Transform t)
+        public CustomTrigger CheckTriggerZone(Transform t)
         {
             foreach(var c in CustomCollision) 
             {
@@ -39,7 +39,7 @@ namespace CKProject.Managers
             return null;
         }
 
-        public CustomTrigger CheckCollision(Vector3 vec)
+        public CustomTrigger CheckTriggerZone(Vector3 vec)
         {
             foreach (var c in CustomCollision)
             {

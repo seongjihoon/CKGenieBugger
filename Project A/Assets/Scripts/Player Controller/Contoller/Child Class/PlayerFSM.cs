@@ -62,7 +62,8 @@ namespace CKProject.FSM
         public bool Check = false;
         public GameObject FoodObject;
         [HideInInspector]
-        public Rigidbody rigidbody;
+        public new Rigidbody rigidbody;
+        public Vector3 velocity = Vector3.zero;
 
         // Start is called before the first frame update    
         private void Awake()
@@ -81,7 +82,9 @@ namespace CKProject.FSM
         private void Update()
         {
             base.Update();
-            CustomCollision = TriggerManager.Instance.CheckCollision(transform);
+            CustomCollision = TriggerManager.Instance.CheckTriggerZone(transform);
+            rigidbody.velocity = velocity;
+            //Debug.Log($"{rigidbody.velocity}");
         }
 
         public void AddState()
@@ -99,7 +102,6 @@ namespace CKProject.FSM
                     AddState(childState[i].StateType, childState[i]);
                 }
             }
-
         }
 
         public void GetFoodObject()

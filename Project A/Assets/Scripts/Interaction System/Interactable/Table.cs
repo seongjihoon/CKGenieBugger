@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using CKProject.Managers;
 using Random = System.Random;
 
 
@@ -26,24 +27,65 @@ namespace CKProject.Interactable
             }
         }
 
+        private void Update()
+        {
+            // 이 문제를 해결하려 한다.
+            if (GuestManager.Instance.TablingCheck(this)
+                && CheckChairs())
+            {
+                GuestManager.Instance.TableClear(this);
+            }
+        }
+
+        private bool CheckChairs()
+        {
+            foreach(var chair in Chairs)
+            {
+                if (chair.Using) return false; 
+            }
+            IsEmptyTable = true;
+            return true;
+        }
+
+
         public void Initialized()
         {
+            foreach(var chair in Chairs)
+            {
+                chair.FoodType = EFoodType.None;
+            }
             Shuffle();
         }
 
         public Transform GetChairTransform()
         {
+            Chair temp = null;
             if (currentChair >= Chairs.Length)
             {
                 currentChair = 0;
                 Shuffle();
             }
-            return Chairs[GetChair].transform;
+            temp = Chairs[GetChair];
+            temp.Using = true;
+            return temp.transform;
+        }
+
+        public EFoodType SetFoodType()
+        {
+            return EFoodType.ALL;
+            //return (EFoodType)UnityEngine.Random.Range((int)EFoodType.Bugger, (int)EFoodType.ALL);
         }
 
         public void EnterGuest(PathFinding.Unit unit)
         {
-
+            // 드디어 들어옴
+            // 게스트가 들어올 경우 의자에 음식 데이터를 넣어줌
+            Chair chair = unit.target.GetComponent<Chair>();
+            if(chair != null)
+            {
+                chair.FoodType = SetFoodType();
+                chair.Guest = unit;
+            }
         }
 
         public void EnterFood(Food food)
@@ -52,10 +94,13 @@ namespace CKProject.Interactable
             {
                 foreach (var chair in Chairs)
                 {
-                    if (chair.Guest != null) continue;
+                    if (chair.Guest == null) continue;
 
                     if (chair.FoodType == food.GetFoodSo.foodType || chair.FoodType == EFoodType.ALL)
                     {
+                        chair.FoodType = EFoodType.Eatting;
+                        // 이후 n초 후 탈출 선언
+                        chair.EscapeGuest().Forget();
                         Debug.Log("음식 확인");
                         return;
                     }
@@ -71,6 +116,10 @@ namespace CKProject.Interactable
             {
                 food.gameObject.SetActive(false);
             }
+        }
+
+        private void EscapeUnit()
+        {
 
         }
 
