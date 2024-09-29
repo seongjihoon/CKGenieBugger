@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 7110612849146564809, guid: 31af60e0b65f54347986b2a30a0740a0, type: 3}
   foodType: 2
-  Price: 0
+  Price: 040000007b0000000b000000
   ReadyTime: 1
   SpawnTime: 2
   ThrowSpeed: 10

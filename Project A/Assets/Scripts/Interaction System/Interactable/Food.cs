@@ -15,6 +15,8 @@ namespace CKProject.Interactable
         private FoodScriptableObject foodSO;
         public bool Throwing = false;
 
+        public int[] getMoney;
+
         public FoodScriptableObject GetFoodSo
         {
             get { return foodSO; }
@@ -50,9 +52,18 @@ namespace CKProject.Interactable
                 if(customCollision != null)
                 {
                     Throwing = false;
-                    customCollision.GetComponent<Table>().EnterFood(this);
+                    AddMoney();
                 }
             }
+        }
+        
+        private void AddMoney()
+        {
+            if(customCollision.GetComponent<Table>().EnterFood(this))
+            {
+                GameObject.Find("UI Manager").GetComponent<Controller>().AddMoney(foodSO.Price);
+            }
+            
         }
     }
 }

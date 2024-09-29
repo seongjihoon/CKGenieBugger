@@ -86,7 +86,7 @@ namespace CKProject.Interactable
             }
         }
 
-        public void EnterFood(Food food)
+        public bool EnterFood(Food food)
         {
             try
             {
@@ -100,15 +100,15 @@ namespace CKProject.Interactable
                         // 이후 n초 후 탈출 선언
                         chair.EscapeGuest().Forget();
                         Debug.Log("음식 확인");
-                        return;
+                        return true;
                     }
                 }
                 Debug.Log("음식 불일치");
-                return;
+                return false;
             }
             catch
             {
-
+                return false;
             }
             finally
             {

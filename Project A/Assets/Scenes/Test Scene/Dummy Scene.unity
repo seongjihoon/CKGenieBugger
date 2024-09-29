@@ -421,6 +421,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 554507490}
+  - component: {fileID: 554507493}
+  - component: {fileID: 554507492}
+  - component: {fileID: 554507491}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -443,6 +446,154 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1520496676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &554507491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554507489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2621c688e4d86b546a7fc4f3544c6b07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyMoneyText: {fileID: 2024064246}
+--- !u!114 &554507492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554507489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc17b4206c138c44fa8c2f5678a19a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Money: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  index: 0
+  unitMoney:
+  - 
+  - A
+  - B
+  - C
+  - D
+  - E
+  - F
+  - G
+  - H
+  - I
+  - J
+  - K
+  - L
+  - M
+  - N
+  - O
+  - P
+  - Q
+  - R
+  - S
+  - T
+  - U
+  - V
+  - W
+  - X
+  - Y
+  - Z
+  - AA
+  - AB
+  - AC
+  - AD
+  - AE
+  - AF
+  - AG
+  - AH
+  - AI
+  - AJ
+  - AK
+  - AL
+  - AM
+  - AN
+  - AO
+  - AP
+  - AQ
+  - AR
+  - AS
+  - AT
+  - AU
+  - AV
+  - AW
+  - AX
+  - AY
+  - AZ
+  - BA
+  - BB
+  - BC
+  - BD
+  - BE
+  - BF
+  - BG
+  - BH
+  - BI
+  - BJ
+  - BK
+  - BL
+  - BM
+  - BN
+  - BO
+  - BP
+  - BQ
+  - BR
+  - BS
+  - BT
+  - BU
+  - BV
+  - BW
+  - BX
+  - BY
+  - BZ
+  - CA
+  - CB
+  - CC
+  - CD
+  - CE
+  - CF
+  - CG
+  - CH
+  - CI
+  - CJ
+  - CK
+  - CL
+  - CM
+  - CN
+  - CO
+  - CP
+  - CQ
+  - CR
+  - CS
+  - CT
+  - CU
+  - CV
+  - CW
+  - CX
+  - CY
+  - CZ
+  Size: 32
+--- !u!114 &554507493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554507489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f2b03a8bd56c5478fbb288276d395b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Model: {fileID: 554507492}
+  View: {fileID: 554507491}
 --- !u!1 &559263828
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,11 +948,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c41806a5bd7911741b11b5c061cd97f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Money: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  index: 0
-  getMoney: 7b00000022000000030000000000000003000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  MymoneyText: {fileID: 2024064246}
-  size: 32
 --- !u!1 &1442710056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,14 +1275,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1434910208}
+      - m_Target: {fileID: 554507493}
         m_TargetAssemblyTypeName: 
-        m_MethodName: UpMoney
-        m_Mode: 1
+        m_MethodName: AddMoney
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 321
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
