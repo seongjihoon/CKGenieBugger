@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using System;
 using CKProject.TriggerSystem;
 using CKProject.Managers;
-using System.Security.Cryptography;
+using MVP;
 
 namespace CKProject.Interactable
 {
