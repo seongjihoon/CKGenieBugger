@@ -23,7 +23,7 @@ namespace MVP
 
     public class Model : MonoBehaviour
     {
-        [ArrayElementTitle("")]
+        [ArrayElementTitle()]
         public int[] Money;
         [HideInInspector]
         public int index;

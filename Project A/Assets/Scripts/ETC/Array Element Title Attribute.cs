@@ -6,9 +6,9 @@ namespace CKProject.AttributeEditor
     public class ArrayElementTitleAttribute : PropertyAttribute
     {
         public string Varname;
-        public ArrayElementTitleAttribute(string ElementTitleVar)
+        public ArrayElementTitleAttribute()
         {
-            Varname = ElementTitleVar;
+            //Varname = ElementTitleVar;
         }
     }
 
