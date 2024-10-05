@@ -21,7 +21,9 @@ namespace CKProject.FSM
             customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
             if (customTrigger != null)
             {
-                customTrigger.GetComponent<Table>()?.EnterGuest(GuestFSM);
+                GuestFSM.Chair = customTrigger.GetComponent<Chair>();
+                //customTrigger.GetComponent<Table>()?.EnterGuest(GuestFSM);
+                GuestManager.Instance.SetWaitingOrder(gameObject);
                 GuestFSM.ChangeState((EGuestStateType)stateType);
             }
         }
@@ -35,6 +37,7 @@ namespace CKProject.FSM
                 {
                     GuestFSM.ChangeState((EGuestStateType)stateType);
                     GuestManager.Instance.OutGuest(GuestFSM);
+                    //GuestManager1.Instance.OutGuest(GuestFSM);
                 }
             }
         }

@@ -33,8 +33,8 @@ namespace CKProject.TriggerSystem
 
         private bool CheckZSize(Vector3 v)
         {
-            if (transform.position.z + Size.z * .5f >= v.z 
-                && transform.position.z - Size.z * 0.5f <= v.z)
+            if (transform.position.z + Offset.z + Size.z * .5f >= v.z 
+                && transform.position.z + Offset.z - Size.z * 0.5f <= v.z)
                 return true;
             return false;
         }
@@ -56,8 +56,8 @@ namespace CKProject.TriggerSystem
 
             localScale.Set((transform.position.x + Offset.x + Size.x * 0.5f),
                 (transform.position.y + Offset.y + Size.y * 0.5f), 
-                (transform.position.x - Offset.x - Size.x * 0.5f), 
-                (transform.position.y - Offset.y - Size.y * 0.5f));
+                (transform.position.x + Offset.x - Size.x * 0.5f), 
+                (transform.position.y + Offset.y - Size.y * 0.5f));
 
 
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,7 +42,7 @@ namespace MVP
         private void MoneyUpdate(ref int[] money)
         {
             Theorem();
-            View.MyMoneyToString(money, Model.index, Model.unitMoney);
+            MyMoneyToString(money, Model.index, Model.unitMoney);
         }
 
         private void Theorem()
@@ -84,7 +85,7 @@ namespace MVP
             }
             Model.Money[index] += memo;
             Theorem();
-            View.MyMoneyToString(Model.Money, Model.index, Model.unitMoney);
+            MyMoneyToString(Model.Money, Model.index, Model.unitMoney);
         }
 
         public void AddMoney(int[] getMoney)
@@ -103,6 +104,27 @@ namespace MVP
                 Model.Money[i] -= useMoney[i];
             }
             MoneyUpdate(ref Model.Money);
+        }
+
+        public void MyMoneyToString(int[] Money, int index, string[] unit)
+        {
+            float a = Money[index];
+
+            if (index > 0)
+            {
+                float b = Money[index - 1];
+                a += b / 1000;
+            }
+
+            if (index == 0)
+            {
+                a += 0;
+            }
+
+            string p;
+            p = (float)(Math.Truncate(a * 100) / 100) + unit[index];
+            View.UpdateMoneyText(p);
+
         }
     }
 
