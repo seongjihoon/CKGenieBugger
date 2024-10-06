@@ -71,7 +71,7 @@ namespace CKProject.FSM
             rigidbody = GetComponent<Rigidbody>();
         }
 
-        void Start()
+        protected override void Start()
         {
             base.Start();
 
@@ -79,7 +79,7 @@ namespace CKProject.FSM
             interactAction = InputSystem.actions["Interact"];
         }
 
-        private void Update()
+        protected override void Update()
         {
             base.Update();
             CustomCollision = TriggerManager.Instance.CheckTriggerZone(transform);

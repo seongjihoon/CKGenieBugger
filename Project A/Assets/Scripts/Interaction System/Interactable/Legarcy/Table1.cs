@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using CKProject.Managers;
@@ -7,13 +7,13 @@ using Random = System.Random;
 
 namespace CKProject.Interactable
 {
-    public class Table : MonoBehaviour
+    public class Table1 : MonoBehaviour
     {
-        // ¸¸µé¾î¾ß ÇÒ ±â´É
-        // ¼Õ´Ô°úÀÇ Ã¹ Ãæµ¹ ½Ã Ä³¸¯ÅÍ°¡ ÀÇÀÚ¿¡ ¾É¾Æ À½½ÄÀ» ÁÖ¹®ÇÏ´Â ±â´É
-        // À½½ÄÀÇ °æ¿ì ÀÏ´Ü ¾Æ¹«°Å³ª Áàµµ ¹®Á¦ ¾ø°Ô ±¸ÇöÇÒ ¿¹Á¤.
+        // ë§Œë“¤ì–´ì•¼ í•  ê¸°ëŠ¥
+        // ì†ë‹˜ê³¼ì˜ ì²« ì¶©ëŒ ì‹œ ìºë¦­í„°ê°€ ì˜ìì— ì•‰ì•„ ìŒì‹ì„ ì£¼ë¬¸í•˜ëŠ” ê¸°ëŠ¥
+        // ìŒì‹ì˜ ê²½ìš° ì¼ë‹¨ ì•„ë¬´ê±°ë‚˜ ì¤˜ë„ ë¬¸ì œ ì—†ê²Œ êµ¬í˜„í•  ì˜ˆì •.
         public bool IsEmptyTable;
-        public Chair[] Chairs;
+        public Chair1[] Chairs;
         private List<int> ChairNum = new List<int> { 0, 1};
 
         private int currentChair = 0;
@@ -27,11 +27,11 @@ namespace CKProject.Interactable
 
         private void Update()
         {
-            // ÀÌ ¹®Á¦¸¦ ÇØ°áÇÏ·Á ÇÑ´Ù.
-            if (GuestManager.Instance.TablingCheck(this)
+            // ì´ ë¬¸ì œë¥¼ í•´ê²°í•˜ë ¤ í•œë‹¤.
+            if (GuestManager1.Instance.TablingCheck(this)
                 && CheckChairs())
             {
-                GuestManager.Instance.TableClear(this);
+                GuestManager1.Instance.TableClear(this);
             }
         }
 
@@ -57,7 +57,7 @@ namespace CKProject.Interactable
 
         public Transform GetChairTransform()
         {
-            Chair temp = null;
+            Chair1 temp = null;
             if (currentChair >= Chairs.Length)
             {
                 currentChair = 0;
@@ -76,9 +76,9 @@ namespace CKProject.Interactable
 
         public void EnterGuest(PathFinding.Unit unit)
         {
-            // µåµğ¾î µé¾î¿È
-            // °Ô½ºÆ®°¡ µé¾î¿Ã °æ¿ì ÀÇÀÚ¿¡ À½½Ä µ¥ÀÌÅÍ¸¦ ³Ö¾îÁÜ
-            Chair chair = unit.target.GetComponent<Chair>();
+            // ë“œë””ì–´ ë“¤ì–´ì˜´
+            // ê²ŒìŠ¤íŠ¸ê°€ ë“¤ì–´ì˜¬ ê²½ìš° ì˜ìì— ìŒì‹ ë°ì´í„°ë¥¼ ë„£ì–´ì¤Œ
+            Chair1 chair = unit.target.GetComponent<Chair1>();
             if(chair != null)
             {
                 chair.FoodType = SetFoodType();
@@ -96,14 +96,14 @@ namespace CKProject.Interactable
 
                     if (chair.FoodType == food.GetFoodSo.foodType || chair.FoodType == EFoodType.ALL)
                     {
-                        chair.FoodType = EFoodType.Eatting;
-                        // ÀÌÈÄ nÃÊ ÈÄ Å»Ãâ ¼±¾ğ
+                        chair.FoodType = EFoodType.None;
+                        // ì´í›„ nì´ˆ í›„ íƒˆì¶œ ì„ ì–¸
                         chair.EscapeGuest().Forget();
-                        Debug.Log("À½½Ä È®ÀÎ");
+                        Debug.Log("ìŒì‹ í™•ì¸");
                         return true;
                     }
                 }
-                Debug.Log("À½½Ä ºÒÀÏÄ¡");
+                Debug.Log("ìŒì‹ ë¶ˆì¼ì¹˜");
                 return false;
             }
             catch

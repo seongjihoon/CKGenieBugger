@@ -13,7 +13,7 @@ namespace CKProject.Interactable
         Pizza,
         Chicken,
         ALL,
-        Eatting,
+        //Eatting,
     }
 
     public enum EKitchenType
@@ -37,7 +37,10 @@ namespace CKProject.Interactable
         
         public const int ObjectPoolCount = 10;
 
-        
+        public EKitchenType GetKitchenType
+        {
+            get { return kitchenType; }
+        }
 
         #endregion
 
@@ -172,7 +175,7 @@ namespace CKProject.Interactable
         #endregion
 
         #region public methods
-
+        
         #endregion
     }
 

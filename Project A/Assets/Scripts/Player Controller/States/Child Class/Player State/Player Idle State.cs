@@ -12,7 +12,7 @@ namespace CKProject.FSM
     {
         #region Private Values
 
-        private float currentTime = 0;
+        //private float currentTime = 0;
 
         #endregion
 

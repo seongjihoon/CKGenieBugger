@@ -96,7 +96,7 @@ namespace PathFinding
                 }
             }
             // 노드를 중심으로 가중치를 부가하는 노드.
-            BlurPenaltyMap(2);
+            BlurPenaltyMap(3);
         }
 
 
@@ -166,7 +166,7 @@ namespace PathFinding
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    if (x == 0 && y == 0) continue;
+                    if ((x == 0 && y == 0 )) continue;
                     var checkX = checkNode.gridX + x;
                     var checkY = checkNode.gridY + y;
                     if (checkX >= 0 && checkX < gridSizeX + 1 && checkY >= 0 && checkY <= gridSizeY + 1
@@ -199,7 +199,8 @@ namespace PathFinding
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    if ((x == 0 && y == 0))
+                    if ((x == 0 && y == 0)|| (x == -1 && y == -1 )||(x == -1 && y == 1)
+                        || (x == 1 && y == -1) || (x == 1 && y == 1))
                         continue;
 
                     int checkX = node.gridX + x;

@@ -86,7 +86,7 @@ namespace CKProject.UI
             }
             catch
             {
-
+                Debug.Log("Not Have A Reward");
             }
         }
     }
