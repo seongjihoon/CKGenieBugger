@@ -1,210 +1,196 @@
-ï»¿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PathFinding;
 using CKProject.SingleTon;
-using CKProject.Interactable;
-using System.Linq;
-using System;
-
-using Random = System.Random;
+using PathFinding;
 using Grid = PathFinding.Grid;
-
+using System.Collections.Generic;
+using CKProject.Interactable;
 
 namespace CKProject.Managers
 {
-    public class GuestManager : SingleTon<GuestManager>
+
+    public class GuestManager : SingleTon<GuestManager> 
     {
-        //Dictionary<int, GameObject[,]> chairs;
-        [Header("ìƒì„± ê´€ë ¨ ë³€ìˆ˜")] public bool SpawnTrigger;
 
-        [Tooltip("ìƒì„± ì£¼ê¸°")] public float SpawnTimer = 0;
-        [Tooltip("ìµœëŒ€ ìƒì„± ê°¯ìˆ˜")] public int MaxSpawnCount = 0;
+        public bool SpawnTrigger = false;
+        public float SpawnInterval = 0;
+        public int MaxSpawnCount = 0;
+
+        [Space(10f)]
+        public Transform SpawnPoint;
+        public Transform HidePoint;
+        public GameObject GuestPrefab;
+
+        public Grid GridInfo;
+        public GameObject[] TargetChairList;
+        public Queue<OrderData> OrderQueue = new Queue<OrderData>();
+
+        private List<GameObject> useChairList = new List<GameObject>();
+        private Stack<GameObject> emptyChairStack = new Stack<GameObject>();
+        
+
+        private GuestList GuestList;
+
+        public  GuestList GetGuestList 
+        {
+            get { return GuestList; }
+        }
+
         private float currentTimer = 0;
-        [Tooltip("í˜„ì¬ ì–´ë–¤ ì†ë‹˜ì„ ìƒì„±í–ˆëŠ”ì§€ ì²´í¬")] private int currentPoolsCount = 0;
-
-
-        [Space(20f)] public Transform spawnPoint;
-
-        [SerializeField] private GameObject guestPrefab;
-
-        [SerializeField, Space(10)] private Grid gridFieldInfo;
-
-        [SerializeField] private GameObject[] targetChairList;
-
-        [SerializeField] private Table[] targetTableList;
-        [SerializeField] private List<Table> useTableList;
-        private Stack<Table> tableStack = new Stack<Table>();
-
-        private int currentChairCount = 0;
-
-        //private List<Unit> guestPools;
-        private List<Unit> useGuestList = new List<Unit>();
-        // í…ŒìŠ¤íŠ¸ ì½”ë“œ 
-        private Stack<Unit> guestStack = new Stack<Unit>();
-        //private List<Unit>
-
-        private int chairCount = 0;
-
-        private Queue<Table> tableQueue = new Queue<Table>();
-
+        
         private void Awake()
         {
             if (Instance == null)
-            {
                 Instance = this;
-            }
             else
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
+            Intialized();
+
         }
 
-        // Start is called before the first frame update
-        private void Start()
-        {
-            // ìµœëŒ€ ìƒì„± ê°œìˆ˜ (2ê°œ) / ì„ì‹œ ìƒì„± íƒ€ì„ (3ì´ˆ)
-            SpawnTimer = SpawnTimer <= 0 ? 3f : SpawnTimer;
-            MaxSpawnCount = MaxSpawnCount <= 0 ? 2 : MaxSpawnCount;
-            CreateGuest2();
-            // ë¹ˆ í…Œì´ë¸”ì„ ì²´í¬
-            SetStackEmptyTable();
 
+        // Start is called before the first frame update
+        void Start()
+        {
+            currentTimer = SpawnInterval;
         }
 
         // Update is called once per frame
-        private void Update()
+        void Update()
         {
-            if(SpawnTrigger)
+            if (SpawnTrigger)
             {
                 currentTimer += Time.deltaTime;
-                if(currentTimer > SpawnTimer)
+                if(currentTimer > SpawnInterval)
                 {
-                    SpawnGuest3();
+                    SpawnGuest();
                     currentTimer = 0;
                 }
             }
         }
-
-        #region Private Methods
-        private void SetQueueEmptyTable()
+        private void SpawnGuest()
         {
-            var random = new Random();
-            foreach(var table in targetTableList)
+            GameObject tempChair = null;
+            GameObject tempUnit = null;
+            // ÇöÀç »ç¿ëÁßÀÌÁö ¾ÊÀº ÀÇÀÚ¸¦ Å¸°ÙÀ¸·Î ¼³Á¤
+            if(emptyChairStack.Count > 0)
             {
-                tableQueue.Enqueue(table);
-            }
-             tableQueue = (Queue<Table>)tableQueue.OrderBy(_ => random.Next());
-        }
+                tempChair = emptyChairStack.Pop();
+                useChairList.Add(tempChair);
 
-        private void SetStackEmptyTable()
-        {
-            foreach(var table in targetTableList)
-            {
-                tableStack.Push(table);
-                table.Initialized();
+                tempUnit = GuestList.GuestPools.Pop();
+                // ÇöÀç ÀÌµ¿ ÁßÀÌ±â ¶§¹®¿¡ ¾îµğµµ ¼ÓÇÏÁö ¾ÊÀ½.
+                tempUnit.SetActive(true);
+                tempUnit.transform.position = SpawnPoint.position;
+                tempUnit.GetComponent<Unit>().SetTarget(tempChair, GridInfo);
             }
         }
 
-        /// <summary>
-        /// ì†ë‹˜ì„ ìƒì„±í•˜ê³  ìœ„ì¹˜ë¥¼ ì§€ì •
-        /// ì†ë‹˜ì´ ë‚˜ê°€ë©´ UseGuestListì— Removeí•˜ê³  GuestStackì— Pushí•˜ê¸°
-        /// í…Œì´ë¸” ë˜í•œ ë§ˆì°¬ê°€ì§€
-        /// </summary>
-        private void SpawnGuest3()
+        private void Intialized()
         {
-            int SpawnCount = UnityEngine.Random.Range(0, MaxSpawnCount);
-            int i = 0;
-            Unit unitTemp = null;
-            Table tableTemp = null;
-            if (tableStack.Count > 0)
+            SetEmptyChairs();
+            SetGuest();
+        }
+
+        private void SetEmptyChairs()
+        {
+            foreach (var chair in TargetChairList)
             {
-                tableTemp = tableStack.Pop();
-                tableTemp.IsEmptyTable = false;
-                useTableList.Add(tableTemp);
-                for (; i < SpawnCount + 1; i++)
-                {
-                    unitTemp = guestStack.Pop();
-                    useGuestList.Add(unitTemp);
-                    unitTemp.gameObject.SetActive(true);
-                    unitTemp.transform.position = new Vector3(spawnPoint.transform.position.x, 0f, spawnPoint.transform.position.z);
-                    unitTemp.SetTarget(tableTemp.GetChairTransform().gameObject, gridFieldInfo);
-                }
+                emptyChairStack.Push(chair);
             }
         }
 
-        private void TableSet()
+        private void SetGuest()
         {
-            foreach(var table in targetTableList)
+            GuestList = new GuestList();
+            GuestList.Init();
+            GameObject tempGuest = null;
+            for (int i = 0; i < MaxSpawnCount; i++)
             {
-                table.Initialized();
+                tempGuest = Instantiate(GuestPrefab, transform);
+                tempGuest.SetActive(false);
+                GuestList.GuestPools.Push(tempGuest);
             }
         }
 
-        private void UpandCount()
-        {
-            currentChairCount++;
-            if (currentChairCount >= targetChairList.Length)
-                currentChairCount = 0;
-        }
-
-        private void CreateGuest2()
-        {
-            chairCount = targetChairList.Length;
-            for(int i = 0; i  < chairCount; i++)
-            {
-                guestStack.Push(Instantiate(guestPrefab).GetComponent<Unit>());
-                guestStack.Peek().gameObject.SetActive(false);
-                guestStack.Peek().transform.parent = transform;
-
-            }
-        }
-        #endregion
 
         #region Public Methods
-        public void TableClear(Table table)
-        {
-            useTableList.Remove(table);
-            tableStack.Push(table);
-        }
-
         public void OutGuest(Unit unit)
         {
-            useGuestList.Remove(unit);
-            guestStack.Push(unit);
+            useChairList.Remove(unit.target.gameObject);
+            GuestList.GuestPools.Push(unit.gameObject);
             unit.gameObject.SetActive(false);
         }
 
-        public bool TablingCheck(Table table)
+        public void SetWaitingOrder(GameObject guest)
         {
-            return useTableList.Contains(table);
+            GuestList.WaitingOrderGuest.Enqueue(guest);
         }
-        #endregion
-
-        #region Legarcy
-        private void SpawnGuest2()
+        
+        public void SetWaitingFood(Unit guest)
         {
-            int SpawnCount = UnityEngine.Random.Range(0, MaxSpawnCount);
-            int i = 0;
-            Unit temp = null;
-            if (guestStack.Count > 0)
-            {
-                for (; i < SpawnCount + 1; i++)
-                {
-                    temp = guestStack.Pop();
-                    useGuestList.Add(temp);
-                    temp.gameObject.SetActive(true);
-                    temp.transform.position = new Vector3(spawnPoint.transform.position.x, 0f, spawnPoint.transform.position.z);
+            OrderData orderData;
+            orderData.FoodType = guest.SetFood();
+            orderData.OrderTarget = guest.gameObject;
+            OrderQueue.Enqueue(orderData);
 
-                    temp.RequestPathGuest(targetChairList[currentChairCount], gridFieldInfo);
-                    UpandCount();
-                    TableSet();
+            //GuestList.WaitingFoodGuest.Enqueue(guest.gameObject);
 
-                }
-            }
+        }
+
+        public GameObject GetWaitingOrderGuest()
+        {
+            return GuestList.WaitingOrderGuest.Dequeue();
+        }
+
+        public OrderData GetWaitingFoodGuest()
+        {
+            return OrderQueue.Dequeue();
+            //return GuestList.WaitingOrderGuest.Dequeue();
         }
 
         #endregion
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            //Gizmos.DrawWireCube(SpawnPoint.position, Vector3.one);
+        }
     }
 
+    /// <summary>
+    /// ¼øÂ÷ÀûÀ¸·Î »ç¿ë.
+    /// </summary>
+    public struct GuestList
+    {
+        // »ç¿ëÀÌ °¡´ÉÇÑ Guest Pool
+        public Stack<GameObject> GuestPools;
+
+        //public Stack<GameObject> GetGuestPools {  get { return GuestPools; } private set { GuestPools = value; } }
+
+        // ÀÌµ¿ ÁßÀÎ Guest
+
+        // ÁÖ¹® ´ë±â ÁßÀÎ Guest
+        public Queue<GameObject> WaitingOrderGuest;
+
+        // À½½Ä ¹ŞÀ» ´ë±â ÁßÀÎ Guest 
+        //public Queue<GameObject> WaitingFoodGuest;
+
+        // ºüÁö´Â Guest
+
+        public void Init()
+        {
+            GuestPools = new Stack<GameObject>();
+            WaitingOrderGuest = new Queue<GameObject>();
+            //WaitingFoodGuest = new Queue<GameObject>();
+        }
+    }
+
+
+    public struct OrderData
+    {
+        public EFoodType FoodType;
+        public GameObject OrderTarget;
+    }
 }

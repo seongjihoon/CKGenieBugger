@@ -9,7 +9,7 @@ namespace CKProject.Interactable
         // 음식 오브젝트를 생성하려면 Prefab이 필요함.
         public GameObject Prefab;
         public EFoodType foodType;
-        [ArrayElementTitle("")]
+        [ArrayElementTitle()]
         public int[] Price;
         [Space(10), InspectorName("준비 시간")]
         public float ReadyTime;

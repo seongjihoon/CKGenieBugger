@@ -6,7 +6,7 @@ namespace CKProject.UI
 {
     public class UseMoneyBtn : MonoBehaviour
     {
-        [ArrayElementTitle("")]
+        [ArrayElementTitle()]
         public int[] NeedMoney;
 
         private Controller controller;

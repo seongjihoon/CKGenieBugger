@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 using CKProject.Interactable;
 using CKProject.TriggerSystem;
 using CKProject.Managers;
 using CKProject.FSM;
 using UnityEditor;
+using System.Collections.Generic;
 
 namespace PathFinding
 {
@@ -59,23 +59,23 @@ namespace PathFinding
         public Grid grid;
         public Vector3[] path;
         public bool GetOut;
+        public Chair Chair;
 
-        //public bool chasing = false;
-        //public bool finding = false;
+        public List<EFoodType> Order = new List<EFoodType>();
 
         private float speed = 2;
         private int targetIndex;
         [SerializeField] private CustomTrigger hitedTrigger;
 
 
-        private void Start()
+        protected override void Start()
         {
             base.Start();
             //PathRequestManager.RequestPath(new PathRequest( this.transform.position, target.position, OnPathFound));
             grid = GameObject.Find("PathFinding").GetComponent<Grid>();
         }
 
-        private void Update()
+        protected override void Update()
         {
             base.Update();
         }
@@ -121,6 +121,12 @@ namespace PathFinding
             grid = gridInfo;
             target = chair.transform;
             GetOut = false;
+        }
+
+        public EFoodType SetFood()
+        {
+            Order.Add(EFoodType.ALL);
+            return Order[Order.Count -1];
         }
 
         public void MoveStart()

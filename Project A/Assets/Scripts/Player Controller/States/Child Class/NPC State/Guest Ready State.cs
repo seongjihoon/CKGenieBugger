@@ -19,7 +19,7 @@ namespace CKProject.FSM
             {
                 if(GuestFSM.GetOut) // 특수 조건을 FSM에서 체크하도록 설계
                 {
-                    GuestFSM.target = GuestManager.Instance.spawnPoint;
+                    GuestFSM.target = GuestManager.Instance.HidePoint;
                     GuestFSM.ChangeState((EGuestStateType)stateType);
                     //GuestFSM.MoveStart();
                 }
