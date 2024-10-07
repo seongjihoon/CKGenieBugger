@@ -20,6 +20,8 @@ namespace CKProject.FSM
                 if(GuestFSM.GetOut) // 특수 조건을 FSM에서 체크하도록 설계
                 {
                     GuestFSM.target = GuestManager.Instance.HidePoint;
+                    // 의자 풀에 넣어줘야함
+                    GuestManager.Instance.ReturnEmptyChair(GuestFSM.Chair.gameObject);
                     GuestFSM.ChangeState((EGuestStateType)stateType);
                     //GuestFSM.MoveStart();
                 }

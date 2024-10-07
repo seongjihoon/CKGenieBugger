@@ -72,7 +72,7 @@ namespace PathFinding
         {
             base.Start();
             //PathRequestManager.RequestPath(new PathRequest( this.transform.position, target.position, OnPathFound));
-            grid = GameObject.Find("PathFinding").GetComponent<Grid>();
+            grid = GameObject.Find("Path Manager").GetComponent<Grid>();
         }
 
         protected override void Update()

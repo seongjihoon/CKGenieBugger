@@ -150,6 +150,11 @@ namespace CKProject.Managers
             //return GuestList.WaitingOrderGuest.Dequeue();
         }
 
+        public void ReturnEmptyChair(GameObject chair)
+        {
+            emptyChairStack.Push(chair);
+        }
+
         #endregion
 
         private void OnDrawGizmos()
