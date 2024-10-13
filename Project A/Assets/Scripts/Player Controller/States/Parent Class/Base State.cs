@@ -9,7 +9,7 @@ namespace CKProject.FSM
 
     public abstract class BaseState<T> : MonoBehaviour where T : Enum
     {
-        public FSMController<T> FsmController;
+        [HideInInspector] public FSMController<T> FsmController;
 
         [SerializeField]
         protected T stateType;
