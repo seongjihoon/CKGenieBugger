@@ -8,7 +8,7 @@ namespace CKProject.FSM
     {
         //public PlayerFSM fsmController;
 
-        public PlayerFSM playerFSM;
+        [HideInInspector] public PlayerFSM playerFSM;
         private void Awake()
         {
             FsmController = GetComponent<PlayerFSM>();
