@@ -10,7 +10,7 @@ namespace CKProject.FSM
 {
     public class CashierFSM : FSMController<EStateType>
     {
-        [HideInInspector] public Transform Target;
+        /*[HideInInspector]*/ public Transform Target;
         [HideInInspector] public Transform Guest;
         [HideInInspector] public Grid Grid;
         [HideInInspector] public Vector3[] Path;

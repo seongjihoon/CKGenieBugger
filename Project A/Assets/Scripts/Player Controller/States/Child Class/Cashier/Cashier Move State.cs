@@ -61,7 +61,7 @@ namespace CKProject.FSM
                 {
                     // 도착했으면 음식 만들기 시작 
                     StopCoroutine("FollowPath");
-
+                    
                     // 제작 시작
                     customTrigger.GetComponent<Kitchen>()?.Interaction();
                     cashierFSM.ChangeState((EStateType)stateType);
