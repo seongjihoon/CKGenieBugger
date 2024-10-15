@@ -3402,12 +3402,12 @@ MonoBehaviour:
   isTrigger: 0
   PersonalColor: {r: 1, g: 0, b: 0, a: 1}
   Offset: {x: 0, y: 0, z: -0.5}
-  Size: {x: 0.25, y: 1, z: 0.25}
+  Size: {x: 0.1, y: 1, z: 0.1}
   localScale:
     serializedVersion: 2
-    x: 0.375
+    x: 0.3
     y: 0.5
-    width: 0.125
+    width: 0.2
     height: -0.5
 --- !u!114 &736664988
 MonoBehaviour:
@@ -3486,12 +3486,12 @@ MonoBehaviour:
   isTrigger: 0
   PersonalColor: {r: 1, g: 0, b: 0, a: 1}
   Offset: {x: 0, y: 0, z: -0.5}
-  Size: {x: 0.25, y: 1, z: 0.25}
+  Size: {x: 0.1, y: 1, z: 0.1}
   localScale:
     serializedVersion: 2
-    x: -1.125
+    x: -1.2
     y: 0.5
-    width: -1.375
+    width: -1.3
     height: -0.5
 --- !u!114 &752081071
 MonoBehaviour:
@@ -5600,7 +5600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1486551657
 Transform:
   m_ObjectHideFlags: 0
