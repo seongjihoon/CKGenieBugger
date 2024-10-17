@@ -15,6 +15,7 @@ namespace CKProject.FSM
         {
             base.Enter();
             PathRequestManager.RequestPath(new PathRequest(transform.position, cashierFSM.Target.position, OnPathFound));
+
         }
 
         public override void Exit()
@@ -33,6 +34,10 @@ namespace CKProject.FSM
         }
 
         private CustomTrigger customTrigger;
+
+        public void RequestPath()
+        {
+        }
 
         [VisibleEnum(typeof(EStateType))]
         public void CheckTriggerArea(int stateType)

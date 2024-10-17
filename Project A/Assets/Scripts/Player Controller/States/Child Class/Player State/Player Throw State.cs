@@ -43,7 +43,7 @@ namespace CKProject.FSM
             {
                 playerFSM.FoodObject.transform.parent = null;
                 //playerFSM.FoodObject.SetActive(false);
-                playerFSM.FoodObject.GetComponent<Food>().Throw().Forget();
+                //playerFSM.FoodObject.GetComponent<Food>().Throw().Forget();
                 playerFSM.FoodObject = null;
                 playerFSM.ChangeState((EStateType) stateType);
             }

@@ -12,14 +12,7 @@ namespace CKProject.Managers
 
         private void Awake()
         {
-            if(Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
+            CreateInstance(this);
         }
 
         private void Start()

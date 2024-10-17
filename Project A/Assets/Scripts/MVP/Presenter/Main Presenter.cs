@@ -116,7 +116,7 @@ namespace CKProject.UI
 
 #endregion
 
-        private void MoneyUpdate(ref int[] money)
+        private void MoneyUpdate(int[] money)
         {
             Theorem();
             MyMoneyToString(money, Model.Index, Model.unitMoney);
@@ -171,7 +171,7 @@ namespace CKProject.UI
             {
                 Model.Money[i] += getMoney[i];
             }
-            MoneyUpdate(ref Model.Money);
+            MoneyUpdate(Model.Money);
         }
 
         public void SubMoney(int[] useMoney)
@@ -180,7 +180,7 @@ namespace CKProject.UI
             {
                 Model.Money[i] -= useMoney[i];
             }
-            MoneyUpdate(ref Model.Money);
+            MoneyUpdate(Model.Money);
         }
 
         public void MyMoneyToString(int[] Money, int index, string[] unit)

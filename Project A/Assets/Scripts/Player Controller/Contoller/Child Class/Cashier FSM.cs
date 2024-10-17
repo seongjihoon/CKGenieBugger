@@ -13,7 +13,7 @@ namespace CKProject.FSM
         /*[HideInInspector]*/ public Transform Target;
         [HideInInspector] public Transform Guest;
         [HideInInspector] public Grid Grid;
-        [HideInInspector] public Vector3[] Path;
+        public Vector3[] Path;
         [HideInInspector] public OrderData NowOrder;
 
         public List<Transform> CounterTop = new List<Transform>();
@@ -55,10 +55,11 @@ namespace CKProject.FSM
 
         public void DeliveryFood()
         {
+            GetOnFood.SetActive(false);
             GetOnFood = null;
             NowOrder.FoodType = EFoodType.None;
             NowOrder.OrderTarget.GetComponent<Unit>().GetOut = true;
-            
+            //GuestManager.Instance.ReturnEmptyChair(Target.Chair.gameObject);
             // 음식을 전달했으니 Guest는 퇴장.
         }
 

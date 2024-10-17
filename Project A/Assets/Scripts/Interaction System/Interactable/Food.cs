@@ -33,27 +33,26 @@ namespace CKProject.Interactable
             Throwing = false;
         }
 
-        public async UniTaskVoid Throw()
-        {
-            Throwing = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(2f));
-            gameObject.SetActive(false);
-        }
-
+        //public async UniTaskVoid Throw()
+        //{
+        //    Throwing = true;
+        //    await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        //    gameObject.SetActive(false);
+        //}
 
 
         private void Update()
         {
-            if(Throwing)
-            {
-                transform.Translate(transform.forward * Time.deltaTime * foodSO.ThrowSpeed);
-                customCollision = TriggerManager.Instance.CheckTriggerZone(transform);
-                if(customCollision != null)
-                {
-                    Throwing = false;
-                    AddMoney();
-                }
-            }
+            //if(Throwing)
+            //{
+            //    transform.Translate(transform.forward * Time.deltaTime * foodSO.ThrowSpeed);
+            //    customCollision = TriggerManager.Instance.CheckTriggerZone(transform);
+            //    if(customCollision != null)
+            //    {
+            //        Throwing = false;
+            //        AddMoney();
+            //    }
+            //}
         }
         
         private void AddMoney()

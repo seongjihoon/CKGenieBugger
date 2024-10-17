@@ -15,5 +15,17 @@ namespace CKProject.SingleTon
             get { return instance; }
             set { instance = value; }
         }
+
+        protected void CreateInstance(T singleTon)
+        {
+            if(instance == null)
+            {
+                instance = singleTon;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

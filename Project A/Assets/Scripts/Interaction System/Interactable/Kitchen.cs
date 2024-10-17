@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using CKProject.EditorUtils;
 using UnityEditor.Timeline.Actions;
+using CKProject.Managers;
 
 namespace CKProject.Interactable
 {
     public enum EFoodType
     {
         None,
-        Bugger,
-        Pizza,
-        Chicken,
+        HotDog,
+        Tteokbokki,
         ALL,
         //Eatting,
     }
