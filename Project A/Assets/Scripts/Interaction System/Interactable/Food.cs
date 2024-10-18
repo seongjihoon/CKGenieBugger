@@ -39,7 +39,7 @@ namespace CKProject.Interactable
         //    await UniTask.Delay(TimeSpan.FromSeconds(2f));
         //    gameObject.SetActive(false);
         //}
-
+            
 
         private void Update()
         {

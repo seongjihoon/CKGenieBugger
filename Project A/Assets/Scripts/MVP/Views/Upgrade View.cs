@@ -21,15 +21,23 @@ namespace MVP.Upgrade
         //    }
         //}
 
-        public void Initialized()
+        public void Initialized(GameManager gameManager, FoodManager fmanager)
         {
             EFoodType foodType = EFoodType.HotDog;
             //UpgradeFoodData Upgrade = FoodManager.Instance.GetFoodLevelData(foodType);
-            foreach (var button in Button)
+            // 스테이지에 따라서 출력할 UI Button 달리하기.
+            for(int i =0; i < gameManager.Stage; i++)
             {
-                UpgradeFoodData Upgrade = FoodManager.Instance.GetFoodLevelData(foodType++);
-                button.MyMoneyToString(Upgrade.Upgrade_Cost, Upgrade.UpgradeIndex, MoneyData.unitMoney);
+                UpgradeFoodData Upgrade = fmanager.GetFoodLevelData(foodType++);
+                Button[i].gameObject.SetActive(true);
+                Button[i].MyMoneyToString(Upgrade.Upgrade_Cost, Upgrade.UpgradeIndex, MoneyData.unitMoney);
             }
+
+            //foreach (var button in Button)
+            //{
+            //    UpgradeFoodData Upgrade = FoodManager.Instance.GetFoodLevelData(foodType++);
+            //    button.MyMoneyToString(Upgrade.Upgrade_Cost, Upgrade.UpgradeIndex, MoneyData.unitMoney);
+            //}
         }
 
         public void UpdateUpgradeUIText(EFoodType foodType, UpgradeFoodData updateData)

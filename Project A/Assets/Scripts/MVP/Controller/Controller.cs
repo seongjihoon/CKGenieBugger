@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine;
 namespace MVP
 {
     /// <summary>
-    /// ÀÔ·Â¿¡ µû¸¥ ±â´É°ú ±×¿¡ µû¸¥ °á°ú¸¦ Model°ú View¿¡ Àü´ŞÇÏ´Â ±â´ÉÀ» ÇÔ.
+    /// ì…ë ¥ì— ë”°ë¥¸ ê¸°ëŠ¥ê³¼ ê·¸ì— ë”°ë¥¸ ê²°ê³¼ë¥¼ Modelê³¼ Viewì— ì „ë‹¬í•˜ëŠ” ê¸°ëŠ¥ì„ í•¨.
     /// </summary>
     public class Controller : MonoBehaviour
     {

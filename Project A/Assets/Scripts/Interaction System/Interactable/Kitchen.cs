@@ -113,7 +113,8 @@ namespace CKProject.Interactable
         private void MakingFood()
         {
             cookTimer += Time.deltaTime;
-            ShowCoolDown(FoodSO.SpawnTime);
+            // 이걸 바꿔야함
+            ShowCoolDown(FoodManager.Instance.GetFoodLevelData(FoodSO.foodType).CreateTime * 0.1f);
             if (cookTimer > FoodSO.SpawnTime)
             {
                 kitchenType = EKitchenType.Complet;

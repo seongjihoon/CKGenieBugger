@@ -15,7 +15,7 @@ namespace MVP.Upgrade
 
         private void Awake()
         {
-            upgradeView.Initialized();
+            upgradeView.Initialized(GameManager.Instance, FoodManager.Instance);
         }
 
         // Getter

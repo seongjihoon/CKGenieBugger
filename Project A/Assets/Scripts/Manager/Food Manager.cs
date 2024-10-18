@@ -9,6 +9,17 @@ namespace CKProject.Managers
 {
     public class FoodManager : SingleTon<FoodManager>
     {
+        public enum DataCurrent
+        {
+            Index = 0,
+            Stage_Code,
+            Food_Code,
+            Food_Level,
+            Upgrade_Cost,
+            Revenue,
+            Time,
+        }
+
         #region struct
         [System.Serializable]
         public struct Stage_Food
@@ -155,7 +166,7 @@ namespace CKProject.Managers
 
         private void CallFoodDataTables()
         {
-            TextAsset tex = (TextAsset)Resources.Load("Test");
+            TextAsset tex = (TextAsset)Resources.Load("FoodLevelTable");
             string file = tex.text;
             bool endOfFile = false;
             var data_values = file.Split("\n");
@@ -205,19 +216,31 @@ namespace CKProject.Managers
             }
         }
 
+        // 현재 가진 돈을 비교하여 마이너스 해줘야함.
         public void LevelUp(EFoodType foodType)
         {
             Stage_Food stage = new Stage_Food(GameManager.Instance.Stage, (int)foodType);
 
-            if (FoodLevelTable[foodType] < LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].Level)
-                FoodLevelTable[foodType]++;
+            // 돈 비교 
+            if (GameManager.Instance.CompareMoney(
+                LevelFoodDatas[stage][FoodLevelTable[foodType]].Upgrade_Cost, LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].UpgradeIndex))
+            {
+                GameManager.Instance.SubMoney(LevelFoodDatas[stage][FoodLevelTable[foodType]].Upgrade_Cost);
+                if (FoodLevelTable[foodType] < LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].Level)
+                    FoodLevelTable[foodType]++;
+                else
+                {
+#if UNITY_EDITOR
+                    Debug.Log("레벨 맥스");
+#endif
+                }
+            }
             else
             {
 #if UNITY_EDITOR
-                Debug.Log("레벨 맥스");
+                Debug.Log("돈 없음");
 #endif
             }
-
         }
 
         public UpgradeFoodData GetFoodLevelData(EFoodType foodType)

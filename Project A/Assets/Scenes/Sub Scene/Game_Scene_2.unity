@@ -1168,7 +1168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &188681838
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1186,9 +1186,9 @@ RectTransform:
   - {fileID: 1644312243}
   m_Father: {fileID: 392095106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 342, y: -100}
   m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &188681839
@@ -1729,10 +1729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9209274d8d0f1c4a9b870b10e57bc12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyData:
-    Money: 
-    Index: 0
-  Size: 32
 --- !u!114 &298043584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1995,6 +1991,7 @@ MonoBehaviour:
   FoodLevelTable:
     keys: 
     values: 
+  FoodMaxLevel: 0
 --- !u!1 &388575773
 GameObject:
   m_ObjectHideFlags: 0
@@ -5689,6 +5686,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stage: 1
   OpenFood: 1
+  MainUI: {fileID: 298043584}
+  moneyData:
+    Money: 
+    Index: 0
+  Size: 36
 --- !u!1 &1144483380
 GameObject:
   m_ObjectHideFlags: 0
@@ -5826,7 +5828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1178974076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5844,9 +5846,9 @@ RectTransform:
   - {fileID: 413954056}
   m_Father: {fileID: 392095106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 342, y: -300}
   m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178974077

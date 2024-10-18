@@ -2,25 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CKProject.AttributeEditor;
+using CKProject.Managers;
 
 namespace CKProject.UI
 {
 
     public class MainModel : MonoBehaviour
     {
-        public MoneyData MoneyData;
+        public int[] Money { get { return GameManager.Instance.moneyData.Money; } set { GameManager.Instance.moneyData.Money = value; } }
+        public int Index { get { return GameManager.Instance.moneyData.Index; } set { GameManager.Instance.moneyData.Index = value; } }
 
-        public int[] Money { get { return MoneyData.Money; } set { MoneyData.Money = value; } }
-        public int Index { get { return MoneyData.Index; } set { MoneyData.Index = value; } }
-
-        public string[] unitMoney { get { return unitMoney; } }
+        public string[] unitMoney { get { return MoneyData.unitMoney; } }
         
-            
-        public int Size;
 
         private void Start()
         {
-            MoneyData.Money = new int[Size];
+            GameManager.Instance.moneyData.Money = new int[GameManager.Instance.Size];
         }
     }
 
@@ -40,5 +37,31 @@ namespace CKProject.UI
         "BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ" , "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY" , "BZ",
         "CA", "CB", "CC", "CD", "CE", "CF", "CG", "CH", "CI", "CJ", "CK", "CL", "CM", "CN", "CO", "CP", "CQ" , "CR", "CS", "CT", "CU", "CV", "CW", "CX", "CY" , "CZ",};
 
+        public void Theorem()
+        {
+            for (int i = 0; i < Money.Length; i++)
+            {
+                if (Money[i] > 0)
+                    Index = i;
+            }
+
+            for (int i = 0; i <= Index; i++)
+            {
+                if (Money[i] >= 1000)
+                {
+                    Money[i] -= 1000;
+                    Money[i + 1] += 1;
+                }
+
+                if (Money[i] < 0)
+                {
+                    if (Index > 1)
+                    {
+                        Money[i + 1] -= 1;
+                        Money[i] += 1000;
+                    }
+                }
+            }
+        }
     }
 }

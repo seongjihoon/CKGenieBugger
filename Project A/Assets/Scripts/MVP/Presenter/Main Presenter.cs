@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using GoogleMobileAds.Api;
+using CKProject.Managers;
 
 namespace CKProject.UI
 {
@@ -27,7 +28,7 @@ namespace CKProject.UI
 
         private void Start()
         {
-            bannerView.Show();
+            //bannerView.Show();
         }
 
         #region bannerView 
@@ -83,6 +84,7 @@ namespace CKProject.UI
             RewardedAd.Load(rewardedAdUnitId, new AdRequest.Builder().Build(), LoadCallback);
         }
 
+
         public void LoadCallback(RewardedAd rewardedAd, LoadAdError loadAdError)
         {
             if (rewardedAd == null)
@@ -114,7 +116,13 @@ namespace CKProject.UI
             }
         }
 
-#endregion
+        #endregion
+
+        public void UpdateMoney()
+        {
+            Theorem();
+            MyMoneyToString(Model.Money, Model.Index, Model.unitMoney);
+        }
 
         private void MoneyUpdate(int[] money)
         {
@@ -124,7 +132,7 @@ namespace CKProject.UI
 
         private void Theorem()
         {
-            for (int i = 0; i < Model.Size; i++)
+            for (int i = 0; i < GameManager.Instance.Size; i++)
             {
                 if (Model.Money[i] > 0)
                     Model.Index = i;

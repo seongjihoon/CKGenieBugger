@@ -5,16 +5,18 @@ using System.Collections;
 using CKProject.Managers;
 using Grid = PathFinding.Grid;
 using CKProject.Interactable;
+using CKProject.UI;
 
 namespace CKProject.FSM
 {
     public class CashierFSM : FSMController<EStateType>
     {
-        /*[HideInInspector]*/ public Transform Target;
+        [HideInInspector] public Transform Target;
         [HideInInspector] public Transform Guest;
         [HideInInspector] public Grid Grid;
         public Vector3[] Path;
         [HideInInspector] public OrderData NowOrder;
+        
 
         public List<Transform> CounterTop = new List<Transform>();
 
@@ -55,10 +57,11 @@ namespace CKProject.FSM
 
         public void DeliveryFood()
         {
-            GetOnFood.SetActive(false);
-            GetOnFood = null;
             NowOrder.FoodType = EFoodType.None;
             NowOrder.OrderTarget.GetComponent<Unit>().GetOut = true;
+            GameManager.Instance.AddMoney(FoodManager.Instance.GetFoodLevelData(GetOnFood.GetComponent<Food>().GetFoodSo.foodType).Revenue);
+            GetOnFood.SetActive(false);
+            GetOnFood = null; 
             //GuestManager.Instance.ReturnEmptyChair(Target.Chair.gameObject);
             // 음식을 전달했으니 Guest는 퇴장.
         }
