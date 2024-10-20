@@ -271,7 +271,7 @@ namespace CKProject.Managers
             }
         }
 
-        public void MissionComplate(MissionData missionData)
+        public void MissionComplate(MissionData missionData, GameObject disableObject)
         {
             Stage_Food stage = new Stage_Food(GameManager.Instance.Stage, missionData.Get_Type);
 
@@ -280,7 +280,13 @@ namespace CKProject.Managers
             //    LevelFoodDatas[stage][FoodLevelTable[(EFoodType)missionData.Get_Type]].Upgrade_Cost, LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].UpgradeIndex))
             if(GameManager.Instance.CompareMoney(missionData.Mission_Count, missionData.Mission_Count_Index))
             {
+                GameManager.Instance.SubMoney(missionData.Mission_Count);
                 RevenueDatas[(EFoodType)missionData.Get_Type].Upgrade(missionData);
+#if UNITY_EDITOR
+                Debug.Log("Success");
+                disableObject.SetActive(false);
+#endif  
+                // 완료되면 버튼 없애주기.
             }
         }
 

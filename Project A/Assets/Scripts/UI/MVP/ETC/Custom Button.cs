@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using CKProject.Interactable;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -18,10 +17,10 @@ namespace CKProject.UI
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(action);
         }
-        public void InitButtonClickEventParam_MissionData(UnityAction<MissionData> action, MissionData param)
+        public void InitButtonClickEvent(Kitchen kitchen, MissionData param)
         {
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => action(param));
+            button.onClick.AddListener(() => kitchen.MissionComplate(param, transform.parent.gameObject));
         }
 
         public string GetMoneyToString(int[] Money, int index, string[] unit)

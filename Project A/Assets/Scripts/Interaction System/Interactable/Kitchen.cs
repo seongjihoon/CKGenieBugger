@@ -189,9 +189,9 @@ namespace CKProject.Interactable
             FoodManager.Instance.LevelUp(FoodSO.foodType);
         }
 
-        public void MissionComplate(MissionData missionData)
+        public void MissionComplate(MissionData missionData, GameObject disablePanel)
         {
-            FoodManager.Instance.MissionComplate(missionData);
+            FoodManager.Instance.MissionComplate(missionData, disablePanel);
         }
 
 

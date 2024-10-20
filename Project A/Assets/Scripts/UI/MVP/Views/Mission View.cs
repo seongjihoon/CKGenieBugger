@@ -34,7 +34,7 @@ namespace MVP.Mission
             for (int i= 0; i < MissionDatas.Length; i++)
             {
                 Missions[i].gameObject.SetActive(true);
-                Missions[i].InitPanelParam_MissionData(MissionDatas[i], FoodManager.Instance.UseKitchens[MissionDatas[i].Get_Type - 1].MissionComplate, MissionDatas[i]);
+                Missions[i].InitPanel(MissionDatas[i], FoodManager.Instance.UseKitchens[MissionDatas[i].Get_Type - 1], MissionDatas[i]);
             }
         }
 
