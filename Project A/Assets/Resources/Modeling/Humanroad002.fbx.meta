@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9c5f4904825163d4a80a52273c865774
+guid: bd1b10dbacc11c04f9e97a6755fcba4e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material #44
-    second: {fileID: 2100000, guid: ed85edf4c023db643ba18a0639c090cf, type: 2}
+      name: Material #21
+    second: {fileID: 2100000, guid: cd279bcd862f896459def2eed612db41, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -48,8 +48,8 @@ ModelImporter:
     importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
@@ -83,7 +83,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
@@ -102,7 +102,7 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
