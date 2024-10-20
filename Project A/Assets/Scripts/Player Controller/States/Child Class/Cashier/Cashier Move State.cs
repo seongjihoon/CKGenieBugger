@@ -15,6 +15,7 @@ namespace CKProject.FSM
         {
             base.Enter();
             PathRequestManager.RequestPath(new PathRequest(transform.position, cashierFSM.Target.position, OnPathFound));
+
         }
 
         public override void Exit()
@@ -34,6 +35,10 @@ namespace CKProject.FSM
 
         private CustomTrigger customTrigger;
 
+        public void RequestPath()
+        {
+        }
+
         [VisibleEnum(typeof(EStateType))]
         public void CheckTriggerArea(int stateType)
         {
@@ -43,6 +48,7 @@ namespace CKProject.FSM
                 if (CustomTriggerCheck())
                 {
                     GuestManager.Instance.SetWaitingFood(cashierFSM.Guest.GetComponent<Unit>());
+                    transform.position = cashierFSM.Path[cashierFSM.Path.Length - 1];
                     StopCoroutine("FollowPath");
 
                     // 주문 완료
@@ -61,7 +67,8 @@ namespace CKProject.FSM
                 {
                     // 도착했으면 음식 만들기 시작 
                     StopCoroutine("FollowPath");
-                    
+                    transform.position = cashierFSM.Path[cashierFSM.Path.Length - 1];
+
                     // 제작 시작
                     customTrigger.GetComponent<Kitchen>()?.Interaction();
                     cashierFSM.ChangeState((EStateType)stateType);
@@ -78,6 +85,7 @@ namespace CKProject.FSM
                 if (CustomTriggerCheck())
                 {
                     StopCoroutine("FollowPath");
+                    transform.position = cashierFSM.Path[cashierFSM.Path.Length - 1];
                     cashierFSM.DeliveryFood();
                     cashierFSM.ChangeState((EStateType)stateType);
                 }

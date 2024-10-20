@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using GoogleMobileAds.Api;
+using CKProject.Managers;
+using UnityEngine.InputSystem;
+using CKProject.Interactable;
+using MVP.Upgrade;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace CKProject.UI
 {
@@ -14,20 +20,108 @@ namespace CKProject.UI
         private RewardedAd rewardedAd;
         private BannerView bannerView;
         private string rewardedAdUnitId;
-        private string AdUnitId; 
+        private string AdUnitId;
+
+        private Camera mainCamera;
+        public EventSystem eventSystem;
+        public GraphicRaycaster graphicRaycaster;
+
+        //private InputAction Mouse;
         private void Awake()
         {
-            //MobileAds.Initialize((InitializationStatus initStatus) =>
-            //{
-            //    // 
-            //});
+            //Mouse = InputSystem.actions["Mouse"];
+            mainCamera = Camera.main;
             BannerRewardedAD();
             RewardedInitAd();
         }
 
         private void Start()
         {
-            bannerView.Show();
+            //bannerView.Show();
+        }
+
+        private void Update()
+        {
+#if UNITY_ANDROID
+            if(Mouse.current.leftButton.wasPressedThisFrame || Touchscreen.current?.primaryTouch.press.isPressed == true)
+            {
+                Vector2 inputPosition;
+
+                // 마우스 입력 처리
+                if (Mouse.current.leftButton.isPressed)
+                {
+                    inputPosition = Mouse.current.position.ReadValue();
+                }
+                // 터치 입력 처리
+                else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+                {
+                    inputPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+                }
+                else
+                {
+                    return;
+                }
+
+                // UI 체크: 터치 또는 클릭한 위치가 UI 요소 위인지 확인
+                if (IsPointerOverUI(inputPosition))
+                {
+                    //Debug.Log("UI 위에서 클릭 또는 터치가 발생했습니다.");
+                    return;  
+                }
+                TouchInteract(inputPosition);
+            }
+#else
+            if(Mouse.IsPressed())
+            {
+                Debug.Log("Hello");
+            }
+
+#endif
+        }
+        // UI 요소 위에서 클릭이 발생했는지 확인하는 함수
+        private bool IsPointerOverUI(Vector2 screenPosition)
+        {
+            PointerEventData pointerData = new PointerEventData(eventSystem)
+            {
+                position = screenPosition
+            };
+
+            // 그래픽 UI의 Raycast 대상 찾기
+            var results = new List<RaycastResult>();
+            graphicRaycaster.Raycast(pointerData, results);
+
+            return results.Count > 0;  // 결과가 있으면 UI 위에 있다는 의미
+        }
+
+        private void TouchInteract(Vector3 inputPosition)
+        {
+            // 클릭한 위치를 월드 좌표로 변환
+            Ray ray = mainCamera.ScreenPointToRay(inputPosition);
+            RaycastHit hit;
+
+            View.UpgradePanel.gameObject.SetActive(false);
+            // Raycast를 발사하여 클릭한 위치의 오브젝트 감지
+            if (Physics.Raycast(ray, out hit))
+            {
+                // 클릭한 위치의 오브젝트를 처리
+                GameObject clickedObject = hit.collider.gameObject;
+                Debug.Log($"클릭한 오브젝트: {clickedObject.name}");
+
+                // 오브젝트 상호작용 함수 호출
+                InteractWithObject(clickedObject);
+            }
+        }
+
+        private void InteractWithObject(GameObject clickedObject)
+        {
+            Kitchen kitchenObject = clickedObject.GetComponentInParent<Kitchen>();
+            if (kitchenObject != null)
+            {
+                // 생성 및 포지션 설정
+                View.SetUpgradePanel(kitchenObject.gameObject);
+                //Debug.Log("해당 오브젝트와 상호작용할 수 있습니다.");
+            }
+            
         }
 
         #region bannerView 
@@ -60,7 +154,7 @@ namespace CKProject.UI
         }
 
 
-        #endregion
+#endregion
 
 
         #region RewardedAD
@@ -82,6 +176,7 @@ namespace CKProject.UI
 
             RewardedAd.Load(rewardedAdUnitId, new AdRequest.Builder().Build(), LoadCallback);
         }
+
 
         public void LoadCallback(RewardedAd rewardedAd, LoadAdError loadAdError)
         {
@@ -116,37 +211,16 @@ namespace CKProject.UI
 
 #endregion
 
-        private void MoneyUpdate(ref int[] money)
+        public void UpdateMoney()
         {
-            Theorem();
-            MyMoneyToString(money, Model.Index, Model.unitMoney);
+            Model.MoneyData.Theorem();
+            MyMoneyToString(Model.Money, Model.Index, Model.unitMoney);
         }
 
-        private void Theorem()
+        private void MoneyUpdate(int[] money)
         {
-            for (int i = 0; i < Model.Size; i++)
-            {
-                if (Model.Money[i] > 0)
-                    Model.Index = i;
-            }
-
-            for (int i = 0; i <= Model.Index; i++)
-            {
-                if (Model.Money[i] >= 1000)
-                {
-                    Model.Money[i] -= 1000;
-                    Model.Money[i + 1] += 1;
-                }
-
-                if (Model.Money[i] < 0)
-                {
-                    if (Model.Index > 1)
-                    {
-                        Model.Money[i + 1] -= 1;
-                        Model.Money[i] += 1000;
-                    }
-                }
-            }
+            Model.MoneyData.Theorem();
+            MyMoneyToString(money, Model.Index, Model.unitMoney);
         }
 
         public void AddMoney(int money)
@@ -161,7 +235,7 @@ namespace CKProject.UI
                 money /= 1000;
             }
             Model.Money[index] += memo;
-            Theorem();
+            Model.MoneyData.Theorem();
             MyMoneyToString(Model.Money, Model.Index, Model.unitMoney);
         }
 
@@ -171,7 +245,7 @@ namespace CKProject.UI
             {
                 Model.Money[i] += getMoney[i];
             }
-            MoneyUpdate(ref Model.Money);
+            MoneyUpdate(Model.Money);
         }
 
         public void SubMoney(int[] useMoney)
@@ -180,7 +254,7 @@ namespace CKProject.UI
             {
                 Model.Money[i] -= useMoney[i];
             }
-            MoneyUpdate(ref Model.Money);
+            MoneyUpdate(Model.Money);
         }
 
         public void MyMoneyToString(int[] Money, int index, string[] unit)
@@ -201,6 +275,11 @@ namespace CKProject.UI
             string p;
             p = (float)(Math.Truncate(a * 100) / 100) + unit[index];
             View.UpdateMoneyText(p);
+        }
+
+        public void SetMissionPanel()
+        {
+            View.SetMissionPanel();
         }
 
         public void SetUpgradePanel()

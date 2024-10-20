@@ -15,11 +15,12 @@ namespace CKProject.FSM
 
         private CustomTrigger customTrigger;
 
+        // 음식 받을 대기 중 
         [VisibleEnum(typeof(EGuestStateType))]
         public void CheckTriggerArea(int stateType)
         {
             customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
-            if (customTrigger != null)
+            if (customTrigger != null && !GuestFSM.GetOut)
             {
                 GuestFSM.Chair = customTrigger.GetComponent<Chair>();
                 //customTrigger.GetComponent<Table>()?.EnterGuest(GuestFSM);

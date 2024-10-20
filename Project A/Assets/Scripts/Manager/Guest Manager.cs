@@ -39,12 +39,7 @@ namespace CKProject.Managers
         
         private void Awake()
         {
-            if (Instance == null)
-                Instance = this;
-            else
-            {
-                Destroy(gameObject);
-            }
+            CreateInstance(this);
             Intialized();
 
         }
@@ -130,6 +125,8 @@ namespace CKProject.Managers
         
         public void SetWaitingFood(Unit guest)
         {
+            // 음식 지정
+            // 현재 제작이 가능한 음식 호출
             OrderData orderData;
             orderData.FoodType = guest.SetFood();
             orderData.OrderTarget = guest.gameObject;

@@ -1,14 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using MVP.Upgrade;
+using UnityEngine.Events;
+using System;
+using MVP.Mission;
 
 namespace CKProject.UI
 {
     public class MainView : MonoBehaviour
     {
         [Header("UI")]
-        public GameObject UpgradePanel;
-
+        public UpgradePresenter UpgradePanel;
+        public MissionPresenter MissionPanel;
         public GameObject SettingPanel;
         public GameObject ShopPanel;
 
@@ -19,13 +23,22 @@ namespace CKProject.UI
 
         private void Start()
         {
-            UpgradePanel.SetActive(false);
+            UpgradePanel.gameObject.SetActive(false);
+            MissionPanel.Initialized();
+            MissionPanel.gameObject.SetActive(false);
             SettingPanel.SetActive(false);
+            ShopPanel.SetActive(false);
         }
 
         public void SetUpgradePanel()
         {
-            UpgradePanel.SetActive(!UpgradePanel.activeSelf);
+            UpgradePanel.gameObject.SetActive(!UpgradePanel.gameObject.activeSelf);
+        }
+
+        public void SetUpgradePanel(GameObject kitchen)
+        {
+            UpgradePanel.gameObject.SetActive(!UpgradePanel.gameObject.activeSelf);
+            UpgradePanel.UpdateConponent(kitchen);
         }
 
         public void SetSettingPanel()
@@ -42,6 +55,11 @@ namespace CKProject.UI
         public void UpdateMoneyText(string text)
         {
             MoneyText.text = text;
+        }
+
+        public void SetMissionPanel()
+        {
+            MissionPanel.gameObject.SetActive(!MissionPanel.gameObject.activeSelf);
         }
     }
 }

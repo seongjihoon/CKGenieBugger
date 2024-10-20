@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using CKProject.EditorUtils;
 using UnityEditor.Timeline.Actions;
+using CKProject.Managers;
+using static CKProject.Managers.FoodManager;
+using static CKProject.Managers.MissionManager;
 
 namespace CKProject.Interactable
 {
     public enum EFoodType
     {
         None,
-        Bugger,
-        Pizza,
-        Chicken,
+        HotDog,
+        Tteokbokki,
         ALL,
         //Eatting,
     }
@@ -59,6 +61,11 @@ namespace CKProject.Interactable
 
         [SerializeField, ReadOnly]
         private int curCount = 0;
+
+        // 기본 스피드
+        //[SerializeField, ReadOnly, Header("배속")]
+        //private float nowSpeed = 1;
+        //private const float defaultSpeed = 1;
 
         #endregion
 
@@ -113,7 +120,8 @@ namespace CKProject.Interactable
         private void MakingFood()
         {
             cookTimer += Time.deltaTime;
-            ShowCoolDown(FoodSO.SpawnTime);
+
+            ShowCoolDown((FoodManager.Instance.GetFoodLevelData(FoodSO.foodType).CreateTime * 0.1f)/* * (defaultSpeed / nowSpeed)*/);
             if (cookTimer > FoodSO.SpawnTime)
             {
                 kitchenType = EKitchenType.Complet;
@@ -176,6 +184,34 @@ namespace CKProject.Interactable
 
         #region public methods
         
+        public void Upgrade()
+        {
+            FoodManager.Instance.LevelUp(FoodSO.foodType);
+        }
+
+        public void MissionComplate(MissionData missionData, GameObject disablePanel)
+        {
+            FoodManager.Instance.MissionComplate(missionData, disablePanel);
+        }
+
+
+        public string FoodName()
+        {
+            switch (FoodSO.foodType)
+            {
+                case EFoodType.None:
+                    break;
+                case EFoodType.HotDog:
+                    return "핫도그";
+                case EFoodType.Tteokbokki:
+                    return "떡볶이";
+                case EFoodType.ALL:
+                    break;
+                default:
+                    break;
+            }
+            return string.Empty;
+        }
         #endregion
     }
 

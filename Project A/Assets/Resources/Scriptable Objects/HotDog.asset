@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a4e527b866963b40bbd6498fe270e47, type: 3}
-  m_Name: Pizza
+  m_Name: HotDog
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 7110612849146564809, guid: 31af60e0b65f54347986b2a30a0740a0, type: 3}
-  foodType: 2
-  Price: 040000007b0000000b000000
+  Prefab: {fileID: 8421477051262660281, guid: ec5af6d78e224cf4bbe27b8df06ba259, type: 3}
+  foodType: 1
+  Level: 0
+  Price: 0000000000000000ea0000001e00000000000000
   ReadyTime: 1
-  SpawnTime: 2
-  ThrowSpeed: 10
+  SpawnTime: 1.5

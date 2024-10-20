@@ -61,8 +61,8 @@ namespace PathFinding
         public bool GetOut;
         public Chair Chair;
 
-        public List<EFoodType> Order = new List<EFoodType>();
-
+        //public List<EFoodType> Order = new List<EFoodType>();
+        public EFoodType Order;
         private float speed = 2;
         private int targetIndex;
         [SerializeField] private CustomTrigger hitedTrigger;
@@ -125,8 +125,11 @@ namespace PathFinding
 
         public EFoodType SetFood()
         {
-            Order.Add(EFoodType.ALL);
-            return Order[Order.Count -1];
+            //Order.Add((EFoodType)Random.Range(0, GameManager.Instance.OpenFood));
+            //return Order[Order.Count -1];
+            Order = (EFoodType)Random.Range(1, GameManager.Instance.OpenFood + 1);
+            //Order = EFoodType.ALL;
+            return Order;
         }
 
         public void MoveStart()
@@ -215,6 +218,11 @@ namespace PathFinding
             }
         }
 
+        private void OnEnable()
+        {
+            //Order.Clear();
+            Order = EFoodType.None;
+        }
         private void OnDrawGizmos()
         {
             if (path != null)
