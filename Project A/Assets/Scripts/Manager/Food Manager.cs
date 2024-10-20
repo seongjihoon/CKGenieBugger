@@ -4,6 +4,7 @@ using UnityEngine;
 using CKProject.SingleTon;
 using CKProject.Interactable;
 using CKProject.EditorUtils;
+using static CKProject.Managers.MissionManager;
 
 namespace CKProject.Managers
 {
@@ -115,7 +116,43 @@ namespace CKProject.Managers
                 return money;
             }
         }
+
+        [System.Serializable]
+        public struct MissionRevenue
+        {
+            [ReadOnly] int defaultCreateTime;
+            [ReadOnly] float CreateTime;
+            [ReadOnly] float defaultRevenue;
+            [ReadOnly] float Revenue;
+
+            public static MissionRevenue Init()
+            {
+                MissionRevenue mission = new MissionRevenue();
+                mission.defaultCreateTime = 1;
+                mission.CreateTime = 1;
+                mission.defaultRevenue = 1;
+                mission.Revenue = 1;
+                return mission;
+            }
+
+            public void Upgrade(MissionData missionData)
+            {
+                switch (missionData.Target_Type)
+                {
+                    case 1:
+                        CreateTime *= missionData.Get_Count;
+                        break;
+                    case 2:
+                        Revenue *= missionData.Get_Count;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
         #endregion
+
 
         #region SerilaizeField
         [System.Serializable]
@@ -124,14 +161,19 @@ namespace CKProject.Managers
 
         };
 
+        [System.Serializable]
+        public class RevenueFoodData : SerializableDictionary<EFoodType, MissionRevenue> { };
         #endregion
 
         #region Food Data Table
         public LevelFoodData LevelFoodDatas = new LevelFoodData();
+
+        public RevenueFoodData RevenueDatas = new RevenueFoodData();
         #endregion
 
         #region Ingame Food Data
         public FoodScriptableObject[] FoodDataArray;
+        public Kitchen[] UseKitchens;
         public SerializableDictionary<EFoodType, int> FoodLevelTable = new SerializableDictionary<EFoodType, int>();
         public int FoodMaxLevel = 0;
         #endregion
@@ -142,7 +184,15 @@ namespace CKProject.Managers
             CreateInstance(this);
             CallFoodDataTables();
             InitializedFoodData();
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
+
+        private void Start()
+        {
+            for (int i = 0; i < GameManager.Instance.Stage; i++)
+            {
+                UseKitchens[i].gameObject.SetActive(true);
+            }
         }
 
         // 매 스테이지마다 초기화 해줘야함.
@@ -154,6 +204,11 @@ namespace CKProject.Managers
                 for (int i = 0; i < FoodDataArray.Length; i++)
                 {
                     FoodLevelTable.Add(FoodDataArray[i].foodType, 1);
+                }
+                foreach(var obj in UseKitchens)
+                {
+                    obj.gameObject.SetActive(false);
+                    RevenueDatas.Add(obj.FoodSO.foodType, MissionRevenue.Init());
                 }
             }
             catch
@@ -169,7 +224,7 @@ namespace CKProject.Managers
             TextAsset tex = (TextAsset)Resources.Load("FoodLevelTable");
             string file = tex.text;
             bool endOfFile = false;
-            var data_values = file.Split("\n");
+            string[] data_values = file.Split("\n");
 
             List<UpgradeFoodData> foodDatas = new List<UpgradeFoodData>();
             // 일단 두번 체크
@@ -216,6 +271,19 @@ namespace CKProject.Managers
             }
         }
 
+        public void MissionComplate(MissionData missionData)
+        {
+            Stage_Food stage = new Stage_Food(GameManager.Instance.Stage, missionData.Get_Type);
+
+            // 돈 비교 
+            //if (GameManager.Instance.CompareMoney(
+            //    LevelFoodDatas[stage][FoodLevelTable[(EFoodType)missionData.Get_Type]].Upgrade_Cost, LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].UpgradeIndex))
+            if(GameManager.Instance.CompareMoney(missionData.Mission_Count, missionData.Mission_Count_Index))
+            {
+                RevenueDatas[(EFoodType)missionData.Get_Type].Upgrade(missionData);
+            }
+        }
+
         // 현재 가진 돈을 비교하여 마이너스 해줘야함.
         public void LevelUp(EFoodType foodType)
         {
@@ -227,7 +295,10 @@ namespace CKProject.Managers
             {
                 GameManager.Instance.SubMoney(LevelFoodDatas[stage][FoodLevelTable[foodType]].Upgrade_Cost);
                 if (FoodLevelTable[foodType] < LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].Level)
+                {
                     FoodLevelTable[foodType]++;
+                    GameManager.Instance.UpgradeDitryFlag = true;
+                }
                 else
                 {
 #if UNITY_EDITOR
@@ -241,6 +312,7 @@ namespace CKProject.Managers
                 Debug.Log("돈 없음");
 #endif
             }
+
         }
 
         public UpgradeFoodData GetFoodLevelData(EFoodType foodType)
