@@ -295,11 +295,12 @@ namespace CKProject.Managers
         {
             Stage_Food stage = new Stage_Food(GameManager.Instance.Stage, (int)foodType);
 
+            var levelTable = FoodLevelTable[foodType] - 1; 
             // 돈 비교 
             if (GameManager.Instance.CompareMoney(
-                LevelFoodDatas[stage][FoodLevelTable[foodType]].Upgrade_Cost, LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].UpgradeIndex))
+                LevelFoodDatas[stage][levelTable].Upgrade_Cost, LevelFoodDatas[stage][levelTable].UpgradeIndex))
             {
-                GameManager.Instance.SubMoney(LevelFoodDatas[stage][FoodLevelTable[foodType]].Upgrade_Cost);
+                GameManager.Instance.SubMoney(LevelFoodDatas[stage][levelTable].Upgrade_Cost);
                 if (FoodLevelTable[foodType] < LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].Level)
                 {
                     FoodLevelTable[foodType]++;
