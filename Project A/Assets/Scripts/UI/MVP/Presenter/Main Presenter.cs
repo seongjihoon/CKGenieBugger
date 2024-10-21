@@ -213,7 +213,7 @@ namespace CKProject.UI
 
         public void UpdateMoney()
         {
-            Model.MoneyData.Theorem();
+            Model.MoneyData = Model.MoneyData.Theorem();
             MyMoneyToString(Model.Money, Model.Index, Model.unitMoney);
         }
 

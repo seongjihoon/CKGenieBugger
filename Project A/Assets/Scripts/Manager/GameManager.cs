@@ -49,7 +49,7 @@ namespace CKProject.Managers
             {
                 moneyData.Money[i] += money[i];
             }
-            moneyData.Theorem();
+            //moneyData.Theorem();
             MainUI.UpdateMoney();
         }
         public void SubMoney(int[] useMoney)
@@ -58,14 +58,14 @@ namespace CKProject.Managers
             {
                 moneyData.Money[i] -= useMoney[i];
             }
-            moneyData.Theorem();
+            //moneyData.Theorem();
             MainUI.UpdateMoney();
         }
 
         // 업데이트 해줘야함
         public bool CompareMoney(int[] upgrade_Cost, int upgrade_Index)
         {
-            if(upgrade_Index <= moneyData.Index && upgrade_Cost[upgrade_Index] <= moneyData.Money[moneyData.Index]  )
+            if(upgrade_Index <= moneyData.Index || upgrade_Cost[upgrade_Index] <= moneyData.Money[upgrade_Index]  )
                 return true;
             return false;
         }
@@ -77,7 +77,6 @@ namespace CKProject.Managers
         [ArrayElementTitle()]
         public int[] Money;
 
-        [HideInInspector]
         public int Index;
         [HideInInspector]
 
@@ -86,7 +85,7 @@ namespace CKProject.Managers
         "BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ" , "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY" , "BZ",
         "CA", "CB", "CC", "CD", "CE", "CF", "CG", "CH", "CI", "CJ", "CK", "CL", "CM", "CN", "CO", "CP", "CQ" , "CR", "CS", "CT", "CU", "CV", "CW", "CX", "CY" , "CZ",};
 
-        public void Theorem()
+        public MoneyData Theorem()
         {
             for (int i = 0; i < Money.Length; i++)
             {
@@ -111,6 +110,13 @@ namespace CKProject.Managers
                     }
                 }
             }
+
+            for (int i = 0; i < Money.Length; i++)
+            {
+                if (Money[i] > 0)
+                    Index = i;
+            }
+            return this;
         }
     }
 }
