@@ -64,8 +64,8 @@ namespace CKProject.Managers
                 {
                     data.Upgrade_Cost = StringToIntArray(str[4], ref data.UpgradeIndex);  // memory dump가 일어날 수 있음
                 }
-                else
-                    Debug.Log("AA");
+                else;
+                    //Debug.Log("AA");
                     //data.Upgrade_Cost = ;
                 data.Revenue = StringToIntArray(str[5], ref data.RevenueIndex);
                 data.CreateTime = float.Parse(str[6]);
@@ -276,17 +276,18 @@ namespace CKProject.Managers
             Stage_Food stage = new Stage_Food(GameManager.Instance.Stage, missionData.Get_Type);
 
             // 돈 비교 
-            //if (GameManager.Instance.CompareMoney(
-            //    LevelFoodDatas[stage][FoodLevelTable[(EFoodType)missionData.Get_Type]].Upgrade_Cost, LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].UpgradeIndex))
             if(GameManager.Instance.CompareMoney(missionData.Mission_Count, missionData.Mission_Count_Index))
             {
                 GameManager.Instance.SubMoney(missionData.Mission_Count);
                 RevenueDatas[(EFoodType)missionData.Get_Type].Upgrade(missionData);
 #if UNITY_EDITOR
                 Debug.Log("Success");
-                disableObject.SetActive(false);
 #endif  
                 // 완료되면 버튼 없애주기.
+
+                // 버튼 없애면서 
+                MissionManager.Instance.MissionComplate();
+                disableObject.SetActive(false);
             }
         }
 

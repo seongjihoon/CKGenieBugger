@@ -1,5 +1,6 @@
 ﻿using CKProject.Interactable;
 using CKProject.Managers;
+using MVP.Mission;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,12 +27,12 @@ namespace CKProject.UI
             CustomButton.MyMoneyToString(missionData.Mission_Count, missionData.Mission_Count_Index, MoneyData.unitMoney);
         }
 
-        public void InitPanel(MissionData missionData, Kitchen  Kitchen, MissionData param)
+        public void InitPanel(MissionData missionData, Kitchen  Kitchen)
         {
             GetText.text = missionData.Get_Text;
             RevenueText.text = missionData.Mission_Text;
 
-            CustomButton.InitButtonClickEvent(Kitchen, param);
+            CustomButton.InitButtonClickEvent(Kitchen, missionData);
             CustomButton.MyMoneyToString(missionData.Mission_Count, missionData.Mission_Count_Index, MoneyData.unitMoney);
         }
 

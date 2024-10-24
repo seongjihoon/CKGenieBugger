@@ -65,7 +65,7 @@ namespace CKProject.Managers
         // 업데이트 해줘야함
         public bool CompareMoney(int[] upgrade_Cost, int upgrade_Index)
         {
-            if(upgrade_Index <= moneyData.Index || upgrade_Cost[upgrade_Index] <= moneyData.Money[upgrade_Index]  )
+            if(upgrade_Index < moneyData.Index || (upgrade_Index == moneyData.Index  && upgrade_Cost[upgrade_Index] <= moneyData.Money[upgrade_Index]))
                 return true;
             return false;
         }
