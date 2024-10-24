@@ -127,6 +127,9 @@ namespace CKProject.Managers
         #endregion
 
         public int MaxPoolCount;
+        private int CurrentUseCount = 0;
+
+        public int Count { get { return CurrentUseCount; } set { CurrentUseCount = value; } }
 
         private void Awake()
         {
@@ -141,8 +144,10 @@ namespace CKProject.Managers
             return MissionDatas[GameManager.Instance.Stage];
         }
 
-
-
+        public void MissionComplate()
+        {
+            CurrentUseCount--;
+        }
 
         // 스테이지 별로 노출되어야하는 미션이 달라야함.
         public void CallMissionDataTables()

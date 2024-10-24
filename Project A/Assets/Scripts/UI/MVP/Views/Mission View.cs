@@ -30,12 +30,15 @@ namespace MVP.Mission
 
         public void InitPanels()
         {
+            int missionCount = 0;
             MissionManager.MissionData[] MissionDatas = MissionManager.Instance.GetStageMission();
             for (int i= 0; i < MissionDatas.Length; i++)
             {
                 Missions[i].gameObject.SetActive(true);
-                Missions[i].InitPanel(MissionDatas[i], FoodManager.Instance.UseKitchens[MissionDatas[i].Get_Type - 1], MissionDatas[i]);
+                Missions[i].InitPanel(MissionDatas[i], FoodManager.Instance.UseKitchens[MissionDatas[i].Get_Type - 1]);
+                missionCount++;
             }
+            MissionManager.Instance.Count = missionCount;
         }
 
 

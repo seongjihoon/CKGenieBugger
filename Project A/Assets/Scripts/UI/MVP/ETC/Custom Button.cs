@@ -17,6 +17,7 @@ namespace CKProject.UI
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(action);
         }
+
         public void InitButtonClickEvent(Kitchen kitchen, MissionData param)
         {
             button.onClick.RemoveAllListeners();

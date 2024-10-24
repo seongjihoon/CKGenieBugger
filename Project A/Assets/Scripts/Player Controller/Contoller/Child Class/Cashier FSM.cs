@@ -20,8 +20,10 @@ namespace CKProject.FSM
 
         public List<Transform> CounterTop = new List<Transform>();
 
+
+
         public float Speed = 2;
-        public GameObject GetOnFood;
+        [HideInInspector] public GameObject GetOnFood;
         [HideInInspector] public int TargetIndex;
 
         protected override void Start()
