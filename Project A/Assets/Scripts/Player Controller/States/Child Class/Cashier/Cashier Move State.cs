@@ -150,6 +150,7 @@ namespace CKProject.FSM
         {
             int count = 0;
             Vector3 currentWaypoint = cashierFSM.Path[0];
+            transform.LookAt(currentWaypoint);
             while (true)
             {
                 count++;
@@ -161,6 +162,7 @@ namespace CKProject.FSM
                         yield break;
                     }
                     currentWaypoint = cashierFSM.Path[cashierFSM.TargetIndex];
+                    transform.LookAt(currentWaypoint);
                 }
                 if (count > 100000)
                 {

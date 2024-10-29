@@ -199,6 +199,8 @@ namespace PathFinding
                         yield break;
                     }
                     currentWaypoint = path[targetIndex];
+                    //transform.Rotate((transform.position - currentWaypoint).normalized);
+                    transform.LookAt(currentWaypoint);
                 }
                 if (count > 100000)
                 {
@@ -213,7 +215,9 @@ namespace PathFinding
 
                 currentWaypoint.y = transform.position.y;
 
+
                 transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+                
                 yield return null;
             }
         }
