@@ -56,6 +56,7 @@ MonoBehaviour:
     - {fileID: 7596915306844560083}
     - {fileID: 1040020147590867185}
     - {fileID: 7268654423252044005}
+  Animator: {fileID: 7365851695562853802}
   target: {fileID: 0}
   grid: {fileID: 0}
   path: []
@@ -279,6 +280,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: All@Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 69d824f66470b654f8706cd5bc568e11, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3abe0de4070b786438bce692578d12db, type: 2}
     - target: {fileID: 7985974569186381559, guid: 69d824f66470b654f8706cd5bc568e11, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -324,3 +329,8 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &7365851695562853802 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 69d824f66470b654f8706cd5bc568e11, type: 3}
+  m_PrefabInstance: {fileID: 3986343997139005499}
+  m_PrefabAsset: {fileID: 0}

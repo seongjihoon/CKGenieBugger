@@ -288,6 +288,8 @@ namespace CKProject.Managers
                 // 버튼 없애면서 
                 MissionManager.Instance.MissionComplate();
                 disableObject.SetActive(false);
+
+                
             }
         }
 
@@ -320,6 +322,11 @@ namespace CKProject.Managers
                 Debug.Log("돈 없음");
 #endif
             }
+
+        }
+
+        public void LevelCheck()
+        {
 
         }
 

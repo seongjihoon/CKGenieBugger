@@ -63,6 +63,7 @@ namespace PathFinding
 
         //public List<EFoodType> Order = new List<EFoodType>();
         public EFoodType Order;
+        public EGuestStateType GuestState;
         private float speed = 2;
         private int targetIndex;
         [SerializeField] private CustomTrigger hitedTrigger;
@@ -73,6 +74,7 @@ namespace PathFinding
             base.Start();
             //PathRequestManager.RequestPath(new PathRequest( this.transform.position, target.position, OnPathFound));
             grid = GameObject.Find("Path Manager").GetComponent<Grid>();
+            GuestState = EGuestStateType.Idle;
         }
 
         protected override void Update()
@@ -181,13 +183,14 @@ namespace PathFinding
 
         public bool GetPathIndex()
         {
-            return targetIndex >= path.Length;
+            return targetIndex >= path.Length - 1;
         }
 
         private IEnumerator FollowPath()
         {
             int count = 0;
             Vector3 currentWaypoint = path[0];
+            transform.LookAt(currentWaypoint);
             while (true)
             {
                 count++;
@@ -196,6 +199,8 @@ namespace PathFinding
                     targetIndex++;
                     if (GetPathIndex())
                     {
+                        transform.LookAt(path[targetIndex]);
+                        transform.position += transform.forward * 0.75f;
                         yield break;
                     }
                     currentWaypoint = path[targetIndex];
@@ -214,7 +219,6 @@ namespace PathFinding
                 //}
 
                 currentWaypoint.y = transform.position.y;
-
 
                 transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
                 

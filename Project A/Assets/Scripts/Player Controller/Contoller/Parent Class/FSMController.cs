@@ -25,6 +25,7 @@ namespace CKProject.FSM
         [SerializeField]
         [ReadOnly] private SerializableDictionary<T1, BaseState<T1>> stateTable = new SerializableDictionary<T1, BaseState<T1>>();
 
+        public Animator Animator;
 
         //public UnityAction<T1> changeStateAction;
         //public UnityAction excuteUpdateAction;

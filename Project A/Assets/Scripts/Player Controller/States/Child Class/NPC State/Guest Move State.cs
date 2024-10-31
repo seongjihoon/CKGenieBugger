@@ -20,9 +20,13 @@ namespace CKProject.FSM
         public void CheckTriggerArea(int stateType)
         {
             customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
-            if (customTrigger != null && !GuestFSM.GetOut)
+            if (customTrigger != null && !GuestFSM.GetOut && customTrigger.transform == GuestFSM.target)
             {
+                Debug.Log(customTrigger.name);
                 GuestFSM.Chair = customTrigger.GetComponent<Chair>();
+                GuestFSM.Animator.SetTrigger("Sit Start");
+                GuestFSM.GuestState = EGuestStateType.Ready;
+                // 바라보는 방향으로 n만큼 이동
                 //customTrigger.GetComponent<Table>()?.EnterGuest(GuestFSM);
                 GuestManager.Instance.SetWaitingOrder(gameObject);
                 GuestFSM.ChangeState((EGuestStateType)stateType);
@@ -38,6 +42,7 @@ namespace CKProject.FSM
                 {
                     GuestFSM.ChangeState((EGuestStateType)stateType);
                     GuestManager.Instance.OutGuest(GuestFSM);
+                    GuestFSM.GuestState = EGuestStateType.Idle;
                     //GuestManager1.Instance.OutGuest(GuestFSM);
                 }
             }

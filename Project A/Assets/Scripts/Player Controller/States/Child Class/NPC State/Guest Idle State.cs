@@ -11,8 +11,11 @@ namespace CKProject.FSM
         [VisibleEnum(typeof(EGuestStateType))]
         public void IsGetPath(int stateType)
         {
-            if(GuestFSM.target != null)   
+            if (GuestFSM.target != null)
+            {
+                GuestFSM.GuestState = (EGuestStateType)stateType;
                 GuestFSM.ChangeState((EGuestStateType)stateType);
+            }
         }
     }
 }
