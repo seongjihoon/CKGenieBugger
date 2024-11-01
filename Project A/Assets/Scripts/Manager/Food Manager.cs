@@ -75,15 +75,16 @@ namespace CKProject.Managers
             public static int[] StringToIntArray(string str, ref int index)
             {
                 List<int> arr = new List<int>();
-                int money = 0, count = 0;
+                int money = 0, count = 0, current = str.Length;
 
                 while (count + 3 < str.Length)
                 {
-                    money = int.Parse(str.Substring(count, 3));
+                    money = int.Parse(str.Substring(current - 3, 3));
                     arr.Add(money);
                     count += 3;
+                    current -= 3;
                 }
-                money = int.Parse(str.Substring(count, str.Length - count));
+                money = int.Parse(str.Substring(0, str.Length - count));
                 arr.Add(money);
                 return Theorem(arr.ToArray(), ref index);
             }
@@ -287,11 +288,16 @@ namespace CKProject.Managers
 
                 // 버튼 없애면서 
                 MissionManager.Instance.MissionComplate();
+                // 매니저에서 활성화된 버튼이 존재하는가?
+                // 또는 현재 음식 레벨이 맥스가 아닌 애들이 있는가?
+                if (MissionManager.Instance.Count < 1 && LevelCheck())
+                {
+                    GameManager.Instance.ChangedButton();
+                }
                 disableObject.SetActive(false);
-
-                
             }
         }
+
 
         // 현재 가진 돈을 비교하여 마이너스 해줘야함.
         public void LevelUp(EFoodType foodType)
@@ -325,8 +331,18 @@ namespace CKProject.Managers
 
         }
 
-        public void LevelCheck()
+        public bool LevelCheck()
         {
+            for(int i = 0; i < GameManager.Instance.Stage; i++)
+            {
+                Stage_Food stage = new Stage_Food(GameManager.Instance.Stage, i + 1);
+
+                if(FoodLevelTable[(EFoodType)i + 1] < LevelFoodDatas[stage][LevelFoodDatas[stage].Length - 1].Level)
+                {
+                    return false;
+                }
+            }
+            return true;
 
         }
 
@@ -334,6 +350,7 @@ namespace CKProject.Managers
         {
             Stage_Food stage = new Stage_Food(GameManager.Instance.Stage, (int)foodType);
 
+            var levelTable = FoodLevelTable[foodType] - 1;
             return LevelFoodDatas[stage][FoodLevelTable[foodType] - 1];
         }
     }

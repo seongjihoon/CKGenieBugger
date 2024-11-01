@@ -11,6 +11,7 @@ namespace CKProject.FSM
         public void MoveStart()
         {
             GuestFSM.MoveStart();
+            GuestFSM.Animator.SetBool("Move", true);
         }
 
         private CustomTrigger customTrigger;
@@ -30,6 +31,7 @@ namespace CKProject.FSM
                 //customTrigger.GetComponent<Table>()?.EnterGuest(GuestFSM);
                 GuestManager.Instance.SetWaitingOrder(gameObject);
                 GuestFSM.ChangeState((EGuestStateType)stateType);
+                GuestFSM.Animator.SetBool("Move", false);
             }
         }
 
@@ -43,6 +45,7 @@ namespace CKProject.FSM
                     GuestFSM.ChangeState((EGuestStateType)stateType);
                     GuestManager.Instance.OutGuest(GuestFSM);
                     GuestFSM.GuestState = EGuestStateType.Idle;
+                    GuestFSM.Animator.SetBool("Move", false);
                     //GuestManager1.Instance.OutGuest(GuestFSM);
                 }
             }

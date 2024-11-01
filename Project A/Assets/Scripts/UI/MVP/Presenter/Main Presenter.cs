@@ -277,6 +277,11 @@ namespace CKProject.UI
             View.UpdateMoneyText(p);
         }
 
+        public void LevelUpChangeButton()
+        {
+            View.ChangeButton();
+        }
+
         public void SetMissionPanel()
         {
             View.SetMissionPanel();

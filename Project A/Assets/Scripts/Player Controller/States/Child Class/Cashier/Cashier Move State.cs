@@ -16,6 +16,7 @@ namespace CKProject.FSM
             base.Enter();
             PathRequestManager.RequestPath(new PathRequest(transform.position, cashierFSM.Target.position, OnPathFound));
 
+            cashierFSM.Animator.SetBool("Move", true);
         }
 
         public override void Exit()
@@ -53,6 +54,7 @@ namespace CKProject.FSM
 
                     // 주문 완료
                     cashierFSM.ChangeState((EStateType)stateType);
+                    cashierFSM.Animator.SetBool("Move", false);
                 }
             }
         }
@@ -72,6 +74,7 @@ namespace CKProject.FSM
                     // 제작 시작
                     customTrigger.GetComponent<Kitchen>()?.Interaction();
                     cashierFSM.ChangeState((EStateType)stateType);
+                    cashierFSM.Animator.SetBool("Move", false);
                 }
             }
         }
@@ -88,6 +91,7 @@ namespace CKProject.FSM
                     transform.position = cashierFSM.Path[cashierFSM.Path.Length - 1];
                     cashierFSM.DeliveryFood();
                     cashierFSM.ChangeState((EStateType)stateType);
+                    cashierFSM.Animator.SetBool("Move", false);
                 }
             }
         }

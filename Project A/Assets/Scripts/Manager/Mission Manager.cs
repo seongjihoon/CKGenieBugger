@@ -149,6 +149,12 @@ namespace CKProject.Managers
             CurrentUseCount--;
         }
 
+        //public void CheckMissionList()
+        //{
+        //    // 현재 미션 리스트가 몇 개 있는지 체크
+            
+        //}
+
         // 스테이지 별로 노출되어야하는 미션이 달라야함.
         public void CallMissionDataTables()
         {

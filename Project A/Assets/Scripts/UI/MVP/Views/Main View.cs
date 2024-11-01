@@ -13,6 +13,8 @@ namespace CKProject.UI
         [Header("UI")]
         public UpgradePresenter UpgradePanel;
         public MissionPresenter MissionPanel;
+        public GameObject NextStageButton;
+        public GameObject MissionButton;
         public GameObject SettingPanel;
         public GameObject ShopPanel;
 
@@ -26,6 +28,8 @@ namespace CKProject.UI
             UpgradePanel.gameObject.SetActive(false);
             MissionPanel.Initialized();
             MissionPanel.gameObject.SetActive(false);
+            MissionButton.SetActive(true);
+            NextStageButton.SetActive(false);
             SettingPanel.SetActive(false);
             ShopPanel.SetActive(false);
         }
@@ -60,6 +64,12 @@ namespace CKProject.UI
         public void SetMissionPanel()
         {
             MissionPanel.gameObject.SetActive(!MissionPanel.gameObject.activeSelf);
+        }
+
+        public void ChangeButton()
+        {
+            MissionButton.SetActive(false);
+            NextStageButton.SetActive(true);
         }
     }
 }

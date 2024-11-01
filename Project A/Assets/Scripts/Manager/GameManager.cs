@@ -69,6 +69,11 @@ namespace CKProject.Managers
                 return true;
             return false;
         }
+
+        public void ChangedButton()
+        {
+            MainUI.LevelUpChangeButton();
+        }
     }
 
     [System.Serializable]
@@ -103,7 +108,7 @@ namespace CKProject.Managers
 
                 if (Money[i] < 0)
                 {
-                    if (Index > 1)
+                    if (Index >= 1)
                     {
                         Money[i + 1] -= 1;
                         Money[i] += 1000;
