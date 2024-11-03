@@ -29,6 +29,7 @@ namespace CKProject.FSM
             base.Start();
             // 입력은 안받을 예정.
             // 무조건 AI만 사용
+            //DontDestroyOnLoad(this);
 
         }
 

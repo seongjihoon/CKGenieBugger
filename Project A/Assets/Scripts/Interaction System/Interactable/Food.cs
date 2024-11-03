@@ -55,13 +55,13 @@ namespace CKProject.Interactable
             //}
         }
         
-        private void AddMoney()
-        {
-            if(customCollision.GetComponent<Table1>().EnterFood(this))
-            {
-                GameObject.Find("UI Manager").GetComponent<Controller>().AddMoney(foodSO.Price);
-            }
+        //private void AddMoney()
+        //{
+        //    if(customCollision.GetComponent<Table1>().EnterFood(this))
+        //    {
+        //        GameObject.Find("UI Manager").GetComponent<Controller>().AddMoney(foodSO.Price);
+        //    }
             
-        }
+        //}
     }
 }

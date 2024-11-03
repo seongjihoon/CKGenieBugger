@@ -8,18 +8,21 @@ using CKProject.SingleTon;
 using CKProject.Interactable;
 using CKProject.UI;
 using CKProject.AttributeEditor;
+using UnityEngine.SceneManagement;
 
 namespace CKProject.Managers
 {
     // 현재 게임에서 사용 중인 데이터 
     // 미션은 여기서 관리 해야할까?
-    public class GameManager : SingleTon<GameManager>
+    public class GameManager : MonoBehaviour
     {
-        [ReadOnly] public int Stage = 1;
+        public static GameManager Instance;
+        public int Stage = 1;
         [ReadOnly] public int OpenFood = 0;
 
         [HideInInspector] public bool UpgradeDitryFlag = false;
 
+        public TriggerManager TriggerManager;
         public MainPresenter MainUI;
 
         public MoneyData moneyData;
@@ -29,9 +32,13 @@ namespace CKProject.Managers
 
         private void Awake()
         {
-            CreateInstance(this);
+            //CreateInstance(this);
+            if(Instance == null)
+               Instance = this;
             OpenFood = Stage;
             moneyData.Money = new int[Size];
+            TriggerManager = GameObject.Find("Custom Trigger Manager").GetComponent<TriggerManager>();
+            MainUI = GameObject.Find("Main UI Manager").GetComponent<MainPresenter>();
             DontDestroyOnLoad(this.gameObject);
         }
 
@@ -74,6 +81,22 @@ namespace CKProject.Managers
         {
             MainUI.LevelUpChangeButton();
         }
+
+        public void NextStage()
+        {
+            Stage++;
+            SceneLoader.Instance.LoadScene("Game Scene 2");
+            OpenFood = Stage;
+            moneyData.Money = new int[Size];
+            FoodManager.Instance.KitchenSet();
+            FoodManager.Instance.InitializedFoodData();
+            //GuestManager.Instance.Reset();
+
+        }
+
+
+
+
     }
 
     [System.Serializable]

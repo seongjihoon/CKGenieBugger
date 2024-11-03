@@ -11,6 +11,14 @@ namespace CKProject.TriggerSystem
         public Vector3 Size = Vector3.zero;
         [SerializeField] private Rect localScale;
 
+        public void Start()
+        {
+            localScale.Set((transform.position.x + Offset.x + Size.x * 0.5f),
+                (transform.position.y + Offset.y + Size.y * 0.5f),
+                (transform.position.x + Offset.x - Size.x * 0.5f),
+                (transform.position.y + Offset.y - Size.y * 0.5f));
+        }
+
         public override bool OnCollision(Transform t)
         {
             if (CheckXYSize(t.position) && CheckZSize(t.position))

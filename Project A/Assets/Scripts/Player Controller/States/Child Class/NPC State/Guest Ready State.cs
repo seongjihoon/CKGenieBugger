@@ -36,7 +36,7 @@ namespace CKProject.FSM
         async UniTaskVoid StandUpAnim(EGuestStateType stateType)
         {
             //GuestFSM.Animator.SetTrigger("Sit End");
-            Debug.Log("AA");
+            //Debug.Log("AA");
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
             GuestFSM.ChangeState(stateType);
         }

@@ -8,11 +8,13 @@ namespace CKProject.Managers
     /// <summary>
     /// 역할: CSV에 기록된 데이터들을 불러옴
     /// </summary>
-    public class StageManager : SingleTon<StageManager>
+    public class StageManager : MonoBehaviour
     {
+
+        //public StageManager 
         private void Awake()
         {
-            CreateInstance(this);
+            //CreateInstance(this);
         }
 
         // Start is called before the first frame update

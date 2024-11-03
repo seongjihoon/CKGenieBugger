@@ -1,5 +1,4 @@
 using UnityEngine;
-using CKProject.SingleTon;
 using PathFinding;
 using Grid = PathFinding.Grid;
 using System.Collections.Generic;
@@ -8,8 +7,10 @@ using CKProject.Interactable;
 namespace CKProject.Managers
 {
 
-    public class GuestManager : SingleTon<GuestManager> 
+    public class GuestManager : MonoBehaviour
     {
+        public static GuestManager Instance;
+
 
         public bool SpawnTrigger = false;
         public float SpawnInterval = 0;
@@ -39,8 +40,11 @@ namespace CKProject.Managers
         
         private void Awake()
         {
-            CreateInstance(this);
-            Intialized();
+            if (Instance == null)
+                Instance = this;
+
+            //CreateInstance(this);
+            //DontDestroyOnLoad(this);
 
         }
 
@@ -48,6 +52,7 @@ namespace CKProject.Managers
         // Start is called before the first frame update
         void Start()
         {
+            Intialized();
             currentTimer = SpawnInterval;
         }
 

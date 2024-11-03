@@ -16,9 +16,9 @@ namespace CKProject.FSM
         Interact = 3,
         Throw = 4,
         Standby = 5,
-        
-    }
 
+    }
+#if UNITY_EDITOR
     [CustomEditor(typeof(PlayerFSM))]
     public class PlayerFSMEditor : Editor
     {
@@ -51,6 +51,7 @@ namespace CKProject.FSM
 
         }
     }
+#endif
 
     public class PlayerFSM : FSMController<EStateType>
     {
@@ -82,7 +83,7 @@ namespace CKProject.FSM
         protected override void Update()
         {
             base.Update();
-            CustomCollision = TriggerManager.Instance.CheckTriggerZone(transform);
+            CustomCollision = GameManager.Instance.TriggerManager.CheckTriggerZone(transform);
             rigidbody.velocity = velocity;
             //Debug.Log($"{rigidbody.velocity}");
         }

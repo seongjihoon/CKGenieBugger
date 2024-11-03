@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace CKProject.Managers
 {
-    public class MissionManager : SingleTon<MissionManager>
+    public class MissionManager : MonoBehaviour
     {
+        public static MissionManager Instance;
         enum DataCurrent
         {
             Index = 0,
@@ -133,10 +134,12 @@ namespace CKProject.Managers
 
         private void Awake()
         {
-            CreateInstance(this);
+            //CreateInstance(this);
+            if (Instance == null)
+                Instance = this;
             CallMissionDataTables();
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
 
         public MissionData[] GetStageMission()

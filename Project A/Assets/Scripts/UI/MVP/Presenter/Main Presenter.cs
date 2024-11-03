@@ -33,6 +33,7 @@ namespace CKProject.UI
             mainCamera = Camera.main;
             BannerRewardedAD();
             RewardedInitAd();
+            //DontDestroyOnLoad(this);
         }
 
         private void Start()
@@ -299,6 +300,12 @@ namespace CKProject.UI
         public void SetShopPanel()
         {
             View.SetShopPanel();
+        }
+
+        public void UserInfoSet(string UserName, string UserID)
+        {
+            Model.UserInfoSet(UserName, UserID);
+            View.ShowUserInfo(Model.UserName, Model.UserID);
         }
     }
 }

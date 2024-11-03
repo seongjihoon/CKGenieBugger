@@ -8,8 +8,9 @@ using static CKProject.Managers.MissionManager;
 
 namespace CKProject.Managers
 {
-    public class FoodManager : SingleTon<FoodManager>
+    public class FoodManager : MonoBehaviour
     {
+        public static FoodManager Instance;
         public enum DataCurrent
         {
             Index = 0,
@@ -65,8 +66,6 @@ namespace CKProject.Managers
                     data.Upgrade_Cost = StringToIntArray(str[4], ref data.UpgradeIndex);  // memory dump가 일어날 수 있음
                 }
                 else;
-                    //Debug.Log("AA");
-                    //data.Upgrade_Cost = ;
                 data.Revenue = StringToIntArray(str[5], ref data.RevenueIndex);
                 data.CreateTime = float.Parse(str[6]);
                 return data;
@@ -182,26 +181,35 @@ namespace CKProject.Managers
 
         private void Awake()
         {
-            CreateInstance(this);
+            if (Instance == null)
+                Instance = this;
+            //CreateInstance(this);
             CallFoodDataTables();
             InitializedFoodData();
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
 
         private void Start()
+        {
+            KitchenSet();
+        }
+
+        public void KitchenSet()
         {
             for (int i = 0; i < GameManager.Instance.Stage; i++)
             {
                 UseKitchens[i].gameObject.SetActive(true);
             }
+
         }
 
         // 매 스테이지마다 초기화 해줘야함.
-        private void InitializedFoodData()
+        public void InitializedFoodData()
         {
             try
             {
                 FoodLevelTable.Clear();
+                RevenueDatas.Clear();
                 for (int i = 0; i < FoodDataArray.Length; i++)
                 {
                     FoodLevelTable.Add(FoodDataArray[i].foodType, 1);
@@ -259,7 +267,6 @@ namespace CKProject.Managers
                         data_value = data_values[count++].Split(',');
                     }
                     foodDatas.Add(UpgradeFoodData.Initialize(data_value));
-                    //FoodMaxLevel = int.Parse(data_value[3]);
 
                     Stage_Food stage_Food = new Stage_Food(int.Parse(data_value[1]), int.Parse(data_value[2]));
 

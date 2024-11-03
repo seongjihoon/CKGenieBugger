@@ -6,30 +6,60 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace CKProject.Managers
 {
-    public class TriggerManager : SingleTon.SingleTon<TriggerManager>
+    public class TriggerManager : MonoBehaviour
     {
         public CustomTrigger[] CustomCollision;
 
         private void Awake()
         {
-            CreateInstance(this);
+            //CreateInstance(this);
+            //DontDestroyOnLoad(this);
         }
 
         private void Start()
         {
+            //Initialize();
+            //CustomCollision = FindObjectsOfType<BoxTrigger>();
+        }
+
+        public void Initialize()
+        {
             CustomCollision = FindObjectsOfType<CustomTrigger>();
+            foreach (var i in CustomCollision)
+            {
+                Debug.Log($"{i}");
+            }
         }
 
         public CustomTrigger CheckTriggerZone(Transform t)
         {
-            foreach(var c in CustomCollision) 
+            try
             {
-                if (c.OnCollision(t))
+                foreach (var c in CustomCollision)
                 {
-                    return c;
+                    if (c.OnCollision(t))
+                    {
+                        return c;
+                    }
                 }
+                return null;
             }
-            return null;
+            catch
+            {
+                Initialize();
+
+                foreach (var c in CustomCollision)
+                {
+                    if (c.OnCollision(t))
+                    {
+                        return c;
+                    }
+                }
+                return null;
+            }
+            finally
+            {
+            }
         }
 
         public CustomTrigger CheckTriggerZone(Vector3 vec)

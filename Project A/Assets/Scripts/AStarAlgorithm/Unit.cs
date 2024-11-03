@@ -18,6 +18,7 @@ namespace PathFinding
         Ready = 3,
         Out = 4,
     }
+#if UNITY_EDITOR
     [CustomEditor(typeof(Unit))]
     public class UnitFSMEditor : Editor
     {
@@ -50,6 +51,7 @@ namespace PathFinding
 
         }
     }
+#endif
 
     // 이걸 State로 가르기
     public class Unit : FSMController<EGuestStateType>

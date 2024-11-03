@@ -20,10 +20,10 @@ namespace CKProject.FSM
         [VisibleEnum(typeof(EGuestStateType))]
         public void CheckTriggerArea(int stateType)
         {
-            customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
+            customTrigger = GameManager.Instance.TriggerManager.CheckTriggerZone(transform);
             if (customTrigger != null && !GuestFSM.GetOut && customTrigger.transform == GuestFSM.target)
             {
-                Debug.Log(customTrigger.name);
+                //Debug.Log(customTrigger.name);
                 GuestFSM.Chair = customTrigger.GetComponent<Chair>();
                 GuestFSM.Animator.SetTrigger("Sit Start");
                 GuestFSM.GuestState = EGuestStateType.Ready;

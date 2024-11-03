@@ -6,26 +6,36 @@ using UnityEngine;
 
 namespace CKProject.SingleTon
 {
-    public abstract class SingleTon<T> : MonoBehaviour
-    {
-        private static T instance;
+    //public abstract class SingleTon<T> : MonoBehaviour where T : MonoBehaviour
+    //{
+    //    private static T instance;
 
-        public static T Instance
-        {
-            get { return instance; }
-            set { instance = value; }
-        }
+    //    public static T Instance
+    //    {
+    //        get {
+    //            if (instance == null)
+    //            {
+    //                instance = FindObjectOfType(typeof(T).Name);
+    //            }
+    //            return instance;
 
-        protected void CreateInstance(T singleTon)
-        {
-            if(instance == null)
-            {
-                instance = singleTon;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
+    //        }
+    //        set { instance = value; }
+    //    }
+
+
+
+    //    protected void CreateInstance(T singleTon)
+    //    {
+    //        if(instance == null)
+    //        {
+    //            instance = singleTon;
+    //            Debug.Log("Init: " + gameObject.name);
+    //        }
+    //        else
+    //        {
+    //            //Destroy(this);
+    //        }
+    //    }
+    //}
 }

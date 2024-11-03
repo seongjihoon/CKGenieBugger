@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace CKProject.AttributeEditor
 {
+//#if UNITY_EDITOR
     public class ArrayElementTitleAttribute : PropertyAttribute
     {
         public string Varname;
@@ -12,6 +13,7 @@ namespace CKProject.AttributeEditor
         }
     }
 
+#if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(ArrayElementTitleAttribute))]
     public class ArrayElementTitleDrawer : PropertyDrawer
     {
@@ -121,4 +123,5 @@ namespace CKProject.AttributeEditor
             return "";
         }
     }
+#endif
 }

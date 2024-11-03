@@ -45,7 +45,7 @@ namespace CKProject.FSM
         {
             if(cashierFSM.NowOrder.FoodType == EFoodType.None)
             {
-                customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
+                customTrigger = GameManager.Instance.TriggerManager.CheckTriggerZone(transform);
                 if (CustomTriggerCheck())
                 {
                     GuestManager.Instance.SetWaitingFood(cashierFSM.Guest.GetComponent<Unit>());
@@ -64,7 +64,7 @@ namespace CKProject.FSM
         {
             if(cashierFSM.NowOrder.FoodType != EFoodType.None && cashierFSM.GetOnFood == null)
             {
-                customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
+                customTrigger = GameManager.Instance.TriggerManager.CheckTriggerZone(transform);
                 if (CustomTriggerCheck())
                 {
                     // 도착했으면 음식 만들기 시작 
@@ -84,7 +84,7 @@ namespace CKProject.FSM
         {
             if(cashierFSM.GetOnFood != null)
             {
-                customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
+                customTrigger = GameManager.Instance.TriggerManager.CheckTriggerZone(transform);
                 if (CustomTriggerCheck())
                 {
                     StopCoroutine("FollowPath");

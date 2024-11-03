@@ -14,11 +14,21 @@ namespace CKProject.UI
         public int Index { get { return GameManager.Instance.moneyData.Index; } set { GameManager.Instance.moneyData.Index = value; } }
 
         public string[] unitMoney { get { return MoneyData.unitMoney; } }
-        
+
+        public string UserName { get { return UserName; } private set { UserName = value; } }
+        public string UserID { get { return UserID; } private set { UserID = value; } }
+
+        //public 
 
         private void Start()
         {
             GameManager.Instance.moneyData.Money = new int[GameManager.Instance.Size];
+        }
+
+        public void UserInfoSet(string userName, string userID)
+        {
+            UserName = userName;
+            UserID = userID;
         }
     }
 

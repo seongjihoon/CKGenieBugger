@@ -17,9 +17,10 @@ namespace CKProject.UI
         public GameObject MissionButton;
         public GameObject SettingPanel;
         public GameObject ShopPanel;
+        public Text UserInfo;
 
 
-        [Tooltip("Legarcy")]
+        [Header("Legarcy")]
         public Text MoneyText;
         
 
@@ -64,6 +65,7 @@ namespace CKProject.UI
         public void SetMissionPanel()
         {
             MissionPanel.gameObject.SetActive(!MissionPanel.gameObject.activeSelf);
+            UpgradePanel.gameObject.SetActive(false);
         }
 
         public void ChangeButton()
@@ -71,5 +73,10 @@ namespace CKProject.UI
             MissionButton.SetActive(false);
             NextStageButton.SetActive(true);
         }
+
+        public void ShowUserInfo(string name, string id )
+        {
+            MoneyText.text = "UserName: " + name + "\nUserId" + id;
+         }
     }
 }

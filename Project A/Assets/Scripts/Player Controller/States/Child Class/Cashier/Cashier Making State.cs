@@ -34,7 +34,7 @@ namespace CKProject.FSM
         [VisibleEnum(typeof(EStateType))]
         public void MakingCheck(int eType)
         {
-            customTrigger = TriggerManager.Instance.CheckTriggerZone(transform);
+            customTrigger = GameManager.Instance.TriggerManager.CheckTriggerZone(transform);
             Kitchen kitchen = customTrigger.GetComponent<Kitchen>();
             if(customTrigger != null && kitchen.GetKitchenType == EKitchenType.Complet)
             {

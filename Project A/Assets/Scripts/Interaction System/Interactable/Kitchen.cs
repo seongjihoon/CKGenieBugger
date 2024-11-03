@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using CKProject.EditorUtils;
-using UnityEditor.Timeline.Actions;
+﻿using UnityEngine;
 using CKProject.Managers;
-using static CKProject.Managers.FoodManager;
 using static CKProject.Managers.MissionManager;
 
 namespace CKProject.Interactable
