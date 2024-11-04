@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using CKProject.Managers;
 using UnityEngine.InputSystem;
 using CKProject.Interactable;
@@ -17,8 +17,8 @@ namespace CKProject.UI
         public MainModel Model;
         public MainView View;
 
-        private RewardedAd rewardedAd;
-        private BannerView bannerView;
+        //private RewardedAd rewardedAd;
+        //private BannerView bannerView;
         private string rewardedAdUnitId;
         private string AdUnitId;
 
@@ -31,8 +31,8 @@ namespace CKProject.UI
         {
             //Mouse = InputSystem.actions["Mouse"];
             mainCamera = Camera.main;
-            BannerRewardedAD();
-            RewardedInitAd();
+            //BannerRewardedAD();
+            //RewardedInitAd();
             //DontDestroyOnLoad(this);
         }
 
@@ -125,92 +125,92 @@ namespace CKProject.UI
             
         }
 
-        #region bannerView 
-        private void BannerRewardedAD()
-        {
-#if UNITY_ANDROID
-            AdUnitId = "ca-app-pub-3940256099942544/6300978111";
-#elif UNITY_IPHONE
-            //AdUnitId = "ca-app-pub-3940256099942544/6300978111;
-#else
-            AdUnitId = "unexpected_platform";
-#endif
-            bannerView = new BannerView(AdUnitId, AdSize.Banner, AdPosition.Top);
-        }
+//        #region bannerView 
+//        private void BannerRewardedAD()
+//        {
+//#if UNITY_ANDROID
+//            AdUnitId = "ca-app-pub-3940256099942544/6300978111";
+//#elif UNITY_IPHONE
+//            //AdUnitId = "ca-app-pub-3940256099942544/6300978111;
+//#else
+//            AdUnitId = "unexpected_platform";
+//#endif
+//            bannerView = new BannerView(AdUnitId, AdSize.Banner, AdPosition.Top);
+//        }
 
-        public void LoadAd()
-        {
-            // create an instance of a banner view first.
-            if (bannerView == null)
-            {
-                BannerRewardedAD();
-            }
+//        public void LoadAd()
+//        {
+//            // create an instance of a banner view first.
+//            if (bannerView == null)
+//            {
+//                BannerRewardedAD();
+//            }
 
-            // create our request used to load the ad.
-            AdRequest adRequest = new AdRequest.Builder().Build();
+//            // create our request used to load the ad.
+//            AdRequest adRequest = new AdRequest.Builder().Build();
 
-            // send the request to load the ad.
-            Debug.Log("Loading banner ad.");
-            bannerView.LoadAd(adRequest);
-        }
-
-
-#endregion
+//            // send the request to load the ad.
+//            Debug.Log("Loading banner ad.");
+//            bannerView.LoadAd(adRequest);
+//        }
 
 
-        #region RewardedAD
-
-        private void RewardedInitAd()
-        {
-            //adUnitId
-#if UNITY_ANDROID
-            rewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
-#elif UNITY_IPHONE
-            adUnitId = "ca-app-pub-3940256099942544/1712485313";
-#else
-            adUnitId = "unexpected_platform";
-#endif
-
-#region Legarcy
-            //rewardedAd = new RewardedAd(adUnitId);
-#endregion
-
-            RewardedAd.Load(rewardedAdUnitId, new AdRequest.Builder().Build(), LoadCallback);
-        }
+//#endregion
 
 
-        public void LoadCallback(RewardedAd rewardedAd, LoadAdError loadAdError)
-        {
-            if (rewardedAd == null)
-            {
-                Debug.Log($"Rewarded Failed : {loadAdError.GetMessage()}");
+//        #region RewardedAD
 
-            }
-            else
-            {
-                Debug.Log("Rewarded Success");
-                this.rewardedAd = rewardedAd;
-            }
-        }
+//        private void RewardedInitAd()
+//        {
+//            //adUnitId
+//#if UNITY_ANDROID
+//            rewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
+//#elif UNITY_IPHONE
+//            adUnitId = "ca-app-pub-3940256099942544/1712485313";
+//#else
+//            adUnitId = "unexpected_platform";
+//#endif
 
-        public void ShowAds()
-        {
-            if (rewardedAd != null & rewardedAd.CanShowAd()) 
-            {
-                rewardedAd.Show(GetReward);
-            }
-        }
+//#region Legarcy
+//            //rewardedAd = new RewardedAd(adUnitId);
+//#endregion
 
-        public void GetReward(Reward reward)
-        {
-            if(reward.Amount >0 )
-            {
-                // º¸»ó È¹µæ.
-                RewardedInitAd();
-            }
-        }
+//            RewardedAd.Load(rewardedAdUnitId, new AdRequest.Builder().Build(), LoadCallback);
+//        }
 
-#endregion
+
+//        public void LoadCallback(RewardedAd rewardedAd, LoadAdError loadAdError)
+//        {
+//            if (rewardedAd == null)
+//            {
+//                Debug.Log($"Rewarded Failed : {loadAdError.GetMessage()}");
+
+//            }
+//            else
+//            {
+//                Debug.Log("Rewarded Success");
+//                this.rewardedAd = rewardedAd;
+//            }
+//        }
+
+//        public void ShowAds()
+//        {
+//            if (rewardedAd != null & rewardedAd.CanShowAd()) 
+//            {
+//                rewardedAd.Show(GetReward);
+//            }
+//        }
+
+//        public void GetReward(Reward reward)
+//        {
+//            if(reward.Amount >0 )
+//            {
+//                // º¸»ó È¹µæ.
+//                RewardedInitAd();
+//            }
+//        }
+
+//#endregion
 
         public void UpdateMoney()
         {

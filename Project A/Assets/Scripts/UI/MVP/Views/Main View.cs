@@ -17,6 +17,7 @@ namespace CKProject.UI
         public GameObject MissionButton;
         public GameObject SettingPanel;
         public GameObject ShopPanel;
+
         public Text UserInfo;
 
 
@@ -76,7 +77,7 @@ namespace CKProject.UI
 
         public void ShowUserInfo(string name, string id )
         {
-            MoneyText.text = "UserName: " + name + "\nUserId" + id;
+            UserInfo.text = "UserName: " + name + "\nUserId" + id;
          }
     }
 }

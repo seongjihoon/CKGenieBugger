@@ -31,14 +31,15 @@ namespace CKProject.Managers
 
         public void ProcessAuthentication(SignInStatus status)
         {
+            MainPresenter mainUI = GameObject.Find("Main UI Manager").GetComponent<MainPresenter>();
+
             if (status == SignInStatus.Success)
             {
-                MainPresenter mainUI = GameObject.Find("Main UI Manager").GetComponent<MainPresenter>();
                 mainUI.UserInfoSet(PlayGamesPlatform.Instance.GetUserDisplayName(), PlayGamesPlatform.Instance.GetUserId());
             }
             else
             {
-
+                mainUI.UserInfoSet("Not Founded", "Not Founded");
             }
         }
 
