@@ -68,7 +68,7 @@ public class SceneLoader : MonoBehaviour
         progressBar.fillAmount = 0f;
         yield return StartCoroutine(Fade(true));
 
-        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation op = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         op.allowSceneActivation = false;
 
         float timer = 0.0f;

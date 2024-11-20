@@ -328,6 +328,11 @@ namespace CKProject.Managers
                     Debug.Log("레벨 맥스");
 #endif
                 }
+
+                if (MissionManager.Instance.Count < 1 && LevelCheck())
+                {
+                    GameManager.Instance.ChangedButton();
+                }
             }
             else
             {

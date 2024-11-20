@@ -13,7 +13,7 @@ namespace CKProject.Managers
         private void Awake()
         {
             //CreateInstance(this);
-            //DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
         }
 
         private void Start()

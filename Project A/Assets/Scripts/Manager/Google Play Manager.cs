@@ -10,12 +10,12 @@ namespace CKProject.Managers
     public class GooglePlayManager : MonoBehaviour
     {
         public static GooglePlayManager Instance;
-
+        
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
-
+            DontDestroyOnLoad(this);
         }
 
         // Start is called before the first frame update
@@ -31,7 +31,7 @@ namespace CKProject.Managers
 
         public void ProcessAuthentication(SignInStatus status)
         {
-            MainPresenter mainUI = GameObject.Find("Main UI Manager").GetComponent<MainPresenter>();
+            MainPresenter mainUI = GameObject.Find("UI").GetComponent<MainPresenter>();
 
             if (status == SignInStatus.Success)
             {

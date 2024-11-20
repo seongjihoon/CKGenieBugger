@@ -38,10 +38,14 @@ namespace CKProject.Managers
             OpenFood = Stage;
             moneyData.Money = new int[Size];
             TriggerManager = GameObject.Find("Custom Trigger Manager").GetComponent<TriggerManager>();
-            MainUI = GameObject.Find("Main UI Manager").GetComponent<MainPresenter>();
-            DontDestroyOnLoad(this.gameObject);
+            MainUI = GameObject.Find("UI").GetComponent<MainPresenter>();
         }
 
+        private void Start()
+        {
+
+            DontDestroyOnLoad(this);
+        }
         public void KitchenOpen()
         {
             if(Stage > OpenFood && (EFoodType)OpenFood < EFoodType.ALL)
@@ -88,6 +92,7 @@ namespace CKProject.Managers
             SceneLoader.Instance.LoadScene("Game Scene 2");
             OpenFood = Stage;
             moneyData.Money = new int[Size];
+            MainUI.ResetUI();
             FoodManager.Instance.KitchenSet();
             FoodManager.Instance.InitializedFoodData();
             //GuestManager.Instance.Reset();

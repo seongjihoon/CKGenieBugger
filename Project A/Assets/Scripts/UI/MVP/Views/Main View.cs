@@ -23,17 +23,28 @@ namespace CKProject.UI
 
         [Header("Legarcy")]
         public Text MoneyText;
+        public Text CrystalText;
         
 
         private void Start()
         {
             UpgradePanel.gameObject.SetActive(false);
-            MissionPanel.Initialized();
             MissionPanel.gameObject.SetActive(false);
+            SetMissions();
             MissionButton.SetActive(true);
             NextStageButton.SetActive(false);
             SettingPanel.SetActive(false);
             ShopPanel.SetActive(false);
+        }
+
+        public void SetMissions()
+        {
+            MissionPanel.Initialized();
+        }
+
+        public void HideUpgradPanel()
+        {
+            UpgradePanel.gameObject.SetActive(false);
         }
 
         public void SetUpgradePanel()
@@ -73,6 +84,12 @@ namespace CKProject.UI
         {
             MissionButton.SetActive(false);
             NextStageButton.SetActive(true);
+        }
+
+        public void ResetButtons()
+        {
+            NextStageButton.SetActive(false); 
+            MissionButton.SetActive(true);
         }
 
         public void ShowUserInfo(string name, string id )

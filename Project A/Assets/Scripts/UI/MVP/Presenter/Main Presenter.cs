@@ -33,7 +33,7 @@ namespace CKProject.UI
             mainCamera = Camera.main;
             //BannerRewardedAD();
             //RewardedInitAd();
-            //DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Start()
@@ -96,6 +96,8 @@ namespace CKProject.UI
 
         private void TouchInteract(Vector3 inputPosition)
         {
+            if (mainCamera == null)
+                mainCamera = Camera.main;
             // 클릭한 위치를 월드 좌표로 변환
             Ray ray = mainCamera.ScreenPointToRay(inputPosition);
             RaycastHit hit;
@@ -249,6 +251,12 @@ namespace CKProject.UI
             MoneyUpdate(Model.Money);
         }
 
+        public void AddCrystals(int crystals)
+        {
+            Model.Crystals += crystals;
+            View.CrystalText.text = Model.Crystals.ToString();
+        }
+
         public void SubMoney(int[] useMoney)
         {
             for (int i = 0; i < useMoney.Length; i++)
@@ -256,6 +264,14 @@ namespace CKProject.UI
                 Model.Money[i] -= useMoney[i];
             }
             MoneyUpdate(Model.Money);
+        }
+
+        public void ResetUI()
+        {
+            MoneyUpdate(Model.Money);
+            View.SetMissions();
+            View.ResetButtons();
+            View.HideUpgradPanel();
         }
 
         public void MyMoneyToString(int[] Money, int index, string[] unit)
