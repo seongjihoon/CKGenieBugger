@@ -9,6 +9,13 @@ using CKProject.UI;
 
 namespace CKProject.FSM
 {
+    [SerializeField]
+    public enum EStateType
+    {
+        Idle = 1,
+        Move = 2,
+        Interact = 3,
+    }
     public class CashierFSM : FSMController<EStateType>
     {
         [HideInInspector] public Transform Target;
