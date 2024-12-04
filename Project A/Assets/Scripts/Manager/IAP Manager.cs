@@ -26,7 +26,7 @@ namespace CKProject.Managers
             builder.AddProduct(crystal_100, ProductType.Consumable);
             builder.AddProduct(ad_block, ProductType.NonConsumable);
 
-            UnityPurchasing.Initialize(this.GetComponent<IAPManager>(), builder);
+            UnityPurchasing.Initialize(this, builder);
         }
 
 

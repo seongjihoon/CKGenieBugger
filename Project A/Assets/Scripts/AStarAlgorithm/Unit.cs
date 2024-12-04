@@ -69,6 +69,7 @@ namespace PathFinding
         private float speed = 2;
         private int targetIndex;
         [SerializeField] private CustomTrigger hitedTrigger;
+        [SerializeField] private GameObject[] ChangedBody;
 
 
         protected override void Start()
@@ -232,7 +233,13 @@ namespace PathFinding
         {
             //Order.Clear();
             Order = EFoodType.None;
+            foreach(var body in ChangedBody)
+            {
+                body.SetActive(false);
+            }
+            ChangedBody[Random.Range(0, ChangedBody.Length)].SetActive(true);
         }
+
         private void OnDrawGizmos()
         {
             if (path != null)

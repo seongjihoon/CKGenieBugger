@@ -21,7 +21,6 @@ namespace CKProject.Managers
             {
 
             });
-
         }
 
         private void Start()
@@ -66,7 +65,7 @@ namespace CKProject.Managers
                     Debug.Log("Rewarded ad loaded with response : "
                               + ad.GetResponseInfo());
 
-                    rewardedAd = ad;
+                    rewardedAd = ad; 
                 });
         }
 
