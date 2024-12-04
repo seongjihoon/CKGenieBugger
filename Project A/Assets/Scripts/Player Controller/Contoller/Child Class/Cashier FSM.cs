@@ -59,7 +59,7 @@ namespace CKProject.FSM
         public void DeliveryFood()
         {
             NowOrder.FoodType = EFoodType.None;
-            NowOrder.OrderTarget.GetComponent<Unit>().GetOut = true;
+            NowOrder.OrderTarget.GetComponent<NPCFSM>().GetOut = true;
             GameManager.Instance.AddMoney(FoodManager.Instance.GetFoodLevelData(GetOnFood.GetComponent<Food>().GetFoodSo.foodType).Revenue);
             GetOnFood.SetActive(false);
             GetOnFood = null; 

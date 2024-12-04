@@ -48,7 +48,7 @@ namespace CKProject.FSM
                 customTrigger = GameManager.Instance.TriggerManager.CheckTriggerZone(transform);
                 if (CustomTriggerCheck())
                 {
-                    GuestManager.Instance.SetWaitingFood(cashierFSM.Guest.GetComponent<Unit>());
+                    GuestManager.Instance.SetWaitingFood(cashierFSM.Guest.GetComponent<NPCFSM>());
                     transform.position = cashierFSM.Path[cashierFSM.Path.Length - 1];
                     StopCoroutine("FollowPath");
 
@@ -170,7 +170,7 @@ namespace CKProject.FSM
                 }
                 if (count > 100000)
                 {
-                    transform.GetComponent<Unit>().enabled = false;
+                    transform.GetComponent<NPCFSM>().enabled = false;
                     yield break;
                 }
                 //if (CheckTargetPosition())

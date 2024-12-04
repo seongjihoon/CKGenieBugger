@@ -7,11 +7,11 @@ namespace CKProject.FSM
 {
     public class GuestBaseState : BaseState<EGuestStateType>
     {
-        public Unit GuestFSM;
+        public NPCFSM GuestFSM;
         private void Awake()
         {
-            FsmController = GetComponent<Unit>();
-            GuestFSM = FsmController as Unit;
+            FsmController = GetComponent<NPCFSM>();
+            GuestFSM = FsmController as NPCFSM;
         }
     }
 }

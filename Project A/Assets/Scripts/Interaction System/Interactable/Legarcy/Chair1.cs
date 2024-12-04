@@ -13,7 +13,7 @@ namespace CKProject.Interactable
         [Header("Food Type")]
         public EFoodType FoodType = EFoodType.None;
         [Header("Guest")]
-        public Unit Guest;
+        public NPCFSM Guest;
         public bool Using = false;
 
         public async UniTaskVoid EscapeGuest()

@@ -83,7 +83,7 @@ namespace CKProject.Managers
                 // 현재 이동 중이기 때문에 어디도 속하지 않음.
                 tempUnit.SetActive(true);
                 tempUnit.transform.position = SpawnPoint.position;
-                tempUnit.GetComponent<Unit>().SetTarget(tempChair, GridInfo);
+                tempUnit.GetComponent<NPCFSM>().SetTarget(tempChair, GridInfo);
             }
         }
 
@@ -116,7 +116,7 @@ namespace CKProject.Managers
 
 
         #region Public Methods
-        public void OutGuest(Unit unit)
+        public void OutGuest(NPCFSM unit)
         {
             useChairList.Remove(unit.target.gameObject);
             GuestList.GuestPools.Push(unit.gameObject);
@@ -128,7 +128,7 @@ namespace CKProject.Managers
             GuestList.WaitingOrderGuest.Enqueue(guest);
         }
         
-        public void SetWaitingFood(Unit guest)
+        public void SetWaitingFood(NPCFSM guest)
         {
             // 음식 지정
             // 현재 제작이 가능한 음식 호출

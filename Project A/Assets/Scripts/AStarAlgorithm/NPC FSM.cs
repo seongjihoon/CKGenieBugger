@@ -10,51 +10,9 @@ using System.Collections.Generic;
 namespace PathFinding
 {
 
-    [SerializeField]
-    public enum EGuestStateType
-    {
-        Idle = 1,
-        Move = 2,
-        Ready = 3,
-        Out = 4,
-    }
-#if UNITY_EDITOR
-    [CustomEditor(typeof(Unit))]
-    public class UnitFSMEditor : Editor
-    {
-        private Unit fsmEditor;
-        private void OnEnable()
-        {
-            fsmEditor = (Unit)target;
-        }
-
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-
-
-            if (GUILayout.Button("상태 추가", GUILayout.Width(120), GUILayout.Height(30)))
-            {
-                fsmEditor.AddState();
-            }
-
-            //if (GUILayout.Button("제거", GUILayout.Width(120), GUILayout.Height(30)))
-            //{
-            //    fsmEditor.SubState();
-            //}
-
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.EndHorizontal();
-
-        }
-    }
-#endif
 
     // 이걸 State로 가르기
-    public class Unit : FSMController<EGuestStateType>
+    public class NPCFSM : FSMController<EGuestStateType>
     {
         //Thread Research;
         public Transform target;
@@ -212,7 +170,7 @@ namespace PathFinding
                 }
                 if (count > 100000)
                 {
-                    transform.GetComponent<Unit>().enabled = false;
+                    transform.GetComponent<NPCFSM>().enabled = false;
                     yield break;
                 }
                 //if (CheckTargetPosition())
@@ -262,4 +220,46 @@ namespace PathFinding
         }
     }
 
+    [SerializeField]
+    public enum EGuestStateType
+    {
+        Idle = 1,
+        Move = 2,
+        Ready = 3,
+        Out = 4,
+    }
+#if UNITY_EDITOR
+    [CustomEditor(typeof(NPCFSM))]
+    public class UnitFSMEditor : Editor
+    {
+        private NPCFSM fsmEditor;
+        private void OnEnable()
+        {
+            fsmEditor = (NPCFSM)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+
+            if (GUILayout.Button("상태 추가", GUILayout.Width(120), GUILayout.Height(30)))
+            {
+                fsmEditor.AddState();
+            }
+
+            //if (GUILayout.Button("제거", GUILayout.Width(120), GUILayout.Height(30)))
+            //{
+            //    fsmEditor.SubState();
+            //}
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+
+        }
+    }
+#endif
 }

@@ -39,13 +39,13 @@ namespace CKProject.FSM
 
         private void Serving()
         {
-            cashierFSM.Target = cashierFSM.Guest.GetComponent<Unit>().Chair.Table;
+            cashierFSM.Target = cashierFSM.Guest.GetComponent<NPCFSM>().Chair.Table;
         }
 
         private void GetOrder()
         {
             cashierFSM.Guest = GuestManager.Instance.GetWaitingOrderGuest().transform;
-            cashierFSM.Target = cashierFSM.Guest.GetComponent<Unit>().Chair.Table;
+            cashierFSM.Target = cashierFSM.Guest.GetComponent<NPCFSM>().Chair.Table;
         }
         
         private void GetFood()
